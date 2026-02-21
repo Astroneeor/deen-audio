@@ -1,0 +1,54 @@
+name: deen_audio
+description: Halal offline-first desktop audio app
+version: 0.1.0+1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.13.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Audio
+  just_audio: ^0.9.36
+  audio_service: ^0.18.12
+  just_audio_background: ^0.0.1-beta.11
+
+  # State Management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Database
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.1
+
+  # File System
+  file_picker: ^6.1.1
+
+  # Routing
+  go_router: ^13.0.0
+
+  # Utilities
+  flutter_hooks: ^0.20.4
+  hooks_riverpod: ^2.4.9
+  freezed_annotation: ^2.4.1
+  rxdart: ^0.28.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.7
+  isar_generator: ^3.1.0+1
+  riverpod_generator: ^2.3.9
+  freezed: ^2.4.5
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/quran/
+    - assets/adhkar/
+    - assets/fonts/
