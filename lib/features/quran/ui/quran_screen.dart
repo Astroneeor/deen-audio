@@ -1,52 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../providers/quran_providers.dart';
+import 'ayah_reader.dart';
+import 'surah_list.dart';
 
-class QuranScreen extends StatelessWidget {
+/// Quran reader screen — two-panel desktop layout.
+///
+/// ┌─────────────────────┬────────────────────────────────────┐
+/// │  SurahList (260px)  │         AyahReader (expanded)      │
+/// └─────────────────────┴────────────────────────────────────┘
+///
+/// On launch the last-read surah is restored automatically.
+class QuranScreen extends ConsumerWidget {
   const QuranScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: _PlaceholderContent(
-        icon: Icons.menu_book_outlined,
-        title: 'Quran',
-        subtitle: 'Phase 3 — Arabic text + translations coming soon',
-      ),
-    );
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Restore last-read surah on first load.
+    ref.listen(lastReadProvider, (_, next) {
+      next.whenData((pos) {
+        final current = ref.read(selectedSurahNumberProvider);
+        if (current == 1) {
+          // Only restore if user hasn't already navigated away from default.
+          ref.read(selectedSurahNumberProvider.notifier).state = pos.surah;
+        }
+      });
+    });
 
-class _PlaceholderContent extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  const _PlaceholderContent({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return Row(
       children: [
-        Icon(icon, size: 64, color: AppColors.gold.withValues(alpha: 0.4)),
-        const SizedBox(height: 20),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: AppColors.textPrimary,
-              ),
+        // Left: surah navigator
+        SizedBox(
+          width: 260,
+          child: Container(
+            color: AppColors.sidebar,
+            child: const SurahList(),
+          ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          subtitle,
-          style: Theme.of(context).textTheme.bodyMedium,
-          textAlign: TextAlign.center,
-        ),
+
+        const VerticalDivider(width: 1, color: AppColors.divider),
+
+        // Right: ayah reader
+        const Expanded(child: AyahReader()),
       ],
     );
   }

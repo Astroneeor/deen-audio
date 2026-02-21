@@ -1,0 +1,154 @@
+[
+  {
+    "number": 1,
+    "name": "الفاتحة",
+    "englishName": "Al-Faatiha",
+    "englishNameTranslation": "The Opening",
+    "numberOfAyahs": 7,
+    "revelationType": "Meccan",
+    "ayahs": [
+      {"number": 1, "text": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"},
+      {"number": 2, "text": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ"},
+      {"number": 3, "text": "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"},
+      {"number": 4, "text": "مَٰلِكِ يَوْمِ ٱلدِّينِ"},
+      {"number": 5, "text": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ"},
+      {"number": 6, "text": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ"},
+      {"number": 7, "text": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ"}
+    ]
+  },
+  {
+    "number": 2,
+    "name": "البقرة",
+    "englishName": "Al-Baqara",
+    "englishNameTranslation": "The Cow",
+    "numberOfAyahs": 286,
+    "revelationType": "Medinan",
+    "ayahs": []
+  },
+  {
+    "number": 3,
+    "name": "آل عمران",
+    "englishName": "Aal-i-Imraan",
+    "englishNameTranslation": "The Family of Imraan",
+    "numberOfAyahs": 200,
+    "revelationType": "Medinan",
+    "ayahs": []
+  },
+  {
+    "number": 4,
+    "name": "النساء",
+    "englishName": "An-Nisaa",
+    "englishNameTranslation": "The Women",
+    "numberOfAyahs": 176,
+    "revelationType": "Medinan",
+    "ayahs": []
+  },
+  {
+    "number": 5,
+    "name": "المائدة",
+    "englishName": "Al-Maaida",
+    "englishNameTranslation": "The Table",
+    "numberOfAyahs": 120,
+    "revelationType": "Medinan",
+    "ayahs": []
+  },
+  {
+    "number": 6,
+    "name": "الأنعام",
+    "englishName": "Al-An'aam",
+    "englishNameTranslation": "The Cattle",
+    "numberOfAyahs": 165,
+    "revelationType": "Meccan",
+    "ayahs": []
+  },
+  {
+    "number": 7,
+    "name": "الأعراف",
+    "englishName": "Al-A'raaf",
+    "englishNameTranslation": "The Heights",
+    "numberOfAyahs": 206,
+    "revelationType": "Meccan",
+    "ayahs": []
+  },
+  {
+    "number": 8,
+    "name": "الأنفال",
+    "englishName": "Al-Anfaal",
+    "englishNameTranslation": "The Spoils of War",
+    "numberOfAyahs": 75,
+    "revelationType": "Medinan",
+    "ayahs": []
+  },
+  {
+    "number": 9,
+    "name": "التوبة",
+    "englishName": "At-Tawba",
+    "englishNameTranslation": "The Repentance",
+    "numberOfAyahs": 129,
+    "revelationType": "Medinan",
+    "ayahs": []
+  },
+  {
+    "number": 10,
+    "name": "يونس",
+    "englishName": "Yunus",
+    "englishNameTranslation": "Jonah",
+    "numberOfAyahs": 109,
+    "revelationType": "Meccan",
+    "ayahs": []
+  },
+  {
+    "number": 36,
+    "name": "يس",
+    "englishName": "Ya-Seen",
+    "englishNameTranslation": "Ya-Seen",
+    "numberOfAyahs": 83,
+    "revelationType": "Meccan",
+    "ayahs": []
+  },
+  {
+    "number": 55,
+    "name": "الرحمن",
+    "englishName": "Ar-Rahmaan",
+    "englishNameTranslation": "The Beneficent",
+    "numberOfAyahs": 78,
+    "revelationType": "Medinan",
+    "ayahs": []
+  },
+  {
+    "number": 67,
+    "name": "الملك",
+    "englishName": "Al-Mulk",
+    "englishNameTranslation": "The Sovereignty",
+    "numberOfAyahs": 30,
+    "revelationType": "Meccan",
+    "ayahs": []
+  },
+  {
+    "number": 112,
+    "name": "الإخلاص",
+    "englishName": "Al-Ikhlaas",
+    "englishNameTranslation": "The Sincerity",
+    "numberOfAyahs": 4,
+    "revelationType": "Meccan",
+    "ayahs": []
+  },
+  {
+    "number": 113,
+    "name": "الفلق",
+    "englishName": "Al-Falaq",
+    "englishNameTranslation": "The Daybreak",
+    "numberOfAyahs": 5,
+    "revelationType": "Meccan",
+    "ayahs": []
+  },
+  {
+    "number": 114,
+    "name": "الناس",
+    "englishName": "An-Naas",
+    "englishNameTranslation": "Mankind",
+    "numberOfAyahs": 6,
+    "revelationType": "Meccan",
+    "ayahs": []
+  }
+]
