@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Ayat al-Kursi",
+    "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ",
+    "transliteration": "Allahu la ilaha illa huwa al-Hayyul-Qayyum, la ta'khudhuhu sinatun wa la nawm",
+    "translation": "Allah – there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep.",
+    "count": 1,
+    "reference": "Al-Baqarah 2:255"
+  },
+  {
+    "id": 2,
+    "title": "Al-Ikhlas, Al-Falaq & An-Naas",
+    "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+    "transliteration": "Qul huwa Allahu ahad. Allahu as-samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.",
+    "translation": "Say: He is Allah, [who is] One, Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.",
+    "count": 3,
+    "reference": "Al-Ikhlas 112:1-4 (recite each surah 3×)"
+  },
+  {
+    "id": 3,
+    "title": "Evening supplication",
+    "arabic": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
+    "transliteration": "Amsayna wa amsal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la sharika lah",
+    "translation": "We have reached the evening and at this very time unto Allah belongs all sovereignty; all praise is for Allah. None has the right to be worshipped except Allah, alone, without partner.",
+    "count": 1,
+    "reference": "Abu Dawud 4/317"
+  },
+  {
+    "id": 4,
+    "title": "Seeking forgiveness",
+    "arabic": "أَسْتَغْفِرُ اللهَ الْعَظِيمَ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+    "transliteration": "Astaghfirullaha al-'Adheem alladhi la ilaha illa huwa al-Hayyul-Qayyum wa atubu ilayh",
+    "translation": "I seek forgiveness from Allah, the Magnificent, beside Whom none has the right to be worshipped except He, the Living, the Eternal, and I repent to Him.",
+    "count": 3,
+    "reference": "Abu Dawud, At-Tirmidhi"
+  },
+  {
+    "id": 5,
+    "title": "Protection from harm",
+    "arabic": "بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+    "transliteration": "Bismillahilladhi la yadurru ma'asmihi shay'un fil-ardi wa la fis-sama'i wa huwas-sami'ul-'alim",
+    "translation": "In the name of Allah with whose name nothing is harmed on earth nor in the heavens and He is the All-Seeing, the All-Knowing.",
+    "count": 3,
+    "reference": "Abu Dawud 4/323, At-Tirmidhi 5/465"
+  },
+  {
+    "id": 6,
+    "title": "SubhanAllah, Alhamdulillah, Allahu Akbar",
+    "arabic": "سُبْحَانَ اللهِ ۝ الْحَمْدُ لِلَّهِ ۝ اللهُ أَكْبَرُ",
+    "transliteration": "SubhanAllah. Alhamdulillah. Allahu Akbar.",
+    "translation": "Glory be to Allah. All praise is for Allah. Allah is the Greatest.",
+    "count": 33,
+    "reference": "Al-Bukhari 7/67"
+  }
+]

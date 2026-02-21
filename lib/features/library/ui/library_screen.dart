@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/models/track.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../shared/widgets/shimmer_box.dart';
 import '../providers/library_providers.dart';
 import 'library_filter_bar.dart';
 import 'track_list_tile.dart';
@@ -27,10 +28,7 @@ class LibraryScreen extends ConsumerWidget {
             data: (tracks) => tracks.isEmpty
                 ? _EmptyState(isScanning: scanState.isLoading)
                 : _TrackList(tracks: tracks),
-            loading: () => const Center(
-              child: CircularProgressIndicator(
-                  color: AppColors.gold, strokeWidth: 2),
-            ),
+            loading: () => const _TrackListSkeleton(),
             error: (e, _) => Center(
               child: Text('Error loading library: $e',
                   style: const TextStyle(color: AppColors.error)),
@@ -137,6 +135,43 @@ class _TrackList extends StatelessWidget {
         track: tracks[i],
         queue: tracks,
         index: i,
+      ),
+    );
+  }
+}
+
+// ── Loading skeleton ──────────────────────────────────────────────────────────
+
+class _TrackListSkeleton extends StatelessWidget {
+  const _TrackListSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: 8,
+      separatorBuilder: (_, __) =>
+          const Divider(height: 1, color: AppColors.divider, indent: 72),
+      itemBuilder: (_, __) => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: Row(
+          children: [
+            ShimmerBox(width: 38, height: 38, borderRadius: 6),
+            SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ShimmerBox(width: double.infinity, height: 13),
+                  SizedBox(height: 6),
+                  ShimmerBox(width: 120, height: 11),
+                ],
+              ),
+            ),
+            SizedBox(width: 12),
+            ShimmerBox(width: 36, height: 12),
+          ],
+        ),
       ),
     );
   }

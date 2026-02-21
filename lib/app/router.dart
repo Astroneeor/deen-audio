@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../features/adhkar/ui/adhkar_screen.dart';
 import '../features/library/ui/library_screen.dart';
 import '../features/quran/ui/quran_screen.dart';
+import '../features/settings/ui/settings_screen.dart';
 import '../shared/widgets/app_scaffold.dart';
 
 /// Route path constants
@@ -12,6 +13,7 @@ class AppRoutes {
   static const String quran = '/quran';
   static const String library = '/library';
   static const String adhkar = '/adhkar';
+  static const String settings = '/settings';
 }
 
 final router = GoRouter(
@@ -36,6 +38,12 @@ final router = GoRouter(
           path: AppRoutes.adhkar,
           pageBuilder: (context, state) => const NoTransitionPage(
             child: AdhkarScreen(),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.settings,
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: SettingsScreen(),
           ),
         ),
       ],

@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Ayat al-Kursi",
+    "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ",
+    "transliteration": "Allahu la ilaha illa huwa al-Hayyul-Qayyum, la ta'khudhuhu sinatun wa la nawm",
+    "translation": "Allah – there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep.",
+    "count": 1,
+    "reference": "Al-Baqarah 2:255"
+  },
+  {
+    "id": 2,
+    "title": "Al-Ikhlas, Al-Falaq & An-Naas",
+    "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+    "transliteration": "Qul huwa Allahu ahad. Allahu as-samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.",
+    "translation": "Say: He is Allah, [who is] One, Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.",
+    "count": 3,
+    "reference": "Al-Ikhlas 112:1-4 (recite each surah 3×)"
+  },
+  {
+    "id": 3,
+    "title": "Morning supplication",
+    "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
+    "transliteration": "Asbahna wa asbahal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la sharika lah",
+    "translation": "We have reached the morning and at this very time unto Allah belongs all sovereignty; all praise is for Allah. None has the right to be worshipped except Allah, alone, without partner.",
+    "count": 1,
+    "reference": "Abu Dawud 4/317"
+  },
+  {
+    "id": 4,
+    "title": "Sayyid al-Istighfar",
+    "arabic": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
+    "transliteration": "Allahumma anta Rabbi la ilaha illa ant, khalaqtani wa ana abduk, wa ana ala ahdika wa wa'dika mastata't",
+    "translation": "O Allah, You are my Lord, none has the right to be worshipped except You, You created me and I am Your servant and I abide to Your covenant and promise as best I can.",
+    "count": 1,
+    "reference": "Al-Bukhari 7/150"
+  },
+  {
+    "id": 5,
+    "title": "Seeking refuge from the Shaytaan",
+    "arabic": "أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+    "transliteration": "A'udhu billahi minash-shaytanir-rajim",
+    "translation": "I seek refuge in Allah from the accursed Satan.",
+    "count": 3,
+    "reference": "Hisnul Muslim"
+  },
+  {
+    "id": 6,
+    "title": "Tasbeeh",
+    "arabic": "سُبْحَانَ اللهِ وَبِحَمْدِهِ",
+    "transliteration": "SubhanAllahi wa bihamdih",
+    "translation": "Glory be to Allah and praise Him.",
+    "count": 100,
+    "reference": "Al-Bukhari 7/168"
+  }
+]

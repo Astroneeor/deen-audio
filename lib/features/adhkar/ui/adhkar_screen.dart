@@ -1,53 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../providers/adhkar_providers.dart';
+import 'adhkar_list.dart';
+import 'tasbih_counter.dart';
 
-class AdhkarScreen extends StatelessWidget {
+/// Adhkar screen — Morning / Evening tabs with dhikr cards and tasbih counter.
+class AdhkarScreen extends ConsumerWidget {
   const AdhkarScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: _PlaceholderContent(
-        icon: Icons.auto_awesome_outlined,
-        title: 'Adhkar',
-        subtitle: 'Phase 4 — Morning & evening adhkar coming soon',
+  Widget build(BuildContext context, WidgetRef ref) {
+    final morningAsync = ref.watch(morningAdhkarProvider);
+    final eveningAsync = ref.watch(eveningAdhkarProvider);
+
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ── Header ──────────────────────────────────────────────────────────
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 20, 16, 12),
+            child: Row(
+              children: [
+                const Expanded(
+                  child: Text(
+                    'Adhkar',
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                Tooltip(
+                  message: 'Open Tasbih Counter',
+                  child: IconButton(
+                    icon: const Icon(Icons.radio_button_unchecked_outlined),
+                    color: AppColors.gold,
+                    iconSize: 22,
+                    onPressed: () => showTasbihCounter(context),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // ── Tab bar ─────────────────────────────────────────────────────────
+          const TabBar(
+            isScrollable: false,
+            tabs: [
+              Tab(text: 'Morning'),
+              Tab(text: 'Evening'),
+            ],
+            indicatorColor: AppColors.gold,
+            labelColor: AppColors.gold,
+            unselectedLabelColor: AppColors.textSecondary,
+            labelStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+            unselectedLabelStyle: TextStyle(fontSize: 13),
+            indicatorSize: TabBarIndicatorSize.label,
+            dividerColor: AppColors.divider,
+          ),
+
+          // ── Content ─────────────────────────────────────────────────────────
+          Expanded(
+            child: TabBarView(
+              children: [
+                AdhkarList(adhkarAsync: morningAsync),
+                AdhkarList(adhkarAsync: eveningAsync),
+              ],
+            ),
+          ),
+        ],
       ),
-    );
-  }
-}
-
-class _PlaceholderContent extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  const _PlaceholderContent({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 64, color: AppColors.gold.withValues(alpha: 0.4)),
-        const SizedBox(height: 20),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: AppColors.textPrimary,
-              ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          subtitle,
-          style: Theme.of(context).textTheme.bodyMedium,
-          textAlign: TextAlign.center,
-        ),
-      ],
     );
   }
 }

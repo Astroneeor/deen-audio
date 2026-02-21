@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/ayah.dart';
 import '../../../core/models/surah.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../features/settings/providers/settings_providers.dart';
 import '../providers/quran_providers.dart';
+import 'ayah_tile.dart';
 
 /// Right panel: displays all ayahs for the selected surah.
 ///
@@ -35,6 +37,7 @@ class _AyahReaderState extends ConsumerState<AyahReader> {
     final ayahsAsync = ref.watch(currentAyahsProvider);
     final selectedNumber = ref.watch(selectedSurahNumberProvider);
     final showTranslation = ref.watch(showTranslationProvider);
+    final fontSize = ref.watch(quranFontSizeProvider);
 
     return Column(
       children: [
@@ -50,10 +53,11 @@ class _AyahReaderState extends ConsumerState<AyahReader> {
         Expanded(
           child: ayahsAsync.when(
             data: (ayahs) => ayahs.isEmpty
-                ? _EmptyAyahs(surahNumber: selectedNumber)
+                ? const EmptyAyahsView()
                 : _AyahList(
                     ayahs: ayahs,
                     showTranslation: showTranslation,
+                    fontSize: fontSize,
                     controller: _controller,
                     onAyahVisible: (ayah) {
                       ref
@@ -158,12 +162,14 @@ class _Header extends ConsumerWidget {
 class _AyahList extends ConsumerWidget {
   final List<Ayah> ayahs;
   final bool showTranslation;
+  final double fontSize;
   final ScrollController controller;
   final void Function(Ayah) onAyahVisible;
 
   const _AyahList({
     required this.ayahs,
     required this.showTranslation,
+    required this.fontSize,
     required this.controller,
     required this.onAyahVisible,
   });
@@ -195,9 +201,10 @@ class _AyahList extends ConsumerWidget {
         ),
         itemBuilder: (_, i) {
           final ayah = ayahs[i];
-          return _AyahTile(
+          return AyahTile(
             ayah: ayah,
             showTranslation: showTranslation,
+            fontSize: fontSize,
             isBookmarked: bookmarked.contains(ayah.ayahNumber),
             onBookmarkTap: () => ref
                 .read(quranRepositoryProvider)
@@ -209,135 +216,3 @@ class _AyahList extends ConsumerWidget {
   }
 }
 
-// ── Ayah tile ─────────────────────────────────────────────────────────────────
-
-class _AyahTile extends StatelessWidget {
-  final Ayah ayah;
-  final bool showTranslation;
-  final bool isBookmarked;
-  final VoidCallback onBookmarkTap;
-
-  const _AyahTile({
-    required this.ayah,
-    required this.showTranslation,
-    required this.isBookmarked,
-    required this.onBookmarkTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // Ayah number + bookmark row
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _AyahBadge(number: ayah.ayahNumber),
-            IconButton(
-              onPressed: onBookmarkTap,
-              icon: Icon(
-                isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-              ),
-              color: isBookmarked ? AppColors.gold : AppColors.textMuted,
-              iconSize: 16,
-              splashRadius: 14,
-              tooltip: isBookmarked ? 'Remove bookmark' : 'Bookmark ayah',
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-
-        // Arabic text (right-to-left)
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: Text(
-            ayah.arabicText,
-            textAlign: TextAlign.right,
-            style: const TextStyle(
-              fontFamily: 'Amiri',
-              fontSize: 26,
-              height: 1.9,
-              color: AppColors.textPrimary,
-            ),
-          ),
-        ),
-
-        // English translation
-        if (showTranslation && ayah.translation != null) ...[
-          const SizedBox(height: 10),
-          Text(
-            ayah.translation!,
-            style: const TextStyle(
-              fontSize: 13,
-              height: 1.6,
-              color: AppColors.textSecondary,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-class _AyahBadge extends StatelessWidget {
-  final int number;
-  const _AyahBadge({required this.number});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: AppColors.gold.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: AppColors.gold.withValues(alpha: 0.25)),
-      ),
-      child: Text(
-        '$number',
-        style: const TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-          color: AppColors.gold,
-        ),
-      ),
-    );
-  }
-}
-
-// ── Empty state ────────────────────────────────────────────────────────────────
-
-class _EmptyAyahs extends StatelessWidget {
-  final int surahNumber;
-  const _EmptyAyahs({required this.surahNumber});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.menu_book_outlined,
-              size: 56, color: AppColors.gold.withValues(alpha: 0.3)),
-          const SizedBox(height: 20),
-          const Text(
-            'Ayahs not in stub dataset',
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Download the full quran_simple.json from tanzil.net\n'
-            'and replace assets/quran/quran_simple.json',
-            style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-}

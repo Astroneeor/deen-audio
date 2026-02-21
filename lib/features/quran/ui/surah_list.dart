@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../shared/widgets/shimmer_box.dart';
 import '../providers/quran_providers.dart';
 
 /// Left panel: scrollable list of all 114 surahs.
@@ -53,10 +54,7 @@ class SurahList extends ConsumerWidget {
                 );
               },
             ),
-            loading: () => const Center(
-              child: CircularProgressIndicator(
-                  color: AppColors.gold, strokeWidth: 2),
-            ),
+            loading: () => const _SurahListSkeleton(),
             error: (e, _) => Center(
               child: Text('Error: $e',
                   style: const TextStyle(color: AppColors.error)),
@@ -64,6 +62,40 @@ class SurahList extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+// ── Loading skeleton ──────────────────────────────────────────────────────────
+
+class _SurahListSkeleton extends StatelessWidget {
+  const _SurahListSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemCount: 12,
+      itemBuilder: (_, __) => const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        child: Row(
+          children: [
+            ShimmerBox(width: 28, height: 12),
+            SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ShimmerBox(width: 90, height: 14),
+                  SizedBox(height: 5),
+                  ShimmerBox(width: 120, height: 10),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

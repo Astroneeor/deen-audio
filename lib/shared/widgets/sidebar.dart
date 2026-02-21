@@ -107,24 +107,37 @@ class Sidebar extends StatelessWidget {
   }
 
   Widget _buildSettingsButton(BuildContext context) {
+    final location = GoRouterState.of(context).uri.path;
+    final isActive = location.startsWith(AppRoutes.settings);
     return InkWell(
-      onTap: () {
-        // Settings — Phase 5
-      },
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
-          children: [
-            Icon(Icons.settings_outlined, size: 18, color: AppColors.textMuted),
-            SizedBox(width: 12),
-            Text(
-              'Settings',
-              style: TextStyle(
-                color: AppColors.textMuted,
-                fontSize: 13,
+      onTap: () => context.go(AppRoutes.settings),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        color: isActive
+            ? AppColors.gold.withValues(alpha: 0.08)
+            : Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              Icon(Icons.settings_outlined,
+                  size: 18,
+                  color:
+                      isActive ? AppColors.gold : AppColors.textMuted),
+              const SizedBox(width: 12),
+              Text(
+                'Settings',
+                style: TextStyle(
+                  color:
+                      isActive ? AppColors.gold : AppColors.textMuted,
+                  fontSize: 13,
+                  fontWeight: isActive
+                      ? FontWeight.w600
+                      : FontWeight.normal,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
