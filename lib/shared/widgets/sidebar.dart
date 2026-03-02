@@ -37,6 +37,12 @@ const _navItems = [
     activeIcon: Icons.auto_awesome,
     route: AppRoutes.adhkar,
   ),
+  _NavItem(
+    label: 'Prayer',
+    icon: Icons.mosque_outlined,
+    activeIcon: Icons.mosque,
+    route: AppRoutes.prayer,
+  ),
 ];
 
 /// Left navigation sidebar — 220px wide, dark background.
@@ -122,18 +128,15 @@ class Sidebar extends StatelessWidget {
             children: [
               Icon(Icons.settings_outlined,
                   size: 18,
-                  color:
-                      isActive ? AppColors.gold : AppColors.textMuted),
+                  color: isActive ? AppColors.gold : AppColors.textMuted),
               const SizedBox(width: 12),
               Text(
                 'Settings',
                 style: TextStyle(
-                  color:
-                      isActive ? AppColors.gold : AppColors.textMuted,
+                  color: isActive ? AppColors.gold : AppColors.textMuted,
                   fontSize: 13,
-                  fontWeight: isActive
-                      ? FontWeight.w600
-                      : FontWeight.normal,
+                  fontWeight:
+                      isActive ? FontWeight.w600 : FontWeight.normal,
                 ),
               ),
             ],
@@ -165,7 +168,7 @@ class _SidebarItem extends StatelessWidget {
               : Colors.transparent,
           borderRadius: BorderRadius.circular(6),
           border: isActive
-              ? Border(
+              ? const Border(
                   left: BorderSide(color: AppColors.gold, width: 2),
                 )
               : const Border(

@@ -2,55 +2,109 @@
   {
     "id": 1,
     "title": "Ayat al-Kursi",
-    "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ",
-    "transliteration": "Allahu la ilaha illa huwa al-Hayyul-Qayyum, la ta'khudhuhu sinatun wa la nawm",
-    "translation": "Allah – there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep.",
+    "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ",
+    "transliteration": "Allahu la ilaha illa Huwal-Hayyul-Qayyum. La ta'khudhuhu sinatun wa la nawm. Lahu ma fis-samawati wa ma fil-ard. Man dhal-ladhi yashfa'u 'indahu illa bi-idhnih.",
+    "translation": "Allah — there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission?",
     "count": 1,
-    "reference": "Al-Baqarah 2:255"
+    "reference": "Al-Baqarah 2:255 — Hisnul Muslim #100"
   },
   {
     "id": 2,
     "title": "Al-Ikhlas, Al-Falaq & An-Naas",
     "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
-    "transliteration": "Qul huwa Allahu ahad. Allahu as-samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.",
-    "translation": "Say: He is Allah, [who is] One, Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent.",
+    "transliteration": "Qul huwa Allahu Ahad. Allahus-Samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.",
+    "translation": "Say: He is Allah, [who is] One. Allah, the Eternal Refuge. He neither begets nor is born, nor is there to Him any equivalent. (Recite Al-Ikhlas, Al-Falaq and An-Naas × 3 each.)",
     "count": 3,
-    "reference": "Al-Ikhlas 112:1-4 (recite each surah 3×)"
+    "reference": "Abu Dawud 4/317, At-Tirmidhi 5/567 — Hisnul Muslim #98"
   },
   {
     "id": 3,
-    "title": "Morning supplication",
-    "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
-    "transliteration": "Asbahna wa asbahal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la sharika lah",
-    "translation": "We have reached the morning and at this very time unto Allah belongs all sovereignty; all praise is for Allah. None has the right to be worshipped except Allah, alone, without partner.",
+    "title": "Morning greeting",
+    "arabic": "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+    "transliteration": "Asbahna wa asbahal-mulku lillah, walhamdu lillah, la ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd, wa Huwa 'ala kulli shay'in Qadir.",
+    "translation": "We have reached the morning and at this very time unto Allah belongs all sovereignty; all praise is for Allah. None has the right to be worshipped except Allah, alone, without partner, to Him belongs all sovereignty and praise, and He is able to do all things.",
     "count": 1,
-    "reference": "Abu Dawud 4/317"
+    "reference": "Abu Dawud 4/317 — Hisnul Muslim #67"
   },
   {
     "id": 4,
-    "title": "Sayyid al-Istighfar",
-    "arabic": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ",
-    "transliteration": "Allahumma anta Rabbi la ilaha illa ant, khalaqtani wa ana abduk, wa ana ala ahdika wa wa'dika mastata't",
-    "translation": "O Allah, You are my Lord, none has the right to be worshipped except You, You created me and I am Your servant and I abide to Your covenant and promise as best I can.",
+    "title": "Allahumma bika asbahna",
+    "arabic": "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ",
+    "transliteration": "Allahumma bika asbahna, wa bika amsayna, wa bika nahya, wa bika namutu, wa ilayka-n-nushur.",
+    "translation": "O Allah, by You we enter the morning and by You we enter the evening, by You we live and by You we die, and to You is the resurrection.",
     "count": 1,
-    "reference": "Al-Bukhari 7/150"
+    "reference": "At-Tirmidhi 5/466 — Hisnul Muslim #68"
   },
   {
     "id": 5,
-    "title": "Seeking refuge from the Shaytaan",
-    "arabic": "أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
-    "transliteration": "A'udhu billahi minash-shaytanir-rajim",
-    "translation": "I seek refuge in Allah from the accursed Satan.",
-    "count": 3,
-    "reference": "Hisnul Muslim"
+    "title": "Sayyid al-Istighfar",
+    "arabic": "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+    "transliteration": "Allahumma anta Rabbi la ilaha illa ant, khalaqtani wa ana abduk, wa ana 'ala ahdika wa wa'dika mastata't, a'udhu bika min sharri ma sana't, abu'u laka bini'matika 'alayya, wa abu'u bidhanbi faghfir li fa innahu la yaghfiru adh-dhunuba illa ant.",
+    "translation": "O Allah, You are my Lord, none has the right to be worshipped except You. You created me and I am Your servant, and I abide by Your covenant and promise as best I can. I seek refuge in You from the evil of what I have done. I acknowledge Your favour upon me, and I confess my sin — so forgive me, for none forgives sins except You.",
+    "count": 1,
+    "reference": "Al-Bukhari 7/150 — Hisnul Muslim #76"
   },
   {
     "id": 6,
-    "title": "Tasbeeh",
+    "title": "Seeking refuge from creation",
+    "arabic": "أَعُوذُ بِكَلِمَاتِ اللهِ التَّامَّاتِ مِن شَرِّ مَا خَلَقَ",
+    "transliteration": "A'udhu bikalimatillahit-tammat, min sharri ma khalaq.",
+    "translation": "I seek refuge in the perfect words of Allah from the evil of what He has created.",
+    "count": 3,
+    "reference": "Muslim 4/2081 — Hisnul Muslim #82"
+  },
+  {
+    "id": 7,
+    "title": "Protection from harm (Bismillah)",
+    "arabic": "بِسْمِ اللهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+    "transliteration": "Bismillahil-ladhi la yadurru ma'asmihi shay'un fil-ardi wa la fis-sama'i wa huwas-sami'ul-'alim.",
+    "translation": "In the name of Allah with whose name nothing is harmed on earth nor in the heavens, and He is the All-Hearing, the All-Knowing.",
+    "count": 3,
+    "reference": "Abu Dawud 4/323, At-Tirmidhi 5/465 — Hisnul Muslim #83"
+  },
+  {
+    "id": 8,
+    "title": "Raditu billahi Rabban",
+    "arabic": "رَضِيتُ بِاللهِ رَبًّا، وَبِالإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ صلى الله عليه وسلم نَبِيًّا",
+    "transliteration": "Raditu billahi Rabban, wa bil-Islami dinan, wa bi-Muhammadin sallallahu 'alayhi wa sallam nabiyyan.",
+    "translation": "I am pleased with Allah as my Lord, with Islam as my religion, and with Muhammad (peace be upon him) as my Prophet.",
+    "count": 3,
+    "reference": "Abu Dawud 4/318, At-Tirmidhi 5/465 — Hisnul Muslim #84"
+  },
+  {
+    "id": 9,
+    "title": "Tahleel — ten times",
+    "arabic": "لَا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+    "transliteration": "La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamd, wa Huwa 'ala kulli shay'in Qadir.",
+    "translation": "None has the right to be worshipped except Allah, alone, without partner. To Him belongs all sovereignty and praise, and He is able to do all things.",
+    "count": 10,
+    "reference": "Al-Bukhari 4/95, Muslim 4/2071 — Hisnul Muslim #71"
+  },
+  {
+    "id": 10,
+    "title": "Seeking well-being",
+    "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي الدُّنْيَا وَالآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي",
+    "transliteration": "Allahumma inni as'alukal-'afwa wal-'afiyata fid-dunya wal-akhira. Allahumma inni as'alukal-'afwa wal-'afiyata fi dini wa dunyaya wa ahli wa mali.",
+    "translation": "O Allah, I ask You for pardon and well-being in this life and the next. O Allah, I ask You for pardon and well-being in my religion, my worldly affairs, my family, and my wealth.",
+    "count": 1,
+    "reference": "Ibn Majah 2/332, Abu Dawud — Hisnul Muslim #75"
+  },
+  {
+    "id": 11,
+    "title": "Yaa Hayyu Yaa Qayyoom",
+    "arabic": "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ",
+    "transliteration": "Ya Hayyu ya Qayyum, bi-rahmatika astaghith, aslih li sha'ni kullahu wa la takilni ila nafsi tarfata 'ayn.",
+    "translation": "O Ever-Living One, O Sustainer of all, by Your mercy I seek help. Rectify all of my affairs and do not leave me in charge of my affairs even for a blink of an eye.",
+    "count": 1,
+    "reference": "Al-Hakim, graded Hasan by Al-Albani — Hisnul Muslim #100"
+  },
+  {
+    "id": 12,
+    "title": "SubhanAllah wa bihamdih",
     "arabic": "سُبْحَانَ اللهِ وَبِحَمْدِهِ",
-    "transliteration": "SubhanAllahi wa bihamdih",
+    "transliteration": "SubhanAllahi wa bihamdih.",
     "translation": "Glory be to Allah and praise Him.",
     "count": 100,
-    "reference": "Al-Bukhari 7/168"
+    "reference": "Al-Bukhari 7/168, Muslim 4/2071 — Hisnul Muslim #73"
   }
 ]

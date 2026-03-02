@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../features/library/providers/library_providers.dart';
 import '../providers/settings_providers.dart';
+import 'font_size_tile.dart';
 
-/// Settings screen — library folder, Quran font size, and app info.
+/// Settings screen — library folder, prayer location, Quran font size, about.
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -20,15 +21,15 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 28),
 
           // ── Library ─────────────────────────────────────────────────────────
-          _section('Library', [
-            _LibraryFolderTile(),
-          ]),
+          _section('Library', [_LibraryFolderTile()]),
+          const SizedBox(height: 24),
+
+          // ── Prayer ──────────────────────────────────────────────────────────
+          _section('Prayer Times', [const _LocationTile()]),
           const SizedBox(height: 24),
 
           // ── Quran ───────────────────────────────────────────────────────────
-          _section('Quran', [
-            _FontSizeTile(),
-          ]),
+          _section('Quran', [const FontSizeTile()]),
           const SizedBox(height: 24),
 
           // ── About ────────────────────────────────────────────────────────────
@@ -76,8 +77,11 @@ class SettingsScreen extends ConsumerWidget {
               for (int i = 0; i < children.length; i++) ...[
                 children[i],
                 if (i < children.length - 1)
-                  const Divider(height: 1, color: AppColors.divider,
-                      indent: 16, endIndent: 16),
+                  const Divider(
+                      height: 1,
+                      color: AppColors.divider,
+                      indent: 16,
+                      endIndent: 16),
               ],
             ],
           ),
@@ -142,13 +146,12 @@ class _LibraryFolderTile extends ConsumerWidget {
           TextButton(
             onPressed: scanState.isLoading
                 ? null
-                : () => ref
-                    .read(scanNotifierProvider.notifier)
-                    .pickAndScan(),
+                : () =>
+                    ref.read(scanNotifierProvider.notifier).pickAndScan(),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.gold,
-              textStyle:
-                  const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+              textStyle: const TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.w500),
             ),
             child: Text(folder != null ? 'Rescan' : 'Choose folder'),
           ),
@@ -158,60 +161,170 @@ class _LibraryFolderTile extends ConsumerWidget {
   }
 }
 
-// ── Font size tile ────────────────────────────────────────────────────────────
+// ── Location tile ─────────────────────────────────────────────────────────────
 
-class _FontSizeTile extends ConsumerWidget {
+class _LocationTile extends ConsumerStatefulWidget {
+  const _LocationTile();
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final fontSize = ref.watch(quranFontSizeProvider);
+  ConsumerState<_LocationTile> createState() => _LocationTileState();
+}
+
+class _LocationTileState extends ConsumerState<_LocationTile> {
+  late final TextEditingController _latCtrl;
+  late final TextEditingController _lngCtrl;
+  String? _error;
+
+  static const _methods = [
+    ('muslimWorldLeague', 'Muslim World League'),
+    ('northAmerica', 'North America (ISNA)'),
+    ('egyptian', 'Egyptian General Authority'),
+    ('karachi', 'University of Islamic Sciences, Karachi'),
+    ('ummAlQura', 'Umm al-Qura (Makkah)'),
+    ('kuwait', 'Kuwait'),
+    ('qatar', 'Qatar'),
+    ('singapore', 'Singapore'),
+    ('turkey', 'Turkey'),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    final loc = ref.read(locationSettingsProvider);
+    _latCtrl = TextEditingController(
+        text: loc.latitude?.toStringAsFixed(4) ?? '');
+    _lngCtrl = TextEditingController(
+        text: loc.longitude?.toStringAsFixed(4) ?? '');
+  }
+
+  @override
+  void dispose() {
+    _latCtrl.dispose();
+    _lngCtrl.dispose();
+    super.dispose();
+  }
+
+  void _save() {
+    final lat = double.tryParse(_latCtrl.text.trim());
+    final lng = double.tryParse(_lngCtrl.text.trim());
+    if (lat == null ||
+        lng == null ||
+        lat < -90 ||
+        lat > 90 ||
+        lng < -180 ||
+        lng > 180) {
+      setState(
+          () => _error = 'Enter valid coordinates (lat −90–90, lng −180–180)');
+      return;
+    }
+    setState(() => _error = null);
+    ref.read(locationSettingsProvider.notifier).setLocation(lat, lng);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = ref.watch(locationSettingsProvider);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.text_fields_outlined,
-                  color: AppColors.textSecondary, size: 18),
-              const SizedBox(width: 12),
-              const Text('Quran font size',
-                  style:
-                      TextStyle(color: AppColors.textPrimary, fontSize: 14)),
-              const Spacer(),
-              Text(
-                '${fontSize.round()}px',
-                style: const TextStyle(
-                    color: AppColors.gold,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
-          Slider(
-            value: fontSize,
-            min: 18,
-            max: 48,
-            divisions: 30,
-            activeColor: AppColors.gold,
-            inactiveColor: AppColors.surfaceVariant,
-            onChanged: (v) =>
-                ref.read(quranFontSizeProvider.notifier).set(v),
-          ),
-          // Preview
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: Text(
-              'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',
-              style: TextStyle(
-                fontFamily: 'Amiri',
-                fontSize: fontSize,
-                color: AppColors.textPrimary.withValues(alpha: 0.6),
-                height: 1.8,
+          // Label row
+          const Row(children: [
+            Icon(Icons.location_on_outlined,
+                color: AppColors.textSecondary, size: 18),
+            SizedBox(width: 12),
+            Text('Prayer location',
+                style:
+                    TextStyle(color: AppColors.textPrimary, fontSize: 14)),
+          ]),
+          const SizedBox(height: 10),
+
+          // Lat / Lng inputs + Save
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(child: _coordField('Latitude', _latCtrl, '21.3891')),
+            const SizedBox(width: 10),
+            Expanded(child: _coordField('Longitude', _lngCtrl, '39.8579')),
+            const SizedBox(width: 10),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: ElevatedButton(
+                onPressed: _save,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.gold,
+                  foregroundColor: AppColors.background,
+                  textStyle: const TextStyle(
+                      fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+                child: const Text('Save'),
               ),
             ),
-          ),
+          ]),
+
+          if (_error != null) ...[
+            const SizedBox(height: 4),
+            Text(_error!,
+                style: const TextStyle(
+                    color: AppColors.error, fontSize: 11)),
+          ],
+
+          const SizedBox(height: 10),
+          // Calculation method dropdown
+          Row(children: [
+            const Text('Method:',
+                style: TextStyle(
+                    color: AppColors.textSecondary, fontSize: 13)),
+            const SizedBox(width: 10),
+            DropdownButton<String>(
+              value: loc.calculationMethod,
+              dropdownColor: AppColors.surface,
+              style: const TextStyle(
+                  color: AppColors.textPrimary, fontSize: 13),
+              underline: const SizedBox(),
+              onChanged: (v) {
+                if (v != null) {
+                  ref
+                      .read(locationSettingsProvider.notifier)
+                      .setMethod(v);
+                }
+              },
+              items: _methods
+                  .map((m) => DropdownMenuItem(
+                      value: m.$1,
+                      child: Text(m.$2)))
+                  .toList(),
+            ),
+          ]),
         ],
+      ),
+    );
+  }
+
+  Widget _coordField(
+      String label, TextEditingController ctrl, String hint) {
+    return TextField(
+      controller: ctrl,
+      keyboardType:
+          const TextInputType.numberWithOptions(decimal: true, signed: true),
+      style: const TextStyle(color: AppColors.textPrimary, fontSize: 13),
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle:
+            const TextStyle(color: AppColors.textMuted, fontSize: 12),
+        hintText: hint,
+        hintStyle: const TextStyle(color: AppColors.textMuted, fontSize: 12),
+        isDense: true,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: AppColors.border),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: AppColors.gold),
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/models/ayah.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_fonts.dart';
 
 /// A single ayah row: number badge, bookmark toggle, Arabic text, translation.
 class AyahTile extends StatelessWidget {
@@ -51,7 +52,7 @@ class AyahTile extends StatelessWidget {
             ayah.arabicText,
             textAlign: TextAlign.right,
             style: TextStyle(
-              fontFamily: 'Amiri',
+              fontFamily: AppFonts.quranText,
               fontSize: fontSize,
               height: 1.9,
               color: AppColors.textPrimary,

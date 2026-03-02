@@ -8,7 +8,7 @@ class Dhikr {
   final String title;
   final String arabic;
   final String? transliteration;
-  final String translation;
+  final String? translation; // optional — some sources are Arabic-only
   final int count;
   final String? reference;
 
@@ -17,18 +17,18 @@ class Dhikr {
     required this.title,
     required this.arabic,
     this.transliteration,
-    required this.translation,
+    this.translation,
     required this.count,
     this.reference,
   });
 
   factory Dhikr.fromJson(Map<String, dynamic> m) => Dhikr(
-        id: m['id'] as int,
+        id: (m['id'] as num?)?.toInt() ?? 0,
         title: m['title'] as String,
         arabic: m['arabic'] as String,
         transliteration: m['transliteration'] as String?,
-        translation: m['translation'] as String,
-        count: m['count'] as int,
+        translation: m['translation'] as String?,
+        count: (m['count'] as num?)?.toInt() ?? 1,
         reference: m['reference'] as String?,
       );
 }

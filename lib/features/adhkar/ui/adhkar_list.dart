@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_fonts.dart';
 import '../data/adhkar_repository.dart';
 import '../../../shared/widgets/shimmer_box.dart';
 
@@ -93,7 +94,7 @@ class _DhikrCard extends StatelessWidget {
               dhikr.arabic,
               textAlign: TextAlign.right,
               style: const TextStyle(
-                fontFamily: 'Amiri',
+                fontFamily: AppFonts.quranText,
                 fontSize: 20,
                 height: 1.9,
                 color: AppColors.textPrimary,
@@ -115,16 +116,18 @@ class _DhikrCard extends StatelessWidget {
             ),
           ],
 
-          // Translation
-          const SizedBox(height: 6),
-          Text(
-            dhikr.translation,
-            style: const TextStyle(
-              fontSize: 13,
-              height: 1.55,
-              color: AppColors.textSecondary,
+          // Translation (optional — Arabic-only sources have no translation)
+          if (dhikr.translation != null) ...[
+            const SizedBox(height: 6),
+            Text(
+              dhikr.translation!,
+              style: const TextStyle(
+                fontSize: 13,
+                height: 1.55,
+                color: AppColors.textSecondary,
+              ),
             ),
-          ),
+          ],
 
           // Reference
           if (dhikr.reference != null) ...[

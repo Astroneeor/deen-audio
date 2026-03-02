@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_fonts.dart';
 import '../../../shared/widgets/shimmer_box.dart';
 import '../providers/quran_providers.dart';
 
@@ -169,7 +170,7 @@ class _SurahTile extends StatelessWidget {
                             : AppColors.textPrimary,
                         // Download Amiri-Regular.ttf to assets/fonts/ and
                         // declare it in pubspec.yaml to enable Amiri font.
-                        fontFamily: 'Amiri',
+                        fontFamily: AppFonts.quranText,
                       ),
                     ),
                     Text(

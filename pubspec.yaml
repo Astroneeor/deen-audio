@@ -38,6 +38,9 @@ dependencies:
   rxdart: ^0.28.0
   path: ^1.9.0
 
+  # Prayer times
+  adhan: ^2.0.0+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
