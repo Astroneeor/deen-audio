@@ -11,14 +11,9 @@ final prayerTimesProvider = Provider<PrayerTimes?>((ref) {
 
   final coords = Coordinates(loc.latitude!, loc.longitude!);
   final params = _calcParams(loc.calculationMethod);
-  final utcOffset = UtcOffset(DateTime.now().timeZoneOffset);
 
   try {
-    return PrayerTimes.today(
-      coords,
-      utcOffset,
-      calculationParameters: params,
-    );
+    return PrayerTimes.today(coords, params);
   } catch (_) {
     return null;
   }
@@ -37,23 +32,23 @@ final qiblahDirectionProvider = Provider<double?>((ref) {
 CalculationParameters _calcParams(String method) {
   switch (method) {
     case 'northAmerica':
-      return CalculationMethod.northAmerica().getParameters();
+      return CalculationMethod.north_america.getParameters();
     case 'egyptian':
-      return CalculationMethod.egyptian().getParameters();
+      return CalculationMethod.egyptian.getParameters();
     case 'karachi':
-      return CalculationMethod.karachi().getParameters();
+      return CalculationMethod.karachi.getParameters();
     case 'ummAlQura':
-      return CalculationMethod.ummAlQura().getParameters();
+      return CalculationMethod.umm_al_qura.getParameters();
     case 'kuwait':
-      return CalculationMethod.kuwait().getParameters();
+      return CalculationMethod.kuwait.getParameters();
     case 'qatar':
-      return CalculationMethod.qatar().getParameters();
+      return CalculationMethod.qatar.getParameters();
     case 'singapore':
-      return CalculationMethod.singapore().getParameters();
+      return CalculationMethod.singapore.getParameters();
     case 'turkey':
-      return CalculationMethod.turkey().getParameters();
+      return CalculationMethod.turkish.getParameters();
     case 'muslimWorldLeague':
     default:
-      return CalculationMethod.muslimWorldLeague().getParameters();
+      return CalculationMethod.muslim_world_league.getParameters();
   }
 }
