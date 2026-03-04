@@ -16,3 +16,8 @@ final morningAdhkarProvider = FutureProvider<List<Dhikr>>((ref) {
 final eveningAdhkarProvider = FutureProvider<List<Dhikr>>((ref) {
   return ref.watch(adhkarRepositoryProvider).loadEvening();
 });
+
+/// All azkar categories loaded from assets/adhkar/azkar_obj.json.
+final azkarCategoriesProvider = FutureProvider<List<AzkarCategory>>((ref) {
+  return ref.watch(adhkarRepositoryProvider).loadAllCategories();
+});

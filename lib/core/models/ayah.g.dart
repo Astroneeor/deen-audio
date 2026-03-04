@@ -36,6 +36,11 @@ const AyahSchema = CollectionSchema(
       id: 3,
       name: r'translation',
       type: IsarType.string,
+    ),
+    r'transliteration': PropertySchema(
+      id: 4,
+      name: r'transliteration',
+      type: IsarType.string,
     )
   },
   estimateSize: _ayahEstimateSize,
@@ -84,6 +89,12 @@ int _ayahEstimateSize(
       bytesCount += 3 + value.length * 3;
     }
   }
+  {
+    final value = object.transliteration;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -97,6 +108,7 @@ void _ayahSerialize(
   writer.writeLong(offsets[1], object.ayahNumber);
   writer.writeLong(offsets[2], object.surahNumber);
   writer.writeString(offsets[3], object.translation);
+  writer.writeString(offsets[4], object.transliteration);
 }
 
 Ayah _ayahDeserialize(
@@ -111,6 +123,7 @@ Ayah _ayahDeserialize(
   object.id = id;
   object.surahNumber = reader.readLong(offsets[2]);
   object.translation = reader.readStringOrNull(offsets[3]);
+  object.transliteration = reader.readStringOrNull(offsets[4]);
   return object;
 }
 
@@ -128,6 +141,8 @@ P _ayahDeserializeProp<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
+      return (reader.readStringOrNull(offset)) as P;
+    case 4:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -849,6 +864,152 @@ extension AyahQueryFilter on QueryBuilder<Ayah, Ayah, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'transliteration',
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'transliteration',
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'transliteration',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'transliteration',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'transliteration',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'transliteration',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'transliteration',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'transliteration',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'transliteration',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'transliteration',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'transliteration',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterFilterCondition> transliterationIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'transliteration',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension AyahQueryObject on QueryBuilder<Ayah, Ayah, QFilterCondition> {}
@@ -901,6 +1062,18 @@ extension AyahQuerySortBy on QueryBuilder<Ayah, Ayah, QSortBy> {
   QueryBuilder<Ayah, Ayah, QAfterSortBy> sortByTranslationDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'translation', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterSortBy> sortByTransliteration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'transliteration', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterSortBy> sortByTransliterationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'transliteration', Sort.desc);
     });
   }
 }
@@ -965,6 +1138,18 @@ extension AyahQuerySortThenBy on QueryBuilder<Ayah, Ayah, QSortThenBy> {
       return query.addSortBy(r'translation', Sort.desc);
     });
   }
+
+  QueryBuilder<Ayah, Ayah, QAfterSortBy> thenByTransliteration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'transliteration', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QAfterSortBy> thenByTransliterationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'transliteration', Sort.desc);
+    });
+  }
 }
 
 extension AyahQueryWhereDistinct on QueryBuilder<Ayah, Ayah, QDistinct> {
@@ -991,6 +1176,14 @@ extension AyahQueryWhereDistinct on QueryBuilder<Ayah, Ayah, QDistinct> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'translation', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Ayah, Ayah, QDistinct> distinctByTransliteration(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'transliteration',
+          caseSensitive: caseSensitive);
     });
   }
 }
@@ -1023,6 +1216,12 @@ extension AyahQueryProperty on QueryBuilder<Ayah, Ayah, QQueryProperty> {
   QueryBuilder<Ayah, String?, QQueryOperations> translationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'translation');
+    });
+  }
+
+  QueryBuilder<Ayah, String?, QQueryOperations> transliterationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'transliteration');
     });
   }
 }

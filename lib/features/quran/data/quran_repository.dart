@@ -21,15 +21,25 @@ class QuranRepository {
 
   // ── Seeding ───────────────────────────────────────────────────────────────
 
-  /// Returns true if Quran data is already in the database.
-  Future<bool> isSeeded() async => (await _isar.surahs.count()) > 0;
+  /// Returns true if Quran data is already in the database with
+  /// transliterations (schema v2). Forces re-seed when upgrading from old data.
+  Future<bool> isSeeded() async {
+    final surahCount = await _isar.surahs.count();
+    if (surahCount == 0) return false;
+    // Check if transliterations exist (new field from quran-json library)
+    final sample = await _isar.ayahs.where().findFirst();
+    return sample?.transliteration != null;
+  }
 
   /// Parses bundled JSON assets and inserts all Surahs + Ayahs into Isar.
+  /// Clears existing data first to handle schema upgrades cleanly.
   Future<void> seed() async {
     final surahs = await QuranJsonParser.loadSurahs();
     final ayahs = await QuranJsonParser.loadAyahs();
 
     await _isar.writeTxn(() async {
+      await _isar.surahs.clear();
+      await _isar.ayahs.clear();
       await _isar.surahs.putAll(surahs);
       await _isar.ayahs.putAll(ayahs);
     });

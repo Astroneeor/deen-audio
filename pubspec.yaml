@@ -56,3 +56,9 @@ flutter:
     - assets/quran/
     - assets/adhkar/
     - assets/fonts/
+  fonts:
+    - family: UthmanicHafs
+      fonts:
+        - asset: assets/fonts/UthmanicHafs1.ttf
+        - asset: assets/fonts/UthmanicHafs1B.ttf
+          weight: 700

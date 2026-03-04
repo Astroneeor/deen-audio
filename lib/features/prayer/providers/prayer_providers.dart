@@ -46,7 +46,7 @@ CalculationParameters _calcParams(String method) {
     case 'singapore':
       return CalculationMethod.singapore.getParameters();
     case 'turkey':
-      return CalculationMethod.turkish.getParameters();
+      return CalculationMethod.karachi.getParameters();
     case 'muslimWorldLeague':
     default:
       return CalculationMethod.muslim_world_league.getParameters();

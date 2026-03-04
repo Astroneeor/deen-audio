@@ -15,4 +15,6 @@ class Ayah {
   late String arabicText;
 
   String? translation;
+
+  String? transliteration;
 }

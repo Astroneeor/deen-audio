@@ -101,7 +101,7 @@ class _AppScaffoldState extends ConsumerState<AppScaffold> {
               ],
             ),
           ),
-          const PlayerBar(),
+          const ClipRect(child: PlayerBar()),
         ],
       ),
     );

@@ -117,7 +117,7 @@ class EmptyAyahsView extends StatelessWidget {
               size: 56, color: AppColors.gold.withValues(alpha: 0.3)),
           const SizedBox(height: 20),
           const Text(
-            'Ayahs not in stub dataset',
+            'No ayahs found',
             style: TextStyle(
               color: AppColors.textPrimary,
               fontSize: 16,
@@ -126,8 +126,7 @@ class EmptyAyahsView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Download the full quran_simple.json from tanzil.net\n'
-            'and replace assets/quran/quran_simple.json',
+            'Select a surah from the list to begin reading.',
             style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
             textAlign: TextAlign.center,
           ),

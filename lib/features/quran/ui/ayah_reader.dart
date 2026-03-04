@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/models/ayah.dart';
 import '../../../core/models/surah.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_fonts.dart';
 import '../../../features/settings/providers/settings_providers.dart';
 import '../providers/quran_providers.dart';
 import 'ayah_tile.dart';
@@ -113,7 +114,7 @@ class _Header extends ConsumerWidget {
                     surah.name,
                     textDirection: TextDirection.rtl,
                     style: const TextStyle(
-                      fontFamily: 'Amiri',
+                      fontFamily: AppFonts.quranText,
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
                       color: AppColors.gold,
