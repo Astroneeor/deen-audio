@@ -21,3 +21,8 @@ final eveningAdhkarProvider = FutureProvider<List<Dhikr>>((ref) {
 final azkarCategoriesProvider = FutureProvider<List<AzkarCategory>>((ref) {
   return ref.watch(adhkarRepositoryProvider).loadAllCategories();
 });
+
+/// Hisnul Muslim chapters with English translations.
+final hisnulMuslimProvider = FutureProvider<List<HisnulMuslimChapter>>((ref) {
+  return ref.watch(adhkarRepositoryProvider).loadHisnulMuslim();
+});

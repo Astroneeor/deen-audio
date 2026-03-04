@@ -16,7 +16,6 @@ class AdhkarScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final morningAsync = ref.watch(morningAdhkarProvider);
     final eveningAsync = ref.watch(eveningAdhkarProvider);
-    final categoriesAsync = ref.watch(azkarCategoriesProvider);
 
     return DefaultTabController(
       length: 3,
@@ -74,6 +73,49 @@ class AdhkarScreen extends ConsumerWidget {
               children: [
                 AdhkarList(adhkarAsync: morningAsync),
                 AdhkarList(adhkarAsync: eveningAsync),
+                const _BrowseTab(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Browse tab with sub-tabs: Translated (Hisnul Muslim) | Arabic (azkar-db)
+
+class _BrowseTab extends ConsumerWidget {
+  const _BrowseTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categoriesAsync = ref.watch(azkarCategoriesProvider);
+    final hisnulAsync = ref.watch(hisnulMuslimProvider);
+
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          const TabBar(
+            isScrollable: false,
+            tabs: [
+              Tab(text: 'Translated'),
+              Tab(text: 'Arabic'),
+            ],
+            indicatorColor: AppColors.gold,
+            labelColor: AppColors.gold,
+            unselectedLabelColor: AppColors.textMuted,
+            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            unselectedLabelStyle: TextStyle(fontSize: 12),
+            indicatorSize: TabBarIndicatorSize.label,
+            dividerColor: Colors.transparent,
+            indicatorWeight: 2,
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                _HisnulMuslimBrowser(chaptersAsync: hisnulAsync),
                 _AzkarBrowser(categoriesAsync: categoriesAsync),
               ],
             ),
@@ -84,7 +126,196 @@ class AdhkarScreen extends ConsumerWidget {
   }
 }
 
-/// Browse all azkar categories from azkar-db.
+// ── Hisnul Muslim (translated) browser ──────────────────────────────────────
+
+class _HisnulMuslimBrowser extends StatelessWidget {
+  final AsyncValue<List<HisnulMuslimChapter>> chaptersAsync;
+
+  const _HisnulMuslimBrowser({required this.chaptersAsync});
+
+  @override
+  Widget build(BuildContext context) {
+    return chaptersAsync.when(
+      data: (chapters) => chapters.isEmpty
+          ? const Center(
+              child: Text('No chapters found',
+                  style: TextStyle(color: AppColors.textSecondary)))
+          : ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: chapters.length,
+              itemBuilder: (_, i) =>
+                  _HisnulChapterTile(chapter: chapters[i]),
+            ),
+      loading: () => const Center(
+        child:
+            CircularProgressIndicator(color: AppColors.gold, strokeWidth: 2),
+      ),
+      error: (e, _) => Center(
+        child: Text('Error: $e',
+            style: const TextStyle(color: AppColors.error)),
+      ),
+    );
+  }
+}
+
+/// Expandable tile for a Hisnul Muslim chapter.
+class _HisnulChapterTile extends StatelessWidget {
+  final HisnulMuslimChapter chapter;
+
+  const _HisnulChapterTile({required this.chapter});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        childrenPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: const Border(),
+        collapsedShape: const Border(),
+        iconColor: AppColors.gold,
+        collapsedIconColor: AppColors.textMuted,
+        title: Text(
+          chapter.title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: AppColors.gold.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                '${chapter.duas.length}',
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.gold,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Icon(Icons.expand_more, size: 18),
+          ],
+        ),
+        children:
+            chapter.duas.map((dua) => _HisnulDuaCard(dua: dua)).toList(),
+      ),
+    );
+  }
+}
+
+/// A single dua card with Arabic + English translation.
+class _HisnulDuaCard extends StatelessWidget {
+  final HisnulMuslimDua dua;
+
+  const _HisnulDuaCard({required this.dua});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.divider),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Repeat badge
+          if (dua.repeat > 1)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: AppColors.gold.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(
+                          color: AppColors.gold.withValues(alpha: 0.3)),
+                    ),
+                    child: Text(
+                      '×${dua.repeat}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.gold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          // Arabic text
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: Text(
+              dua.arabic,
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                fontFamily: AppFonts.quranText,
+                fontSize: 18,
+                height: 1.9,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ),
+
+          // Arabic note (e.g. "Recite Ayat-Al-Kursiy")
+          if (dua.arabicNote != null && dua.arabicNote!.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              dua.arabicNote!,
+              style: const TextStyle(
+                fontSize: 12,
+                height: 1.5,
+                color: AppColors.textMuted,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
+
+          // English translation
+          if (dua.translation != null && dua.translation!.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text(
+              dua.translation!,
+              style: const TextStyle(
+                fontSize: 13,
+                height: 1.55,
+                color: AppColors.textSecondary,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// ── Arabic-only azkar-db browser ────────────────────────────────────────────
+
 class _AzkarBrowser extends StatelessWidget {
   final AsyncValue<List<AzkarCategory>> categoriesAsync;
 
