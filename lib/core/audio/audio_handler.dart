@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
 
 import '../models/track.dart';
@@ -42,12 +45,14 @@ class DeenAudioHandler extends BaseAudioHandler with SeekHandler {
   // ── Public API (called by AudioPlayerService) ─────────────────────────────
 
   Future<void> playTrack(Track track) async {
+    debugPrint('[Audio] playTrack: "${track.title}" | ${track.filePath}');
     _queue.setQueue([track]);
     await _loadCurrent();
     await _player.play();
   }
 
   Future<void> playQueue(List<Track> tracks, {int startIndex = 0}) async {
+    debugPrint('[Audio] playQueue: ${tracks.length} tracks, startIndex=$startIndex');
     _queue.setQueue(tracks, startIndex: startIndex);
     await _loadCurrent();
     await _player.play();
@@ -132,7 +137,17 @@ class DeenAudioHandler extends BaseAudioHandler with SeekHandler {
 
   Future<void> _loadCurrent() async {
     final track = _queue.state.currentTrack;
-    if (track == null) return;
+    if (track == null) {
+      debugPrint('[Audio] _loadCurrent: no current track');
+      return;
+    }
+    debugPrint('[Audio] _loadCurrent: "${track.title}" | ${track.filePath}');
+    final exists = File(track.filePath).existsSync();
+    debugPrint('[Audio] File exists: $exists');
+    if (!exists) {
+      debugPrint('[Audio] WARNING: file not found — skipping load');
+      return;
+    }
     final src = await LocalTrackSource(track.filePath).toAudioSource();
     await _player.setAudioSource(src);
     mediaItem.add(_toMediaItem(track));

@@ -32,9 +32,17 @@ class TrackListTile extends ConsumerWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => ref
-            .read(audioPlayerServiceProvider)
-            .playQueue(queue, startIndex: index),
+        onTap: () {
+          debugPrint(
+            '[TrackTap] "${track.title}" | path: ${track.filePath}',
+          );
+          ref
+              .read(audioPlayerServiceProvider)
+              .playQueue(queue, startIndex: index)
+              .catchError((Object e, StackTrace st) {
+            debugPrint('[TrackTap] playQueue error: $e\n$st');
+          });
+        },
         onLongPress: () => _showContextMenu(context, ref),
         borderRadius: BorderRadius.circular(4),
         child: Padding(

@@ -4,13 +4,17 @@ import '../../../core/models/ayah.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
 
-/// A single ayah row: number badge, bookmark toggle, Arabic text, translation.
+/// A single ayah row: number badge, audio play button (optional),
+/// bookmark toggle, Arabic text, translation.
 class AyahTile extends StatelessWidget {
   final Ayah ayah;
   final bool showTranslation;
   final double fontSize;
   final bool isBookmarked;
   final VoidCallback onBookmarkTap;
+
+  /// If non-null, an audio play button is shown and this callback fires on tap.
+  final VoidCallback? onPlayTap;
 
   const AyahTile({
     super.key,
@@ -19,6 +23,7 @@ class AyahTile extends StatelessWidget {
     required this.fontSize,
     required this.isBookmarked,
     required this.onBookmarkTap,
+    this.onPlayTap,
   });
 
   @override
@@ -26,20 +31,34 @@ class AyahTile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Ayah number + bookmark row
+        // Ayah number + action buttons row
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _AyahBadge(number: ayah.ayahNumber),
-            IconButton(
-              onPressed: onBookmarkTap,
-              icon: Icon(
-                isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-              ),
-              color: isBookmarked ? AppColors.gold : AppColors.textMuted,
-              iconSize: 16,
-              splashRadius: 14,
-              tooltip: isBookmarked ? 'Remove bookmark' : 'Bookmark ayah',
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (onPlayTap != null)
+                  IconButton(
+                    onPressed: onPlayTap,
+                    icon: const Icon(Icons.play_circle_outline),
+                    color: AppColors.gold,
+                    iconSize: 16,
+                    splashRadius: 14,
+                    tooltip: 'Play this ayah',
+                  ),
+                IconButton(
+                  onPressed: onBookmarkTap,
+                  icon: Icon(
+                    isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                  ),
+                  color: isBookmarked ? AppColors.gold : AppColors.textMuted,
+                  iconSize: 16,
+                  splashRadius: 14,
+                  tooltip: isBookmarked ? 'Remove bookmark' : 'Bookmark ayah',
+                ),
+              ],
             ),
           ],
         ),

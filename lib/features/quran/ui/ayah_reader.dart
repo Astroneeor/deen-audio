@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/audio/audio_player_service.dart';
 import '../../../core/models/ayah.dart';
 import '../../../core/models/surah.dart';
+import '../../../core/models/track.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_fonts.dart';
 import '../../../features/settings/providers/settings_providers.dart';
@@ -180,6 +182,10 @@ class _AyahList extends ConsumerWidget {
     final bookmarkedAsync = ref.watch(bookmarkedAyahsProvider);
     final bookmarked = bookmarkedAsync.valueOrNull ?? {};
 
+    // Audio tracks for the current surah (empty list if none scanned).
+    final surahTracks =
+        ref.watch(currentSurahAudioProvider).valueOrNull ?? <Track>[];
+
     return NotificationListener<ScrollNotification>(
       onNotification: (n) {
         if (n is ScrollUpdateNotification && ayahs.isNotEmpty) {
@@ -202,6 +208,7 @@ class _AyahList extends ConsumerWidget {
         ),
         itemBuilder: (_, i) {
           final ayah = ayahs[i];
+          final playTap = _buildPlayCallback(ayah, surahTracks, ref);
           return AyahTile(
             ayah: ayah,
             showTranslation: showTranslation,
@@ -210,10 +217,47 @@ class _AyahList extends ConsumerWidget {
             onBookmarkTap: () => ref
                 .read(quranRepositoryProvider)
                 .toggleBookmark(ayah.surahNumber, ayah.ayahNumber),
+            onPlayTap: playTap,
           );
         },
       ),
     );
+  }
+
+  /// Returns a callback that plays the best available audio for [ayah], or
+  /// null if no audio files exist for this surah.
+  ///
+  /// Priority: per-ayah file > full-surah file.
+  VoidCallback? _buildPlayCallback(
+    Ayah ayah,
+    List<Track> surahTracks,
+    WidgetRef ref,
+  ) {
+    if (surahTracks.isEmpty) return null;
+
+    // Prefer a per-ayah file matching this exact ayah number.
+    final ayahFiles = surahTracks
+        .where((t) => t.isAyahFile && t.ayahNumber == ayah.ayahNumber)
+        .toList();
+    if (ayahFiles.isNotEmpty) {
+      return () => ref
+          .read(audioPlayerServiceProvider)
+          .playQueue(ayahFiles)
+          .catchError(
+              (Object e) => debugPrint('[AyahReader] audio error: $e'));
+    }
+
+    // Fallback: full-surah files (play from the beginning).
+    final fullFiles = surahTracks.where((t) => !t.isAyahFile).toList();
+    if (fullFiles.isNotEmpty) {
+      return () => ref
+          .read(audioPlayerServiceProvider)
+          .playQueue(fullFiles)
+          .catchError(
+              (Object e) => debugPrint('[AyahReader] audio error: $e'));
+    }
+
+    return null;
   }
 }
 

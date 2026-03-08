@@ -29,6 +29,17 @@ class LibraryRepository {
 
   Future<int> count() => _isar.tracks.count();
 
+  /// Returns all Quran tracks (full-surah and per-ayah) for a given surah,
+  /// specified as a zero-padded 3-digit string (e.g. "001", "114").
+  Future<List<Track>> getQuranTracksBySurah(String surahNumber) async {
+    final all = await _isar.tracks.where().findAll();
+    return all
+        .where(
+          (t) => t.type == TrackType.quran && t.surahNumber == surahNumber,
+        )
+        .toList();
+  }
+
   // ── Writes ────────────────────────────────────────────────────────────────
 
   /// Atomically clears the collection and inserts the new scan result.

@@ -4,6 +4,8 @@ import '../../../core/database/database_provider.dart';
 import '../../../core/models/ayah.dart';
 import '../../../core/models/bookmark.dart';
 import '../../../core/models/surah.dart';
+import '../../../core/models/track.dart';
+import '../../../features/library/providers/library_providers.dart';
 import '../data/quran_repository.dart';
 
 // ── Repository ────────────────────────────────────────────────────────────────
@@ -71,4 +73,21 @@ final bookmarkedAyahsProvider = FutureProvider<Set<int>>((ref) async {
 /// Last-read position loaded from disk at startup.
 final lastReadProvider = FutureProvider<({int surah, int ayah})>((ref) {
   return ref.watch(quranRepositoryProvider).getLastRead();
+});
+
+// ── Quran audio (library integration) ────────────────────────────────────────
+
+/// All Quran tracks from the user's library for the currently selected surah.
+/// Includes both full-surah files and per-ayah files.
+/// Returns an empty list when the library has no Quran audio for this surah.
+final currentSurahAudioProvider = Provider<AsyncValue<List<Track>>>((ref) {
+  final surahNumber = ref.watch(selectedSurahNumberProvider);
+  final surahStr = surahNumber.toString().padLeft(3, '0');
+  return ref.watch(tracksStreamProvider).whenData(
+        (tracks) => tracks
+            .where(
+              (t) => t.type == TrackType.quran && t.surahNumber == surahStr,
+            )
+            .toList(),
+      );
 });

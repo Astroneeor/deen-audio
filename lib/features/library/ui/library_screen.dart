@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/audio/audio_player_service.dart';
 import '../../../core/models/track.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/shimmer_box.dart';
@@ -16,6 +17,7 @@ class LibraryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final filteredAsync = ref.watch(filteredTracksProvider);
     final scanState = ref.watch(scanNotifierProvider);
+    final filter = ref.watch(trackTypeFilterProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +29,9 @@ class LibraryScreen extends ConsumerWidget {
           child: filteredAsync.when(
             data: (tracks) => tracks.isEmpty
                 ? _EmptyState(isScanning: scanState.isLoading)
-                : _TrackList(tracks: tracks),
+                : filter == TrackType.quran
+                    ? _QuranGroupedList(tracks: tracks)
+                    : _TrackList(tracks: tracks),
             loading: () => const _TrackListSkeleton(),
             error: (e, _) => Center(
               child: Text('Error loading library: $e',
@@ -229,6 +233,136 @@ class _EmptyState extends ConsumerWidget {
             label: const Text('Scan Folder'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ── Quran grouped view ────────────────────────────────────────────────────────
+
+/// Groups Quran tracks by surah number, then shows available reciters as
+/// expandable sub-items.  Per-ayah files are excluded from the top level
+/// (they play automatically from the Quran reader).
+class _QuranGroupedList extends StatelessWidget {
+  final List<Track> tracks;
+
+  const _QuranGroupedList({required this.tracks});
+
+  @override
+  Widget build(BuildContext context) {
+    // Only full-surah files drive the grouping; ayah files surface via reciter.
+    final surahTracks = tracks.where((t) => !t.isAyahFile).toList();
+
+    // Build: surahNumber → artist → tracks
+    final groups = <String, Map<String, List<Track>>>{};
+    for (final track in surahTracks) {
+      final surah = track.surahNumber ?? '???';
+      final artist = track.artist ?? 'Unknown';
+      groups.putIfAbsent(surah, () => {})[artist] ??= [];
+      groups[surah]![artist]!.add(track);
+    }
+
+    if (groups.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(32),
+          child: Text(
+            'No Quran audio found.\n\nPut surah MP3s in ~/HalalAudio/Quran/<ReciterName>/ and rescan.',
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    final sortedSurahs = groups.keys.toList()..sort();
+
+    return ListView.builder(
+      itemCount: sortedSurahs.length,
+      itemBuilder: (_, i) => _SurahGroup(
+        surahNumber: sortedSurahs[i],
+        reciters: groups[sortedSurahs[i]]!,
+      ),
+    );
+  }
+}
+
+class _SurahGroup extends ConsumerWidget {
+  final String surahNumber;
+  final Map<String, List<Track>> reciters;
+
+  const _SurahGroup({required this.surahNumber, required this.reciters});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Theme(
+      // Remove the default ExpansionTile dividers
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        leading: Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: AppColors.gold.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            // Show numeric surah number without leading zeros
+            '${int.tryParse(surahNumber) ?? surahNumber}',
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: AppColors.gold,
+            ),
+          ),
+        ),
+        title: Text(
+          'Surah $surahNumber',
+          style: const TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        subtitle: Text(
+          '${reciters.length} ${reciters.length == 1 ? 'reciter' : 'reciters'}',
+          style: const TextStyle(color: AppColors.textMuted, fontSize: 11),
+        ),
+        iconColor: AppColors.textMuted,
+        collapsedIconColor: AppColors.textMuted,
+        children: reciters.entries.map((entry) {
+          final artist = entry.key;
+          final reciterTracks = entry.value;
+          return ListTile(
+            contentPadding:
+                const EdgeInsets.only(left: 72, right: 16),
+            title: Text(
+              artist,
+              style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 13,
+              ),
+            ),
+            subtitle: Text(
+              '${reciterTracks.length} file${reciterTracks.length == 1 ? '' : 's'}',
+              style: const TextStyle(
+                color: AppColors.textMuted,
+                fontSize: 11,
+              ),
+            ),
+            trailing: const Icon(
+              Icons.play_circle_outline,
+              color: AppColors.gold,
+              size: 20,
+            ),
+            onTap: () => ref
+                .read(audioPlayerServiceProvider)
+                .playQueue(reciterTracks)
+                .catchError(
+                    (Object e) => debugPrint('[QuranGroup] play error: $e')),
+          );
+        }).toList(),
       ),
     );
   }

@@ -22,38 +22,48 @@ const TrackSchema = CollectionSchema(
       name: r'artist',
       type: IsarType.string,
     ),
-    r'duration': PropertySchema(
+    r'ayahNumber': PropertySchema(
       id: 1,
+      name: r'ayahNumber',
+      type: IsarType.long,
+    ),
+    r'duration': PropertySchema(
+      id: 2,
       name: r'duration',
       type: IsarType.long,
     ),
     r'filePath': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'filePath',
       type: IsarType.string,
     ),
+    r'isAyahFile': PropertySchema(
+      id: 4,
+      name: r'isAyahFile',
+      type: IsarType.bool,
+    ),
     r'isFavorite': PropertySchema(
-      id: 3,
+      id: 5,
       name: r'isFavorite',
       type: IsarType.bool,
     ),
     r'lastPlayed': PropertySchema(
-      id: 4,
+      id: 6,
       name: r'lastPlayed',
       type: IsarType.dateTime,
     ),
     r'surahNumber': PropertySchema(
-      id: 5,
+      id: 7,
       name: r'surahNumber',
       type: IsarType.string,
     ),
     r'title': PropertySchema(
-      id: 6,
+      id: 8,
       name: r'title',
       type: IsarType.string,
     ),
     r'type': PropertySchema(
-      id: 7,
+      id: 9,
       name: r'type',
       type: IsarType.byte,
       enumMap: _TracktypeEnumValueMap,
@@ -103,13 +113,15 @@ void _trackSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.artist);
-  writer.writeLong(offsets[1], object.duration);
-  writer.writeString(offsets[2], object.filePath);
-  writer.writeBool(offsets[3], object.isFavorite);
-  writer.writeDateTime(offsets[4], object.lastPlayed);
-  writer.writeString(offsets[5], object.surahNumber);
-  writer.writeString(offsets[6], object.title);
-  writer.writeByte(offsets[7], object.type.index);
+  writer.writeLong(offsets[1], object.ayahNumber);
+  writer.writeLong(offsets[2], object.duration);
+  writer.writeString(offsets[3], object.filePath);
+  writer.writeBool(offsets[4], object.isAyahFile);
+  writer.writeBool(offsets[5], object.isFavorite);
+  writer.writeDateTime(offsets[6], object.lastPlayed);
+  writer.writeString(offsets[7], object.surahNumber);
+  writer.writeString(offsets[8], object.title);
+  writer.writeByte(offsets[9], object.type.index);
 }
 
 Track _trackDeserialize(
@@ -120,14 +132,16 @@ Track _trackDeserialize(
 ) {
   final object = Track();
   object.artist = reader.readStringOrNull(offsets[0]);
-  object.duration = reader.readLong(offsets[1]);
-  object.filePath = reader.readString(offsets[2]);
+  object.ayahNumber = reader.readLongOrNull(offsets[1]);
+  object.duration = reader.readLong(offsets[2]);
+  object.filePath = reader.readString(offsets[3]);
   object.id = id;
-  object.isFavorite = reader.readBool(offsets[3]);
-  object.lastPlayed = reader.readDateTimeOrNull(offsets[4]);
-  object.surahNumber = reader.readStringOrNull(offsets[5]);
-  object.title = reader.readString(offsets[6]);
-  object.type = _TracktypeValueEnumMap[reader.readByteOrNull(offsets[7])] ??
+  object.isAyahFile = reader.readBool(offsets[4]);
+  object.isFavorite = reader.readBool(offsets[5]);
+  object.lastPlayed = reader.readDateTimeOrNull(offsets[6]);
+  object.surahNumber = reader.readStringOrNull(offsets[7]);
+  object.title = reader.readString(offsets[8]);
+  object.type = _TracktypeValueEnumMap[reader.readByteOrNull(offsets[9])] ??
       TrackType.quran;
   return object;
 }
@@ -142,18 +156,22 @@ P _trackDeserializeProp<P>(
     case 0:
       return (reader.readStringOrNull(offset)) as P;
     case 1:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
-    case 4:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    case 5:
-      return (reader.readStringOrNull(offset)) as P;
-    case 6:
       return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readBool(offset)) as P;
+    case 5:
+      return (reader.readBool(offset)) as P;
+    case 6:
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 7:
+      return (reader.readStringOrNull(offset)) as P;
+    case 8:
+      return (reader.readString(offset)) as P;
+    case 9:
       return (_TracktypeValueEnumMap[reader.readByteOrNull(offset)] ??
           TrackType.quran) as P;
     default:
@@ -407,6 +425,75 @@ extension TrackQueryFilter on QueryBuilder<Track, Track, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Track, Track, QAfterFilterCondition> ayahNumberIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'ayahNumber',
+      ));
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterFilterCondition> ayahNumberIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'ayahNumber',
+      ));
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterFilterCondition> ayahNumberEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'ayahNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterFilterCondition> ayahNumberGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'ayahNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterFilterCondition> ayahNumberLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'ayahNumber',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterFilterCondition> ayahNumberBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'ayahNumber',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Track, Track, QAfterFilterCondition> durationEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -637,6 +724,16 @@ extension TrackQueryFilter on QueryBuilder<Track, Track, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterFilterCondition> isAyahFileEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isAyahFile',
+        value: value,
       ));
     });
   }
@@ -1065,6 +1162,18 @@ extension TrackQuerySortBy on QueryBuilder<Track, Track, QSortBy> {
     });
   }
 
+  QueryBuilder<Track, Track, QAfterSortBy> sortByAyahNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayahNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterSortBy> sortByAyahNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayahNumber', Sort.desc);
+    });
+  }
+
   QueryBuilder<Track, Track, QAfterSortBy> sortByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.asc);
@@ -1086,6 +1195,18 @@ extension TrackQuerySortBy on QueryBuilder<Track, Track, QSortBy> {
   QueryBuilder<Track, Track, QAfterSortBy> sortByFilePathDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'filePath', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterSortBy> sortByIsAyahFile() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isAyahFile', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterSortBy> sortByIsAyahFileDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isAyahFile', Sort.desc);
     });
   }
 
@@ -1163,6 +1284,18 @@ extension TrackQuerySortThenBy on QueryBuilder<Track, Track, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Track, Track, QAfterSortBy> thenByAyahNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayahNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterSortBy> thenByAyahNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'ayahNumber', Sort.desc);
+    });
+  }
+
   QueryBuilder<Track, Track, QAfterSortBy> thenByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'duration', Sort.asc);
@@ -1196,6 +1329,18 @@ extension TrackQuerySortThenBy on QueryBuilder<Track, Track, QSortThenBy> {
   QueryBuilder<Track, Track, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterSortBy> thenByIsAyahFile() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isAyahFile', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Track, Track, QAfterSortBy> thenByIsAyahFileDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isAyahFile', Sort.desc);
     });
   }
 
@@ -1268,6 +1413,12 @@ extension TrackQueryWhereDistinct on QueryBuilder<Track, Track, QDistinct> {
     });
   }
 
+  QueryBuilder<Track, Track, QDistinct> distinctByAyahNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'ayahNumber');
+    });
+  }
+
   QueryBuilder<Track, Track, QDistinct> distinctByDuration() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'duration');
@@ -1278,6 +1429,12 @@ extension TrackQueryWhereDistinct on QueryBuilder<Track, Track, QDistinct> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'filePath', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Track, Track, QDistinct> distinctByIsAyahFile() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isAyahFile');
     });
   }
 
@@ -1327,6 +1484,12 @@ extension TrackQueryProperty on QueryBuilder<Track, Track, QQueryProperty> {
     });
   }
 
+  QueryBuilder<Track, int?, QQueryOperations> ayahNumberProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'ayahNumber');
+    });
+  }
+
   QueryBuilder<Track, int, QQueryOperations> durationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'duration');
@@ -1336,6 +1499,12 @@ extension TrackQueryProperty on QueryBuilder<Track, Track, QQueryProperty> {
   QueryBuilder<Track, String, QQueryOperations> filePathProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'filePath');
+    });
+  }
+
+  QueryBuilder<Track, bool, QQueryOperations> isAyahFileProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isAyahFile');
     });
   }
 

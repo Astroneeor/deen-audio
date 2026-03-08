@@ -78,20 +78,59 @@ class LibraryScanner {
   Track _buildTrack(String filePath, String rootPath) {
     // Make the path relative to root so we can inspect folder segments.
     final relative = p.relative(filePath, from: rootPath);
-    final parts = p.split(relative); // e.g. ['Quran', 'Alafasy', '001.mp3']
+    final parts = p.split(relative); // e.g. ['Quran', 'Alafasy', 'ayah', '001001.mp3']
 
     final topFolder = parts.isNotEmpty ? parts[0] : '';
-    // Artist = the folder directly containing the file, unless it's the type folder.
     final parentFolder = parts.length >= 2 ? parts[parts.length - 2] : '';
-    final artist =
-        (parentFolder.isNotEmpty && parentFolder != topFolder) ? parentFolder : null;
+    final type = _inferType(topFolder);
+    final basename = p.basenameWithoutExtension(filePath);
+
+    String? surahNum;
+    bool isAyahFile = false;
+    int? ayahNum;
+
+    if (type == TrackType.quran) {
+      // Per-ayah format: filename is exactly 6 digits → SSSAAA.mp3 (EveryAyah).
+      // Also accept files inside a folder named "ayah" or "ayahs".
+      final isInAyahFolder = parentFolder.toLowerCase() == 'ayah' ||
+          parentFolder.toLowerCase() == 'ayahs';
+      final sixDigit = RegExp(r'^\d{6}$').hasMatch(basename);
+
+      if (sixDigit || (isInAyahFolder && RegExp(r'^\d{6}$').hasMatch(basename))) {
+        isAyahFile = true;
+        surahNum = basename.substring(0, 3);
+        ayahNum = int.tryParse(basename.substring(3));
+      } else {
+        // Full-surah file: extract leading digits as the surah number.
+        final m = RegExp(r'^(\d{1,3})').firstMatch(basename);
+        if (m != null) surahNum = m.group(1)!.padLeft(3, '0');
+      }
+    }
+
+    // For per-ayah files stored in a named "ayah" sub-folder, the reciter is
+    // the grandparent folder (e.g. Quran/MisharyAlafasy/ayah/001001.mp3).
+    String? artist;
+    if (isAyahFile &&
+        (parentFolder.toLowerCase() == 'ayah' ||
+            parentFolder.toLowerCase() == 'ayahs') &&
+        parts.length >= 3) {
+      final grandparent = parts[parts.length - 3];
+      artist = (grandparent != topFolder) ? grandparent : null;
+    } else {
+      artist = (parentFolder.isNotEmpty && parentFolder != topFolder)
+          ? parentFolder
+          : null;
+    }
 
     return Track()
-      ..title = p.basenameWithoutExtension(filePath)
+      ..title = basename
       ..artist = artist
-      ..type = _inferType(topFolder)
+      ..type = type
       ..filePath = filePath
-      ..duration = 0; // updated when track first plays
+      ..surahNumber = surahNum
+      ..isAyahFile = isAyahFile
+      ..ayahNumber = ayahNum
+      ..duration = 0;
   }
 
   TrackType _inferType(String folderName) {

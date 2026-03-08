@@ -28,4 +28,10 @@ class Track {
 
   /// Only populated for Quran tracks
   String? surahNumber;
+
+  /// True if this file is a per-ayah MP3 in EveryAyah SSSAAA.mp3 format.
+  bool isAyahFile = false;
+
+  /// Ayah number within the surah. Only set when [isAyahFile] is true.
+  int? ayahNumber;
 }
