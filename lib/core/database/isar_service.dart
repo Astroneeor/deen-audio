@@ -1,10 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../models/ayah.dart';
-import '../models/bookmark.dart';
 import '../models/playlist.dart';
-import '../models/surah.dart';
 import '../models/track.dart';
 
 /// Initializes and provides the singleton Isar database instance.
@@ -23,7 +20,7 @@ class IsarService {
 
     final dir = await getApplicationSupportDirectory();
     _instance = await Isar.open(
-      [TrackSchema, PlaylistSchema, BookmarkSchema, SurahSchema, AyahSchema],
+      [TrackSchema, PlaylistSchema],
       directory: dir.path,
       name: 'deen_audio',
     );

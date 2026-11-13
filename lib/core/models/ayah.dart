@@ -1,13 +1,6 @@
-import 'package:isar/isar.dart';
-
-part 'ayah.g.dart';
-
-@collection
+/// One ayah with its Arabic text and optional translation (bundled content;
+/// stored in SQLite).
 class Ayah {
-  Id id = Isar.autoIncrement;
-
-  /// Composite index enables fast queries: "all ayahs of surah N, sorted by ayahNumber"
-  @Index(composite: [CompositeIndex('ayahNumber')])
   late int surahNumber;
 
   late int ayahNumber;

@@ -1,12 +1,5 @@
-import 'package:isar/isar.dart';
-
-part 'surah.g.dart';
-
-@collection
+/// One of the 114 surahs (bundled content; stored in SQLite).
 class Surah {
-  Id id = Isar.autoIncrement;
-
-  @Index(unique: true)
   late int number; // 1 – 114
 
   late String name; // Arabic: "الفاتحة"

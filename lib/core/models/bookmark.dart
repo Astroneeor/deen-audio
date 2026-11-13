@@ -1,14 +1,8 @@
-import 'package:isar/isar.dart';
-
-part 'bookmark.g.dart';
-
-@collection
+/// A saved ayah. [savedAt] is the UTC time of the last write.
 class Bookmark {
-  Id id = Isar.autoIncrement;
-
   late int surahNumber;
 
   late int ayahNumber;
 
-  DateTime savedAt = DateTime.now();
+  late DateTime savedAt;
 }

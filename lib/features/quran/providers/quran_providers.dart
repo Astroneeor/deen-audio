@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/database/database_provider.dart';
+import '../../../core/providers/foundation_providers.dart';
 import '../../../core/models/ayah.dart';
 import '../../../core/models/bookmark.dart';
 import '../../../core/models/surah.dart';
@@ -10,7 +10,12 @@ import '../data/quran_repository.dart';
 
 /// Central repository for all Quran CRUD operations.
 final quranRepositoryProvider = Provider<QuranRepository>((ref) {
-  return QuranRepository(ref.watch(isarProvider));
+  return QuranRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(syncStamperProvider),
+    ref.watch(settingsRepositoryProvider),
+    ref.watch(deviceSettingsRepositoryProvider),
+  );
 });
 
 // ── Seeding ───────────────────────────────────────────────────────────────────
@@ -70,7 +75,8 @@ final bookmarkedAyahsProvider = FutureProvider<Set<int>>((ref) async {
 
 // ── Last-read position ────────────────────────────────────────────────────────
 
-/// Last-read position loaded from disk at startup.
-final lastReadProvider = FutureProvider<({int surah, int ayah})>((ref) {
-  return ref.watch(quranRepositoryProvider).getLastRead();
+/// Last-read position loaded from the database at startup (1:1 if none).
+final lastReadProvider = FutureProvider<({int surah, int ayah})>((ref) async {
+  final pos = await ref.watch(quranRepositoryProvider).getLastRead();
+  return pos ?? (surah: 1, ayah: 1);
 });
