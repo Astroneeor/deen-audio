@@ -27,13 +27,16 @@ class _TasbihPage extends StatefulWidget {
 class _TasbihPageState extends State<_TasbihPage>
     with SingleTickerProviderStateMixin {
   int _count = 0;
-  int _target = 33;
-  bool _reached = false;
+
+  /// Number of repetitions to stop at; null = count without limit (∞).
+  int? _target = 33;
+
+  bool get _reached => _target != null && _count >= _target!;
 
   late final AnimationController _pulseCtrl;
   late final Animation<double> _pulseAnim;
 
-  static const _presets = [33, 99, 1000];
+  static const List<int?> _presets = [33, 99, null];
 
   @override
   void initState() {
@@ -54,31 +57,26 @@ class _TasbihPageState extends State<_TasbihPage>
   }
 
   void _increment() {
-    setState(() {
-      _count++;
-      _reached = _count >= _target;
-    });
+    setState(() => _count++);
     _pulseCtrl.forward(from: 0);
   }
 
   void _reset() {
-    setState(() {
-      _count = 0;
-      _reached = false;
-    });
+    setState(() => _count = 0);
   }
 
-  void _setTarget(int t) {
+  void _setTarget(int? t) {
     setState(() {
       _target = t;
       _count = 0;
-      _reached = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final progress = (_count / _target).clamp(0.0, 1.0);
+    final target = _target;
+    final progress =
+        target == null ? 0.0 : (_count / target).clamp(0.0, 1.0);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -102,50 +100,68 @@ class _TasbihPageState extends State<_TasbihPage>
                 ),
               ),
 
-              const Spacer(),
+              // Count, progress and hint — centred in the remaining space.
+              // The number scales down instead of overflowing when the
+              // window is short.
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: ScaleTransition(
+                          scale: _pulseAnim,
+                          child: Text(
+                            '$_count',
+                            style: TextStyle(
+                              fontSize: 96,
+                              fontWeight: FontWeight.w300,
+                              color: _reached
+                                  ? AppColors.gold
+                                  : AppColors.textPrimary,
+                              letterSpacing: -4,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
 
-              // Count display
-              ScaleTransition(
-                scale: _pulseAnim,
-                child: Text(
-                  '$_count',
-                  style: TextStyle(
-                    fontSize: 96,
-                    fontWeight: FontWeight.w300,
-                    color: _reached ? AppColors.gold : AppColors.textPrimary,
-                    letterSpacing: -4,
-                  ),
+                    // Progress towards the target (hidden when unlimited)
+                    Visibility(
+                      visible: target != null,
+                      maintainSize: true,
+                      maintainAnimation: true,
+                      maintainState: true,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 60),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(2),
+                          child: LinearProgressIndicator(
+                            value: progress,
+                            backgroundColor: AppColors.surfaceVariant,
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                AppColors.gold),
+                            minHeight: 3,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+
+                    Text(
+                      _reached
+                          ? 'Complete! Tap reset to continue.'
+                          : 'Tap anywhere to count',
+                      style: TextStyle(
+                        color: _reached ? AppColors.gold : AppColors.textMuted,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-              const SizedBox(height: 12),
-
-              // Progress bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 60),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(2),
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: AppColors.surfaceVariant,
-                    valueColor:
-                        const AlwaysStoppedAnimation<Color>(AppColors.gold),
-                    minHeight: 3,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                _reached ? 'Complete! Tap reset to continue.' : 'Tap anywhere to count',
-                style: TextStyle(
-                  color: _reached ? AppColors.gold : AppColors.textMuted,
-                  fontSize: 13,
-                ),
-              ),
-
-              const Spacer(),
 
               // Target + reset controls
               Padding(
@@ -156,7 +172,7 @@ class _TasbihPageState extends State<_TasbihPage>
                     // Target presets
                     for (final t in _presets) ...[
                       _TargetChip(
-                        label: t == 1000 ? '∞' : '$t',
+                        label: t == null ? '∞' : '$t',
                         selected: _target == t,
                         onTap: () => _setTarget(t),
                       ),

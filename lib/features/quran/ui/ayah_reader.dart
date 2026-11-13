@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/models/ayah.dart';
 import '../../../core/models/surah.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_fonts.dart';
 import '../../../features/settings/providers/settings_providers.dart';
+import '../data/quran_repository.dart';
 import '../providers/quran_providers.dart';
 import 'ayah_tile.dart';
 
@@ -25,8 +29,34 @@ class AyahReader extends ConsumerStatefulWidget {
 class _AyahReaderState extends ConsumerState<AyahReader> {
   final _controller = ScrollController();
 
+  // Scrolling reports a position every frame; persist it at most twice a
+  // second so the disk is not flooded and writes cannot land out of order.
+  static const _saveInterval = Duration(milliseconds: 500);
+  Timer? _saveTimer;
+  Ayah? _unsaved;
+  QuranRepository? _repo;
+  int? _selectedSurah; // mirrors the provider; ref is unusable in dispose()
+
+  void _onAyahVisible(Ayah ayah) {
+    _repo = ref.read(quranRepositoryProvider);
+    _unsaved = ayah;
+    _saveTimer ??= Timer(_saveInterval, _saveNow);
+  }
+
+  void _saveNow() {
+    _saveTimer?.cancel();
+    _saveTimer = null;
+    final ayah = _unsaved;
+    _unsaved = null;
+    if (ayah == null) return;
+    // A position from a surah the user has since left is stale.
+    if (ayah.surahNumber != _selectedSurah) return;
+    _repo?.saveLastRead(ayah.surahNumber, ayah.ayahNumber);
+  }
+
   @override
   void dispose() {
+    _saveNow(); // do not lose the last position when leaving the screen
     _controller.dispose();
     super.dispose();
   }
@@ -36,6 +66,7 @@ class _AyahReaderState extends ConsumerState<AyahReader> {
     final surahsAsync = ref.watch(surahsProvider);
     final ayahsAsync = ref.watch(currentAyahsProvider);
     final selectedNumber = ref.watch(selectedSurahNumberProvider);
+    _selectedSurah = selectedNumber;
     final showTranslation = ref.watch(showTranslationProvider);
     final fontSize = ref.watch(quranFontSizeProvider);
 
@@ -59,11 +90,7 @@ class _AyahReaderState extends ConsumerState<AyahReader> {
                     showTranslation: showTranslation,
                     fontSize: fontSize,
                     controller: _controller,
-                    onAyahVisible: (ayah) {
-                      ref
-                          .read(quranRepositoryProvider)
-                          .saveLastRead(ayah.surahNumber, ayah.ayahNumber);
-                    },
+                    onAyahVisible: _onAyahVisible,
                   ),
             loading: () => const Center(
               child: CircularProgressIndicator(
@@ -113,7 +140,7 @@ class _Header extends ConsumerWidget {
                     surah.name,
                     textDirection: TextDirection.rtl,
                     style: const TextStyle(
-                      fontFamily: 'Amiri',
+                      fontFamily: AppFonts.quranText,
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
                       color: AppColors.gold,

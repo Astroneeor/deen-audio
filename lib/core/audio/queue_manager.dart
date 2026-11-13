@@ -24,18 +24,25 @@ class QueueState {
   bool get hasNext => _nextIndex != null;
   bool get hasPrevious => _prevIndex != null;
 
+  /// Target of a manual "next". Repeat-one does not pin the user to the
+  /// current track here — it only applies when a track finishes on its own.
   int? get _nextIndex {
     if (queue.isEmpty) return null;
-    if (repeatMode == RepeatMode.one) return currentIndex;
     final n = currentIndex + 1;
     if (n < queue.length) return n;
     if (repeatMode == RepeatMode.all) return 0;
     return null;
   }
 
-  int? get _prevIndex {
+  /// Target once the current track has played to its end.
+  int? get _completedIndex {
     if (queue.isEmpty) return null;
     if (repeatMode == RepeatMode.one) return currentIndex;
+    return _nextIndex;
+  }
+
+  int? get _prevIndex {
+    if (queue.isEmpty) return null;
     final p = currentIndex - 1;
     if (p >= 0) return p;
     if (repeatMode == RepeatMode.all) return queue.length - 1;
@@ -72,10 +79,13 @@ class QueueManager {
 
   void setQueue(List<Track> tracks, {int startIndex = 0}) {
     _originalQueue = List.from(tracks);
-    final q = state.shuffleEnabled ? _shuffled(tracks, startIndex) : tracks;
+    final start = _clampIndex(startIndex, tracks.length);
+    final q = state.shuffleEnabled
+        ? _shuffled(tracks, start)
+        : List<Track>.from(tracks);
     _setState(state.copyWith(
       queue: q,
-      currentIndex: state.shuffleEnabled ? 0 : startIndex,
+      currentIndex: state.shuffleEnabled ? 0 : start,
     ));
   }
 
@@ -84,17 +94,17 @@ class QueueManager {
     _setState(state.copyWith(queue: [...state.queue, track]));
   }
 
-  /// Advance to next track. Returns new index or null if queue ended.
-  int? next() {
-    final idx = state._nextIndex;
-    if (idx == null) return null;
-    _setState(state.copyWith(currentIndex: idx));
-    return idx;
-  }
+  /// Manual skip to the next track. Returns new index or null at the end.
+  int? next() => _moveTo(state._nextIndex);
+
+  /// Call when the current track finished playing by itself. Honours
+  /// repeat-one (same index again). Returns null when the queue has ended.
+  int? onTrackCompleted() => _moveTo(state._completedIndex);
 
   /// Move to previous track. Returns new index or null if at start.
-  int? previous() {
-    final idx = state._prevIndex;
+  int? previous() => _moveTo(state._prevIndex);
+
+  int? _moveTo(int? idx) {
     if (idx == null) return null;
     _setState(state.copyWith(currentIndex: idx));
     return idx;
@@ -102,7 +112,7 @@ class QueueManager {
 
   void jumpTo(int index) {
     _setState(state.copyWith(
-      currentIndex: index.clamp(0, state.queue.length - 1),
+      currentIndex: _clampIndex(index, state.queue.length),
     ));
   }
 
@@ -113,12 +123,12 @@ class QueueManager {
       _setState(state.copyWith(queue: shuffled, currentIndex: 0, shuffleEnabled: true));
     } else {
       final current = state.currentTrack;
-      final restored = current == null
-          ? 0
-          : _originalQueue.indexWhere((t) => t.id == current.id);
+      // Match by identity: ids collide for unsaved tracks and for a track
+      // that was queued twice.
+      final restored = _originalQueue.indexWhere((t) => identical(t, current));
       _setState(state.copyWith(
         queue: List.from(_originalQueue),
-        currentIndex: restored.clamp(0, _originalQueue.length - 1),
+        currentIndex: _clampIndex(restored, _originalQueue.length),
         shuffleEnabled: false,
       ));
     }
@@ -126,14 +136,19 @@ class QueueManager {
 
   void setRepeatMode(RepeatMode mode) => _setState(state.copyWith(repeatMode: mode));
 
+  /// Empties the queue. Shuffle and repeat are user settings and survive.
   void clear() {
     _originalQueue = [];
-    _setState(const QueueState());
+    _setState(state.copyWith(queue: const [], currentIndex: 0));
   }
 
+  /// Clamps [index] into `0..length-1`; 0 for an empty list.
+  int _clampIndex(int index, int length) =>
+      length == 0 ? 0 : index.clamp(0, length - 1);
+
   List<Track> _shuffled(List<Track> tracks, int pivot) {
-    if (tracks.isEmpty) return tracks;
-    final clamp = pivot.clamp(0, tracks.length - 1);
+    if (tracks.isEmpty) return [];
+    final clamp = _clampIndex(pivot, tracks.length);
     final head = tracks[clamp];
     final tail = List<Track>.from(tracks)..removeAt(clamp);
     tail.shuffle();

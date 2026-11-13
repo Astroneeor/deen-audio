@@ -15,6 +15,12 @@ dependencies:
   just_audio: ^0.9.36
   audio_service: ^0.18.12
   just_audio_background: ^0.0.1-beta.11
+  # Desktop backends: just_audio has no Linux/Windows implementation of its own.
+  just_audio_media_kit: ^2.1.0          # libmpv-based player for Linux + Windows
+  media_kit_libs_linux: ^1.2.1          # links system libmpv on Linux
+  media_kit_libs_windows_audio: ^1.0.9  # bundles audio-only libmpv on Windows
+  audio_service_mpris: ^0.2.1           # Linux MPRIS (media keys, desktop widget)
+  audio_service_win: ^0.0.3             # Windows SMTC (taskbar media controls)
 
   # State Management
   flutter_riverpod: ^2.4.9
@@ -24,6 +30,17 @@ dependencies:
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
   path_provider: ^2.1.1
+  # SQLite via Drift (replacing Isar). drift/drift_dev are held at 2.18.x:
+  # the newest line whose generator accepts analyzer 5.x, which
+  # isar_generator still pins. Upgrade once Isar is removed.
+  drift: ">=2.18.0 <2.19.0"
+  sqlite3: ^2.4.0
+  sqlite3_flutter_libs: ^0.5.42   # bundles SQLite into desktop builds
+
+  # Network + ids
+  http: ^1.6.0
+  uuid: ^4.6.0
+  crypto: ^3.0.8
 
   # File System
   file_picker: ^6.1.1
@@ -46,9 +63,17 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.4.7
   isar_generator: ^3.1.0+1
+  drift_dev: ">=2.18.0 <2.19.0"
   riverpod_generator: ^2.3.9
   freezed: ^2.4.5
   json_serializable: ^6.7.1
+
+# TEMPORARY (remove together with Isar): drift 2.18 declares web ^0.5 while
+# media_kit needs web ^1.1. drift only imports package:web from its browser
+# entry points (drift/web.dart, drift/wasm.dart), which this desktop app never
+# imports, so the override does not affect native code.
+dependency_overrides:
+  web: ^1.1.0
 
 flutter:
   uses-material-design: true
@@ -56,3 +81,9 @@ flutter:
     - assets/quran/
     - assets/adhkar/
     - assets/fonts/
+  fonts:
+    # Quran text font (SIL OFL 1.1 — assets/fonts/AmiriQuran-OFL.txt).
+    # Family name must match AppFonts.quranText.
+    - family: Amiri Quran
+      fonts:
+        - asset: assets/fonts/AmiriQuran-Regular.ttf

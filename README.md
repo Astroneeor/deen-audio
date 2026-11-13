@@ -22,10 +22,17 @@ Offline-first Islamic desktop audio player — Spotify for halal content.
 ### Linux
 
 ```bash
-sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev lld
+# Build toolchain
+sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev lld build-essential
+
+# Audio playback (needed to run the app, not to compile it)
+sudo apt install libmpv2
 ```
 
-`lld` is required when Flutter is installed via snap. Without it the linker step fails.
+- `lld` is required when Flutter is installed via snap. Without it the linker step fails.
+- `libmpv2` provides `libmpv.so.2`, which the audio backend (`just_audio_media_kit` / `media_kit`) loads at startup. Without it the app still opens but nothing plays; the console prints `Audio backend unavailable`. On other distros install the package that ships `libmpv.so.2` (often `mpv-libs` or `libmpv`).
+- `build-essential` (`make` + a C compiler) is used by `media_kit_libs_linux`, which downloads and compiles mimalloc during the first build, so that build needs internet access.
+- Media keys and the desktop media widget use MPRIS over the D-Bus session bus (`audio_service_mpris`); no extra package is needed on a standard desktop session.
 
 ### macOS
 
@@ -69,66 +76,34 @@ flutter build windows --release
 
 ## Content setup
 
-The app ships with stub data. Replace the stubs with real content before use.
+The complete Quran text, an English translation and the Quran font ship with the app — the reader works fully offline with no setup. Only recitation audio has to be added by you.
 
-### 1. Full Quran text (required for Quran reader)
+### 1. Quran text and translation (bundled)
 
-Download the Tanzil simple-clean JSON and the Saheeh International translation:
+| File | Content | Source |
+|------|---------|--------|
+| `assets/quran/quran_simple.json` | All 114 surahs / 6236 ayahs, Uthmani text | [Tanzil](https://tanzil.net) Quran Text, Uthmani, version 1.1 |
+| `assets/quran/translation_en.json` | Saheeh International (English) | [tanzil.net/trans](https://tanzil.net/trans/) — `en.sahih` |
 
-```
-https://tanzil.net/download/
-  → Quran text  : "Simple (with marked Quranic words)" → JSON
-  → Translation : English → Saheeh International → JSON
-```
+**Attribution.** The Quran text is © 2007–2026 [Tanzil Project](https://tanzil.net), licensed under Creative Commons Attribution 3.0. It is included verbatim: Tanzil's terms forbid changing the text and require that the source be indicated with a link to [tanzil.net](https://tanzil.net) so users can keep track of updates. The full notices are in `assets/quran/TANZIL_LICENSE.txt`. Never edit the JSON files by hand.
 
-Save the files as:
+The ayah text is byte-for-byte what Tanzil publishes. In particular, Tanzil prefixes the basmala to ayah 1 of every surah except Al-Fatiha (where it is ayah 1) and At-Tawba (which has none); the app leaves it there.
 
-```
-assets/quran/quran_simple.json
-assets/quran/translation_en.json
-```
-
-Both files must use the array-of-surahs format the app expects:
-
-```jsonc
-// quran_simple.json
-[
-  {
-    "number": 1,
-    "name": "الفاتحة",
-    "englishName": "Al-Faatiha",
-    "englishNameTranslation": "The Opening",
-    "numberOfAyahs": 7,
-    "revelationType": "Meccan",
-    "ayahs": [
-      { "number": 1, "text": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ" }
-    ]
-  }
-]
-
-// translation_en.json
-[
-  {
-    "number": 1,
-    "ayahs": [
-      { "number": 1, "text": "In the name of Allah..." }
-    ]
-  }
-]
-```
-
-After replacing the files, delete the Isar database so it re-seeds on next launch:
+To regenerate the files (for example after a Tanzil update), download the sources into an empty directory and run the converter:
 
 ```bash
-# Linux
-rm -rf ~/.local/share/deen_audio/
+mkdir /tmp/quran-dl && cd /tmp/quran-dl
+curl -L -o tanzil-uthmani-default.txt \
+  "https://tanzil.net/pub/download/index.php?marks=true&sajdah=true&tatweel=true&quranType=uthmani&outType=txt-2&agree=true"
+curl -L -o tanzil-en-sahih.txt https://tanzil.net/trans/en.sahih
+curl -L -o tanzil-quran-data.xml https://tanzil.net/res/text/metadata/quran-data.xml
 
-# macOS
-rm -rf ~/Library/Application\ Support/deen_audio/
-
-# Windows (PowerShell)
-Remove-Item -Recurse "$env:APPDATA\deen_audio"
+cd <repo root>
+python3 -I tools/build_quran_assets.py /tmp/quran-dl assets/quran
+flutter test test/quran_assets_test.dart
 ```
+
+The converter pins the SHA-256 of the source files and refuses changed ones unless `--allow-new-version` is passed. After changing the data, bump `QuranRepository.dataVersion` in `lib/features/quran/data/quran_repository.dart` — existing installs then re-seed their database automatically on next launch (bookmarks are kept).
 
 ### 2. Quran recitation audio
 
@@ -143,27 +118,9 @@ for i in $(seq -w 1 114); do
 done
 ```
 
-### 3. Arabic font — Amiri (recommended)
+### 3. Arabic font (bundled)
 
-```bash
-# Linux
-wget -O assets/fonts/Amiri-Regular.ttf \
-  "https://github.com/aliftype/amiri/releases/latest/download/Amiri-Regular.ttf"
-
-# macOS / Windows: download from https://amirifont.org and save to assets/fonts/Amiri-Regular.ttf
-```
-
-After placing the file, add the font declaration to `pubspec.yaml` under `flutter:`:
-
-```yaml
-flutter:
-  fonts:
-    - family: Amiri
-      fonts:
-        - asset: assets/fonts/Amiri-Regular.ttf
-```
-
-Then rebuild the app.
+Quran text is rendered with **Amiri Quran** (`assets/fonts/AmiriQuran-Regular.ttf`, family `Amiri Quran` in `pubspec.yaml`), © 2010–2022 The Amiri Project Authors, from [github.com/google/fonts](https://github.com/google/fonts/tree/main/ofl/amiriquran) (upstream: [aliftype/amiri](https://github.com/aliftype/amiri)). It is licensed under the SIL Open Font License 1.1 — see `assets/fonts/AmiriQuran-OFL.txt`.
 
 ### 4. Audio library folder structure
 

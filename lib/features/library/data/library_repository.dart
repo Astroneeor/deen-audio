@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:path/path.dart' as p;
 
 import '../../../core/models/track.dart';
 
@@ -31,11 +32,50 @@ class LibraryRepository {
 
   // ── Writes ────────────────────────────────────────────────────────────────
 
-  /// Atomically clears the collection and inserts the new scan result.
-  Future<void> replaceAllTracks(List<Track> tracks) async {
+  /// Makes the collection match a fresh scan result, in one transaction.
+  ///
+  /// Tracks are matched by [Track.filePath]. A file that was already in the
+  /// library keeps its id (playlists reference ids) and its per-track user
+  /// state — favourite flag, last-played time and measured duration — while
+  /// title / artist / type are refreshed from the scan. Files that are no
+  /// longer on disk are removed, except those under one of the [keepUnder]
+  /// directories: folders the scanner could not read, whose contents are
+  /// unknown rather than gone.
+  Future<void> replaceAllTracks(
+    List<Track> tracks, {
+    Iterable<String> keepUnder = const [],
+  }) async {
     await _isar.writeTxn(() async {
-      await _isar.tracks.clear();
-      await _isar.tracks.putAll(tracks);
+      final existingByPath = <String, Track>{};
+      final staleIds = <Id>[];
+      for (final old in await _isar.tracks.where().findAll()) {
+        if (existingByPath.containsKey(old.filePath)) {
+          staleIds.add(old.id); // duplicate row for the same file
+        } else {
+          existingByPath[old.filePath] = old;
+        }
+      }
+
+      final scannedByPath = {for (final t in tracks) t.filePath: t};
+      for (final scanned in scannedByPath.values) {
+        final old = existingByPath.remove(scanned.filePath);
+        if (old == null) continue;
+        scanned
+          ..id = old.id
+          ..isFavorite = old.isFavorite
+          ..lastPlayed = old.lastPlayed
+          ..surahNumber ??= old.surahNumber;
+        if (scanned.duration == 0) scanned.duration = old.duration;
+      }
+
+      // Whatever is left in existingByPath was not seen by this scan.
+      for (final old in existingByPath.values) {
+        final unknown = keepUnder.any((dir) => p.isWithin(dir, old.filePath));
+        if (!unknown) staleIds.add(old.id);
+      }
+
+      await _isar.tracks.deleteAll(staleIds);
+      await _isar.tracks.putAll(scannedByPath.values.toList());
     });
   }
 

@@ -15,8 +15,10 @@ final quranRepositoryProvider = Provider<QuranRepository>((ref) {
 
 // ── Seeding ───────────────────────────────────────────────────────────────────
 
-/// Seeds the database from bundled JSON on first launch.
-/// Subsequent calls return instantly (isSeeded guard).
+/// Seeds the database from the bundled Quran JSON on first launch, and
+/// re-seeds installs that still hold the old stub or an outdated dataset.
+/// JSON parsing runs on a background isolate and rows are written in small
+/// chunks, so the UI stays responsive. Later launches return immediately.
 final quranInitProvider = FutureProvider<void>((ref) async {
   final repo = ref.watch(quranRepositoryProvider);
   if (!await repo.isSeeded()) {

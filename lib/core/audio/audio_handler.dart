@@ -1,9 +1,29 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_media_kit/just_audio_media_kit.dart';
 
 import '../models/track.dart';
 import 'queue_manager.dart';
 import 'track_source.dart';
+
+/// Registers the libmpv (media_kit) implementation of just_audio on Linux and
+/// Windows, where just_audio ships no backend of its own. A no-op on macOS,
+/// which keeps just_audio's native AVPlayer backend.
+///
+/// Must run before the first [DeenAudioHandler] is constructed. Returns false
+/// if libmpv could not be loaded — the app still starts, but playback will not
+/// work until it is installed (Ubuntu: `sudo apt install libmpv2`).
+bool initAudioBackend() {
+  try {
+    JustAudioMediaKit.title = 'Deen Audio';
+    JustAudioMediaKit.ensureInitialized();
+    return true;
+  } catch (e) {
+    debugPrint('Audio backend unavailable: $e');
+    return false;
+  }
+}
 
 /// Bridges just_audio with audio_service, enabling OS media controls:
 /// Linux MPRIS, Windows SMTC, macOS Media Center.
@@ -37,20 +57,27 @@ class DeenAudioHandler extends BaseAudioHandler with SeekHandler {
     _player.processingStateStream.listen((ps) {
       if (ps == ProcessingState.completed) _onCompleted();
     });
+
+    // Scanned tracks carry no duration; publish the real one once known so
+    // OS media controls can show progress.
+    _player.durationStream.listen((d) {
+      final item = mediaItem.value;
+      if (d != null && item != null && item.duration != d) {
+        mediaItem.add(item.copyWith(duration: d));
+      }
+    });
   }
 
   // ── Public API (called by AudioPlayerService) ─────────────────────────────
 
   Future<void> playTrack(Track track) async {
     _queue.setQueue([track]);
-    await _loadCurrent();
-    await _player.play();
+    await _loadAndPlay();
   }
 
   Future<void> playQueue(List<Track> tracks, {int startIndex = 0}) async {
     _queue.setQueue(tracks, startIndex: startIndex);
-    await _loadCurrent();
-    await _player.play();
+    await _loadAndPlay();
   }
 
   Future<void> setVolume(double volume) =>
@@ -87,10 +114,7 @@ class DeenAudioHandler extends BaseAudioHandler with SeekHandler {
 
   @override
   Future<void> skipToNext() async {
-    if (_queue.next() != null) {
-      await _loadCurrent();
-      await _player.play();
-    }
+    if (_queue.next() != null) await _loadAndPlay();
   }
 
   @override
@@ -99,8 +123,7 @@ class DeenAudioHandler extends BaseAudioHandler with SeekHandler {
     if (_player.position.inSeconds > 3) {
       await _player.seek(Duration.zero);
     } else if (_queue.previous() != null) {
-      await _loadCurrent();
-      await _player.play();
+      await _loadAndPlay();
     }
   }
 
@@ -118,25 +141,46 @@ class DeenAudioHandler extends BaseAudioHandler with SeekHandler {
     if (_completing) return;
     _completing = true;
     try {
-      if (_queue.next() != null) {
-        await _loadCurrent();
-        await _player.play();
+      if (_queue.onTrackCompleted() != null) {
+        await _loadAndPlay();
       } else {
+        // Queue finished: nothing is loaded any more, so say so. Otherwise
+        // the player bar keeps offering controls for a track that is gone.
         _queue.clear();
         await stop();
+        mediaItem.add(null);
+        queue.add(const []);
       }
     } finally {
       _completing = false;
     }
   }
 
-  Future<void> _loadCurrent() async {
+  Future<void> _loadAndPlay() async {
+    if (await _loadCurrent()) await _player.play();
+  }
+
+  /// Loads the queue's current track. Returns false if nothing was loaded:
+  /// empty queue, superseded by a newer load (rapid skipping), or the file
+  /// could not be opened.
+  Future<bool> _loadCurrent() async {
     final track = _queue.state.currentTrack;
-    if (track == null) return;
-    final src = await LocalTrackSource(track.filePath).toAudioSource();
-    await _player.setAudioSource(src);
+    if (track == null) return false;
     mediaItem.add(_toMediaItem(track));
     queue.add(_queue.state.queue.map(_toMediaItem).toList());
+    try {
+      final src = await LocalTrackSource(track.filePath).toAudioSource();
+      await _player.setAudioSource(src);
+      return true;
+    } on PlayerInterruptedException {
+      return false;
+    } on PlayerException catch (e) {
+      debugPrint('Could not load ${track.filePath}: ${e.message}');
+      playbackState.add(playbackState.value.copyWith(
+        processingState: AudioProcessingState.error,
+      ));
+      return false;
+    }
   }
 
   PlaybackState _toPlaybackState(PlaybackEvent event) {
@@ -147,7 +191,11 @@ class DeenAudioHandler extends BaseAudioHandler with SeekHandler {
         if (playing) MediaControl.pause else MediaControl.play,
         MediaControl.skipToNext,
       ],
-      systemActions: const {MediaAction.seek, MediaAction.seekForward, MediaAction.seekBackward},
+      systemActions: const {
+        MediaAction.seek,
+        MediaAction.seekForward,
+        MediaAction.seekBackward
+      },
       processingState: const {
         ProcessingState.idle: AudioProcessingState.idle,
         ProcessingState.loading: AudioProcessingState.loading,

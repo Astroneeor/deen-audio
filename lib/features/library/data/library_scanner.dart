@@ -41,9 +41,12 @@ class LibraryScanner {
   }
 
   /// Scans a specific directory path and saves to DB.
+  ///
+  /// Throws [LibraryScanException] — leaving the library untouched — when
+  /// [dirPath] itself is missing or unreadable (e.g. an unplugged drive).
   Future<void> scanPath(String dirPath) async {
-    final tracks = await _buildTrackList(dirPath);
-    await _repo.replaceAllTracks(tracks);
+    final found = await _findTracks(dirPath);
+    await _repo.replaceAllTracks(found.tracks, keepUnder: found.unreadable);
     await _persistFolder(dirPath);
   }
 
@@ -61,18 +64,44 @@ class LibraryScanner {
 
   // ── Scanning ──────────────────────────────────────────────────────────────
 
-  Future<List<Track>> _buildTrackList(String rootPath) async {
-    final root = Directory(rootPath);
-    if (!root.existsSync()) return [];
-
+  /// Walks the tree under [rootPath] with async I/O (never blocks the UI
+  /// isolate). Symlinked folders and files are followed; every real
+  /// directory is visited once, so link loops terminate. Sub-folders that
+  /// cannot be read are skipped and reported in the result.
+  Future<({List<Track> tracks, List<String> unreadable})> _findTracks(
+    String rootPath,
+  ) async {
     final tracks = <Track>[];
-    await for (final entity in root.list(recursive: true, followLinks: false)) {
-      if (entity is! File) continue;
-      final ext = p.extension(entity.path).toLowerCase();
-      if (!_supportedExtensions.contains(ext)) continue;
-      tracks.add(_buildTrack(entity.path, rootPath));
+    final unreadable = <String>[];
+    final visited = <String>{};
+    final pending = <Directory>[Directory(rootPath)];
+
+    while (pending.isNotEmpty) {
+      final dir = pending.removeLast();
+      try {
+        if (!visited.add(await dir.resolveSymbolicLinks())) continue;
+        await for (final entity in dir.list(followLinks: true)) {
+          if (entity is Directory) {
+            pending.add(entity);
+          } else if (entity is File) {
+            final ext = p.extension(entity.path).toLowerCase();
+            if (_supportedExtensions.contains(ext)) {
+              tracks.add(_buildTrack(entity.path, rootPath));
+            }
+          }
+          // Remaining case: a dangling link — nothing to import.
+        }
+      } on FileSystemException catch (e) {
+        if (dir.path == rootPath) {
+          throw LibraryScanException(
+            'Cannot read folder "$rootPath"'
+            '${e.osError == null ? '' : ' (${e.osError!.message})'}',
+          );
+        }
+        unreadable.add(dir.path);
+      }
     }
-    return tracks;
+    return (tracks: tracks, unreadable: unreadable);
   }
 
   Track _buildTrack(String filePath, String rootPath) {
@@ -119,4 +148,14 @@ class LibraryScanner {
     final dir = await getApplicationSupportDirectory();
     return File(p.join(dir.path, _settingsFileName));
   }
+}
+
+/// Thrown when the library root folder cannot be scanned at all.
+class LibraryScanException implements Exception {
+  final String message;
+
+  const LibraryScanException(this.message);
+
+  @override
+  String toString() => message;
 }

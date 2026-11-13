@@ -35,7 +35,7 @@ class TrackListTile extends ConsumerWidget {
         onTap: () => ref
             .read(audioPlayerServiceProvider)
             .playQueue(queue, startIndex: index),
-        onLongPress: () => _showContextMenu(context, ref),
+        onLongPress: () => _showContextMenu(context),
         borderRadius: BorderRadius.circular(4),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -112,11 +112,11 @@ class TrackListTile extends ConsumerWidget {
     );
   }
 
-  void _showContextMenu(BuildContext context, WidgetRef ref) {
+  void _showContextMenu(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.surface,
-      builder: (_) => _TrackContextMenu(track: track, ref: ref),
+      builder: (_) => _TrackContextMenu(track: track),
     );
   }
 }
@@ -151,14 +151,13 @@ class _TypeIcon extends StatelessWidget {
 
 // ── Context menu (long-press) ─────────────────────────────────────────────────
 
-class _TrackContextMenu extends StatelessWidget {
+class _TrackContextMenu extends ConsumerWidget {
   final Track track;
-  final WidgetRef ref;
 
-  const _TrackContextMenu({required this.track, required this.ref});
+  const _TrackContextMenu({required this.track});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,

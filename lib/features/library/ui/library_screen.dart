@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' as p;
 
 import '../../../core/models/track.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/shimmer_box.dart';
 import '../providers/library_providers.dart';
+import 'library_empty_state.dart';
 import 'library_filter_bar.dart';
 import 'track_list_tile.dart';
 
@@ -26,7 +28,14 @@ class LibraryScreen extends ConsumerWidget {
         Expanded(
           child: filteredAsync.when(
             data: (tracks) => tracks.isEmpty
-                ? _EmptyState(isScanning: scanState.isLoading)
+                ? LibraryEmptyState(
+                    isScanning: scanState.isLoading,
+                    // Non-null when the library has tracks, just none of
+                    // the selected type.
+                    emptyFilter: _libraryHasTracks(ref)
+                        ? ref.watch(trackTypeFilterProvider)
+                        : null,
+                  )
                 : _TrackList(tracks: tracks),
             loading: () => const _TrackListSkeleton(),
             error: (e, _) => Center(
@@ -40,6 +49,9 @@ class LibraryScreen extends ConsumerWidget {
   }
 }
 
+bool _libraryHasTracks(WidgetRef ref) =>
+    ref.watch(tracksStreamProvider).valueOrNull?.isNotEmpty ?? false;
+
 // ── Header ────────────────────────────────────────────────────────────────────
 
 class _Header extends ConsumerWidget {
@@ -50,8 +62,8 @@ class _Header extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isScanning = scanState.isLoading;
-    final folderName = scanState.valueOrNull?.split('/').last ??
-        scanState.valueOrNull?.split(r'\').last;
+    final folder = scanState.valueOrNull;
+    final folderName = folder == null ? null : p.basename(folder);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 20, 16, 8),
@@ -69,9 +81,19 @@ class _Header extends ConsumerWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                if (folderName != null)
+                if (scanState.hasError)
+                  Text(
+                    'Scan failed: ${scanState.error}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style:
+                        const TextStyle(color: AppColors.error, fontSize: 11),
+                  )
+                else if (folderName != null)
                   Text(
                     folderName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: AppColors.textMuted,
                       fontSize: 11,
@@ -105,7 +127,8 @@ class _ScanButton extends ConsumerWidget {
         ref.watch(scanNotifierProvider).valueOrNull != null;
 
     return TextButton.icon(
-      onPressed: () => ref.read(scanNotifierProvider.notifier).pickAndScan(),
+      // Re-reads the folder (or asks for one); Settings changes the folder.
+      onPressed: () => ref.read(scanNotifierProvider.notifier).rescan(),
       icon: Icon(hasFolder ? Icons.refresh : Icons.folder_open_outlined,
           size: 16),
       label: Text(hasFolder ? 'Rescan' : 'Scan Folder'),
@@ -172,63 +195,6 @@ class _TrackListSkeleton extends StatelessWidget {
             ShimmerBox(width: 36, height: 12),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// ── Empty state ───────────────────────────────────────────────────────────────
-
-class _EmptyState extends ConsumerWidget {
-  final bool isScanning;
-
-  const _EmptyState({required this.isScanning});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (isScanning) {
-      return const Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircularProgressIndicator(color: AppColors.gold, strokeWidth: 2),
-            SizedBox(height: 20),
-            Text('Scanning…',
-                style: TextStyle(color: AppColors.textSecondary)),
-          ],
-        ),
-      );
-    }
-
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.folder_open_outlined,
-              size: 64, color: AppColors.gold.withValues(alpha: 0.35)),
-          const SizedBox(height: 20),
-          const Text(
-            'Your library is empty',
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Put your audio files in ~/HalalAudio/\nthen tap Scan Folder to import them.',
-            style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () =>
-                ref.read(scanNotifierProvider.notifier).pickAndScan(),
-            icon: const Icon(Icons.folder_open_outlined, size: 18),
-            label: const Text('Scan Folder'),
-          ),
-        ],
       ),
     );
   }

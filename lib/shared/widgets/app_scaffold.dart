@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/audio/audio_player_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../features/library/ui/player_bar.dart';
+import 'playback_shortcut_scope.dart';
 import 'sidebar.dart';
 
 /// Shell widget wrapping every screen:
@@ -12,97 +12,60 @@ import 'sidebar.dart';
 ///   ──────────────────────
 ///   Persistent PlayerBar
 ///
-/// Also registers global keyboard shortcuts:
+/// Also wires the global keyboard shortcuts (see [PlaybackShortcutScope] for
+/// when they are suppressed):
 ///   Space      → play / pause
 ///   ← / →      → seek ±10 s
 ///   N           → next track
 ///   S           → toggle shuffle
-class AppScaffold extends ConsumerStatefulWidget {
+class AppScaffold extends ConsumerWidget {
   final Widget child;
 
   const AppScaffold({super.key, required this.child});
 
-  @override
-  ConsumerState<AppScaffold> createState() => _AppScaffoldState();
-}
-
-class _AppScaffoldState extends ConsumerState<AppScaffold> {
-  @override
-  void initState() {
-    super.initState();
-    HardwareKeyboard.instance.addHandler(_onKey);
-  }
-
-  @override
-  void dispose() {
-    HardwareKeyboard.instance.removeHandler(_onKey);
-    super.dispose();
-  }
-
-  bool _onKey(KeyEvent event) {
-    // Only act on key-down events; ignore repeats from held keys for seek.
-    if (event is! KeyDownEvent && event is! KeyRepeatEvent) return false;
-
-    // Don't steal keys while a text field is focused.
-    final focus = FocusManager.instance.primaryFocus;
-    if (focus?.context?.widget is EditableText) return false;
-
+  void _onShortcut(WidgetRef ref, PlaybackShortcut shortcut) {
     final svc = ref.read(audioPlayerServiceProvider);
+    final position = ref.read(positionProvider).valueOrNull ?? Duration.zero;
 
-    switch (event.logicalKey) {
-      case LogicalKeyboardKey.space:
-        if (event is KeyRepeatEvent) return false;
+    switch (shortcut) {
+      case PlaybackShortcut.togglePlay:
         final playing =
             ref.read(playbackStateProvider).valueOrNull?.playing ?? false;
         playing ? svc.pause() : svc.resume();
-        return true;
-
-      case LogicalKeyboardKey.arrowRight:
-        final pos =
-            ref.read(positionProvider).valueOrNull ?? Duration.zero;
-        svc.seek(pos + const Duration(seconds: 10));
-        return true;
-
-      case LogicalKeyboardKey.arrowLeft:
-        final pos =
-            ref.read(positionProvider).valueOrNull ?? Duration.zero;
-        final next = pos - const Duration(seconds: 10);
-        svc.seek(next.isNegative ? Duration.zero : next);
-        return true;
-
-      case LogicalKeyboardKey.keyN:
-        if (event is KeyRepeatEvent) return false;
+      case PlaybackShortcut.seekForward:
+        svc.seek(position + const Duration(seconds: 10));
+      case PlaybackShortcut.seekBackward:
+        final target = position - const Duration(seconds: 10);
+        svc.seek(target.isNegative ? Duration.zero : target);
+      case PlaybackShortcut.next:
         svc.skipNext();
-        return true;
-
-      case LogicalKeyboardKey.keyS:
-        if (event is KeyRepeatEvent) return false;
+      case PlaybackShortcut.toggleShuffle:
         final shuffled =
-            ref.read(queueStateProvider).valueOrNull?.shuffleEnabled ??
-                false;
+            ref.read(queueStateProvider).valueOrNull?.shuffleEnabled ?? false;
         svc.setShuffleEnabled(!shuffled);
-        return true;
     }
-    return false;
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Column(
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                const Sidebar(),
-                const VerticalDivider(width: 1, color: AppColors.divider),
-                Expanded(child: widget.child),
-              ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    return PlaybackShortcutScope(
+      onShortcut: (shortcut) => _onShortcut(ref, shortcut),
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: Column(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  const Sidebar(),
+                  const VerticalDivider(width: 1, color: AppColors.divider),
+                  Expanded(child: child),
+                ],
+              ),
             ),
-          ),
-          const PlayerBar(),
-        ],
+            const PlayerBar(),
+          ],
+        ),
       ),
     );
   }

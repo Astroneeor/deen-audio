@@ -51,6 +51,10 @@ class SurahList extends ConsumerWidget {
                   onTap: () {
                     ref.read(selectedSurahNumberProvider.notifier).state =
                         s.number;
+                    // Remember the surah even if the user never scrolls it.
+                    ref
+                        .read(quranRepositoryProvider)
+                        .saveLastRead(s.number, 1);
                   },
                 );
               },
@@ -168,8 +172,6 @@ class _SurahTile extends StatelessWidget {
                         color: isSelected
                             ? AppColors.gold
                             : AppColors.textPrimary,
-                        // Download Amiri-Regular.ttf to assets/fonts/ and
-                        // declare it in pubspec.yaml to enable Amiri font.
                         fontFamily: AppFonts.quranText,
                       ),
                     ),

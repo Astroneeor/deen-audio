@@ -41,8 +41,15 @@ final filteredTracksProvider = Provider<AsyncValue<List<Track>>>((ref) {
 
 // ── Scan state ────────────────────────────────────────────────────────────────
 
+/// Tracks the library folder and the progress / outcome of scans.
+///
+/// The state's value is the current library folder (null = none chosen yet).
+/// It is kept while a scan is running and after a scan fails, so the UI can
+/// always show the folder and offer a retry; a failure is exposed through
+/// [AsyncValue.error].
 class ScanNotifier extends StateNotifier<AsyncValue<String?>> {
   final LibraryScanner _scanner;
+  String? _folder;
 
   ScanNotifier(this._scanner) : super(const AsyncData(null)) {
     _restoreLastFolder();
@@ -51,37 +58,41 @@ class ScanNotifier extends StateNotifier<AsyncValue<String?>> {
   /// Restore the last-used folder path on startup (for display; tracks come from Isar).
   Future<void> _restoreLastFolder() async {
     final last = await _scanner.getLastFolder();
-    if (last != null && mounted) state = AsyncData(last);
+    if (last == null || !mounted || _folder != null) return;
+    _folder = last;
+    if (!state.isLoading) state = AsyncData(last);
   }
 
   /// Open the OS directory picker, scan, and save.
-  Future<void> pickAndScan() async {
-    state = const AsyncLoading();
-    try {
-      final picked = await _scanner.pickAndScan();
-      state = AsyncData(picked); // null if user cancelled
-    } catch (e, st) {
-      state = AsyncError(e, st);
-    }
-  }
+  /// Cancelling the picker leaves the current folder as it was.
+  Future<void> pickAndScan() => _run(_scanner.pickAndScan);
 
   /// Re-scan the previously used folder (no picker needed).
-  Future<void> rescan() async {
-    final folder = state.valueOrNull;
-    if (folder == null) {
-      await pickAndScan();
-      return;
-    }
-    state = const AsyncLoading();
-    try {
+  Future<void> rescan() {
+    final folder = _folder;
+    if (folder == null) return pickAndScan();
+    return _run(() async {
       await _scanner.scanPath(folder);
-      state = AsyncData(folder);
+      return folder;
+    });
+  }
+
+  Future<void> _run(Future<String?> Function() scan) async {
+    if (state.isLoading) return; // one scan at a time
+    state = const AsyncLoading<String?>().copyWithPrevious(AsyncData(_folder));
+    try {
+      final scanned = await scan();
+      if (!mounted) return;
+      if (scanned != null) _folder = scanned;
+      state = AsyncData(_folder);
     } catch (e, st) {
-      state = AsyncError(e, st);
+      if (!mounted) return;
+      state = AsyncError<String?>(e, st).copyWithPrevious(AsyncData(_folder));
     }
   }
 }
 
+/// Current library folder plus scan progress / failure. See [ScanNotifier].
 final scanNotifierProvider =
     StateNotifierProvider<ScanNotifier, AsyncValue<String?>>((ref) {
   return ScanNotifier(ref.watch(libraryScannerProvider));

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/router.dart';
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_fonts.dart';
 
 class _NavItem {
   final String label;
@@ -61,13 +62,19 @@ class Sidebar extends StatelessWidget {
         children: [
           _buildHeader(),
           const Divider(height: 1, color: AppColors.divider),
-          const SizedBox(height: 8),
-          for (final item in _navItems)
-            _SidebarItem(
-              item: item,
-              isActive: location.startsWith(item.route),
+          // Scrolls instead of overflowing when the window is very short.
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.only(top: 8),
+              children: [
+                for (final item in _navItems)
+                  _SidebarItem(
+                    item: item,
+                    isActive: location.startsWith(item.route),
+                  ),
+              ],
             ),
-          const Spacer(),
+          ),
           const Divider(height: 1, color: AppColors.divider),
           _buildSettingsButton(context),
         ],
@@ -90,7 +97,9 @@ class Sidebar extends StatelessWidget {
             child: const Center(
               child: Text(
                 'د',
+                textDirection: TextDirection.rtl,
                 style: TextStyle(
+                  fontFamily: AppFonts.quranText,
                   fontSize: 18,
                   color: AppColors.background,
                   fontWeight: FontWeight.bold,
@@ -99,12 +108,16 @@ class Sidebar extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          const Text(
-            'Deen Audio',
-            style: TextStyle(
-              color: AppColors.textPrimary,
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
+          const Flexible(
+            child: Text(
+              'Deen Audio',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
