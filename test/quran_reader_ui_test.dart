@@ -5,6 +5,7 @@ import 'package:deen_audio/core/theme/app_fonts.dart';
 import 'package:deen_audio/features/quran/data/quran_repository.dart';
 import 'package:deen_audio/features/quran/providers/quran_providers.dart';
 import 'package:deen_audio/features/quran/ui/ayah_reader.dart';
+import 'package:deen_audio/features/quran/ui/ayah_tile.dart';
 import 'package:deen_audio/features/quran/ui/surah_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -106,5 +107,14 @@ void main() {
     await tester.pump();
 
     expect(repo.saved, [(2, 1)]);
+  });
+
+  testWidgets('a surah with no ayahs shows a neutral message', (tester) async {
+    await tester.pumpWidget(
+        const MaterialApp(home: Scaffold(body: EmptyAyahsView())));
+
+    expect(find.text("This surah couldn't be loaded."), findsOneWidget);
+    expect(find.textContaining('stub'), findsNothing);
+    expect(find.textContaining('tanzil.net'), findsNothing);
   });
 }

@@ -103,7 +103,7 @@ class _AyahBadge extends StatelessWidget {
   }
 }
 
-/// Shown when a surah's ayahs are not in the current JSON stub.
+/// Shown when a surah's ayahs could not be loaded.
 class EmptyAyahsView extends StatelessWidget {
   const EmptyAyahsView({super.key});
 
@@ -117,7 +117,7 @@ class EmptyAyahsView extends StatelessWidget {
               size: 56, color: AppColors.gold.withValues(alpha: 0.3)),
           const SizedBox(height: 20),
           const Text(
-            'Ayahs not in stub dataset',
+            "This surah couldn't be loaded.",
             style: TextStyle(
               color: AppColors.textPrimary,
               fontSize: 16,
@@ -126,8 +126,7 @@ class EmptyAyahsView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Download the full quran_simple.json from tanzil.net\n'
-            'and replace assets/quran/quran_simple.json',
+            'Try another surah, or restart the app.',
             style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
             textAlign: TextAlign.center,
           ),
