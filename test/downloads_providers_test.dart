@@ -116,4 +116,30 @@ void main() {
     await container.read(downloadsUsedBytesProvider.future);
     expect(store.usedBytesCalls, greaterThan(before));
   });
+
+  test('used bytes still resolve when the items stream errors', () async {
+    final container = ProviderContainer(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        authSessionProvider.overrideWithValue(
+          const LocalAuthSession(deviceId: 'device-1'),
+        ),
+        fileStoreProvider.overrideWithValue(MemoryFileStore()),
+        downloadHttpClientProvider.overrideWithValue(
+          FakeDownloadServer({}).client,
+        ),
+        catalogLoaderProvider.overrideWithValue(_FixtureLoader()),
+        downloadItemsProvider.overrideWith(
+          (ref) => Stream.error(StateError('database is closed')),
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+    final sub = container.listen(downloadItemsProvider, (_, _) {});
+    addTearDown(sub.close);
+    await pumpEventQueue();
+    expect(container.read(downloadItemsProvider).hasError, isTrue);
+
+    expect(await container.read(downloadsUsedBytesProvider.future), 0);
+  });
 }

@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../../../core/database/app_database.dart';
+import 'catalog.dart';
 import 'download_models.dart';
 
 /// Reads and writes download state (`download_items`, device-local).
@@ -58,6 +59,28 @@ class DownloadRepository {
           checksum: Value(checksum),
         ),
       );
+
+  /// Upserts the row for catalog [file] of pack [packId], saved at [path],
+  /// with [status] and [bytesDone] (no error).
+  Future<void> record(
+    String packId,
+    CatalogFile file,
+    String path,
+    DownloadStatus status,
+    int bytesDone,
+  ) => upsert(
+    DownloadItem(
+      fileId: file.id,
+      packId: packId,
+      status: status,
+      bytesDone: bytesDone,
+      bytesTotal:
+          file.sizeBytes ?? (status == DownloadStatus.done ? bytesDone : null),
+      relativePath: path,
+    ),
+    url: file.url,
+    checksum: file.checksum,
+  );
 
   /// Sets the status; [error] is stored as given (null clears it).
   Future<void> setStatus(

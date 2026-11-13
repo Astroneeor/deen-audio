@@ -60,6 +60,9 @@ class DownloadService {
 
   late final DownloadQueue _queue;
   final Map<String, int> _generation = {};
+
+  /// Deletes in progress; an enqueue of the same id waits for them.
+  final Map<String, Future<void>> _deleting = {};
   bool _disposed = false;
 
   static String pathFor(CatalogPack pack, CatalogFile file) =>
@@ -70,7 +73,8 @@ class DownloadService {
   /// Queues [fileId] (a no-op if it is queued, running, or done and present;
   /// a file already on disk with the catalog size is just marked done).
   /// Also resumes a paused or failed file, after a pause that is still
-  /// draining. Throws [ArgumentError] for an id not in the catalog.
+  /// draining; after a cancel or delete still in progress it starts afresh
+  /// once that has finished. Throws [ArgumentError] for an unknown id.
   Future<void> enqueueFile(String fileId) async {
     final (pack, file) = catalog.requireFile(fileId);
     final running = _queue.active(fileId);
@@ -82,6 +86,7 @@ class DownloadService {
     final gen = _bump(fileId);
     bool superseded() => _disposed || _generation[fileId] != gen;
     if (running != null) await _queue.drained(fileId);
+    await _deleting[fileId];
 
     final path = pathFor(pack, file);
     final existing = await _repo.get(fileId);
@@ -90,35 +95,16 @@ class DownloadService {
       if (existing?.status == DownloadStatus.done) return;
       final size = await _files.size(path);
       if (size == file.sizeBytes && !superseded()) {
-        await _record(pack, file, DownloadStatus.done, size);
+        await _repo.record(pack.id, file, path, DownloadStatus.done, size);
         _notify(() => onFileDone?.call(pack, file, path));
         return;
       }
     }
     final partSize = await _files.size('$path.part');
     if (superseded()) return;
-    await _record(pack, file, DownloadStatus.queued, partSize);
+    await _repo.record(pack.id, file, path, DownloadStatus.queued, partSize);
     if (!superseded()) _queue.add(fileId);
   }
-
-  Future<void> _record(
-    CatalogPack pack,
-    CatalogFile file,
-    DownloadStatus status,
-    int bytesDone,
-  ) => _repo.upsert(
-    DownloadItem(
-      fileId: file.id,
-      packId: pack.id,
-      status: status,
-      bytesDone: bytesDone,
-      bytesTotal:
-          file.sizeBytes ?? (status == DownloadStatus.done ? bytesDone : null),
-      relativePath: pathFor(pack, file),
-    ),
-    url: file.url,
-    checksum: file.checksum,
-  );
 
   /// Queues every file of [packId] in catalog order.
   Future<void> enqueuePack(String packId) async {
@@ -157,8 +143,7 @@ class DownloadService {
   /// Deletes every file of [packId] and the pack's directory.
   Future<void> deletePack(String packId) async {
     final pack = catalog.requirePack(packId);
-    await _deleteAll(_ids(packId));
-    await _files.deleteDir('$audioDir/${pack.id}');
+    await _deleteAll(_ids(packId), dir: '$audioDir/${pack.id}');
   }
 
   Future<void> _pauseAll(Set<String> ids) async {
@@ -175,9 +160,23 @@ class DownloadService {
     }
   }
 
-  Future<void> _deleteAll(Set<String> ids) async {
+  /// Deletes [ids] (and [dir]). Registered in [_deleting] synchronously, so
+  /// a re-enqueue issued meanwhile runs after the delete, not under it.
+  Future<void> _deleteAll(Set<String> ids, {String? dir}) {
     ids.forEach(_bump);
     _queue.removeWaiting(ids);
+    final done = _deleteNow(ids, dir);
+    for (final id in ids) {
+      _deleting[id] = done;
+    }
+    return done.whenComplete(() {
+      for (final id in ids) {
+        if (identical(_deleting[id], done)) _deleting.remove(id);
+      }
+    });
+  }
+
+  Future<void> _deleteNow(Set<String> ids, String? dir) async {
     await _queue.stop(ids);
     for (final id in ids) {
       final (pack, file) = catalog.requireFile(id);
@@ -191,6 +190,7 @@ class DownloadService {
         _notify(() => onFileRemoved?.call(file));
       }
     }
+    if (dir != null) await _files.deleteDir(dir);
   }
 
   /// Call once at startup: downloads left running or queued by a previous

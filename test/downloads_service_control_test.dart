@@ -171,4 +171,24 @@ void main() {
     expect((await h.row(fatiha)).status, DownloadStatus.done);
     expect(h.files.bytesOf(fatihaFinal), fatihaBody);
   });
+
+  test('cancel then an immediate re-download while the abort drains: the '
+      'new download survives', () async {
+    await h.startHeld();
+    h.server.hold = false;
+    final cancelled = h.service.cancel(fatiha);
+    final enqueued = h.service.enqueueFile(fatiha);
+    await cancelled;
+    await enqueued;
+    await h.service.whenIdle();
+    await pumpEventQueue();
+
+    expect((await h.row(fatiha)).status, DownloadStatus.done);
+    expect(h.files.bytesOf(fatihaFinal), fatihaBody);
+    expect(await h.files.exists(fatihaPart), isFalse);
+    expect(h.done.length, 1);
+    expect(h.removed, isEmpty);
+    // The cancel discarded the old part: the new download started fresh.
+    expect(h.server.rangeOf(fatihaUrl), isNull);
+  });
 }

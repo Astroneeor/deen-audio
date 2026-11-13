@@ -81,7 +81,7 @@ final packDownloadItemsProvider =
 /// Provides the bytes used by downloaded files; rescanned only when a row
 /// appears, disappears or changes status (not on progress writes).
 final downloadsUsedBytesProvider = FutureProvider<int>((ref) async {
-  ref.watch(downloadItemsProvider.select((items) => _statusKey(items.value)));
+  ref.watch(downloadItemsProvider.select((items) => _statusKey(items.valueOrNull)));
   final service = await ref.watch(downloadServiceProvider.future);
   return service.usedBytes();
 });

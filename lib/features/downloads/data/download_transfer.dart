@@ -63,6 +63,8 @@ class DownloadTransfer {
       }
       return outcome;
     } catch (e) {
+      // After an abort the caller decides the status (e.g. paused).
+      if (aborted) return TransferOutcome.aborted;
       await markFailed(
         repo,
         file.id,
@@ -77,6 +79,7 @@ class DownloadTransfer {
     var offset = await files.size(partPath);
     final request = http.Request('GET', file.url);
     if (offset > 0) request.headers['Range'] = 'bytes=$offset-';
+    if (aborted) return TransferOutcome.aborted;
     final res = await _send(request);
     if (res == null) return TransferOutcome.aborted;
 

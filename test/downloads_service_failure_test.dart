@@ -1,13 +1,53 @@
 // DownloadService failures: HTTP errors, offline, disk errors, stale catalog
 // sizes, bad resumes, stalled connections and database errors.
+import 'dart:async';
 import 'dart:io';
 
+import 'package:deen_audio/core/storage/file_store.dart';
 import 'package:deen_audio/features/downloads/data/download_models.dart';
 import 'package:deen_audio/features/downloads/data/download_repository.dart';
+import 'package:deen_audio/features/downloads/data/download_transfer.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
 import 'support/download_harness.dart';
+import 'support/memory_file_store.dart';
+
+/// A store whose `size()` waits for [sizeGate] (when set), and whose sinks
+/// fail on `close()` once [failClose] is set.
+class _GatedStore extends MemoryFileStore {
+  _GatedStore() : super(base: '/store');
+  Completer<void>? sizeGate;
+  bool failClose = false;
+
+  @override
+  Future<int> size(String rel) async {
+    await sizeGate?.future;
+    return super.size(rel);
+  }
+
+  @override
+  Future<IOSinkLike> openAppend(String rel) async =>
+      _FailingCloseSink(this, await super.openAppend(rel));
+}
+
+class _FailingCloseSink implements IOSinkLike {
+  _FailingCloseSink(this._store, this._inner);
+  final _GatedStore _store;
+  final IOSinkLike _inner;
+
+  @override
+  void add(List<int> data) => _inner.add(data);
+
+  @override
+  Future<void> flush() => _inner.flush();
+
+  @override
+  Future<void> close() async {
+    await _inner.close();
+    if (_store.failClose) throw const FileSystemException('close failed');
+  }
+}
 
 /// A repository whose [setProgress] throws from its second call on (the
 /// first write inside the streaming loop), and whose first `failed` status
@@ -150,5 +190,47 @@ void main() {
     expect(item.error, contains('database is locked'));
     expect(item.error, isNot(contains('Connection lost')));
     expect(await h.files.exists(fatihaFinal), isFalse);
+  });
+
+  test('an abort while reading the .part size sends no request', () async {
+    final store = _GatedStore()..sizeGate = Completer<void>();
+    await h.repo.upsert(
+      const DownloadItem(
+        fileId: fatiha,
+        packId: 'test-reciter',
+        status: DownloadStatus.queued,
+        relativePath: fatihaFinal,
+      ),
+      url: Uri.parse('https://example.com/audio/001.mp3'),
+    );
+    final transfer = DownloadTransfer(
+      client: h.server.client,
+      files: store,
+      repo: h.repo,
+      file: h.catalog.file(fatiha)!,
+      relativePath: fatihaFinal,
+    );
+    final outcome = transfer.run();
+    await pumpEventQueue();
+    transfer.abort();
+    store.sizeGate!.complete();
+
+    expect(await outcome, TransferOutcome.aborted);
+    await pumpEventQueue();
+    expect(h.server.requests, isEmpty);
+  });
+
+  test('an error on the abort path still ends paused, not failed', () async {
+    final store = _GatedStore();
+    h.files = store;
+    await h.replaceService(h.newService);
+    await h.startHeld();
+    store.failClose = true;
+
+    await h.service.pause(fatiha);
+    final item = await h.row(fatiha);
+    expect(item.status, DownloadStatus.paused);
+    expect(item.error, isNull);
+    expect(h.files.bytesOf(fatihaPart), [1, 2, 3]);
   });
 }
