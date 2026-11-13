@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "packs": [
+    {
+      "id": "test-reciter",
+      "kind": "quranReciter",
+      "title": "Test Reciter",
+      "subtitle": "Murattal",
+      "sourceName": "Example Source",
+      "sourceUrl": "https://example.com/reciter",
+      "licenceNote": "Test data only.",
+      "files": [
+        {
+          "id": "test-reciter-001",
+          "title": "1. Al-Faatiha",
+          "url": "https://example.com/audio/001.mp3",
+          "sizeBytes": 8,
+          "surahNumber": 1,
+          "fileName": "001.mp3"
+        },
+        {
+          "id": "test-reciter-112",
+          "title": "112. Al-Ikhlaas",
+          "url": "https://example.com/audio/112.mp3",
+          "checksum": "7e52b249f6625d7049057c0613915d674323456fee350eb37d87c7ce444bee50",
+          "checksumAlgo": "sha256",
+          "surahNumber": 112,
+          "fileName": "112.mp3"
+        },
+        {
+          "id": "test-reciter-113",
+          "title": "113. Al-Falaq",
+          "url": "https://example.com/audio/113.mp3",
+          "surahNumber": 113,
+          "fileName": "113.mp3"
+        },
+        {
+          "id": "test-reciter-114",
+          "title": "114. An-Naas",
+          "url": "https://example.com/audio/114.mp3",
+          "surahNumber": 114,
+          "fileName": "114.mp3"
+        },
+        {
+          "id": "test-reciter-002",
+          "title": "2. Al-Baqara",
+          "url": "https://example.com/audio/002.mp3",
+          "surahNumber": 2,
+          "fileName": "002.mp3"
+        }
+      ]
+    },
+    {
+      "id": "test-scans",
+      "kind": "adhkarScans",
+      "title": "Test Adhkar Scans",
+      "sourceName": "Example Source",
+      "sourceUrl": "https://example.com/scans",
+      "files": [
+        {
+          "id": "test-scans-morning",
+          "title": "Morning adhkar, page 1",
+          "url": "https://example.com/scans/morning-1.jpg",
+          "fileName": "morning-1.jpg"
+        },
+        {
+          "id": "test-scans-booklet",
+          "title": "Evening adhkar booklet",
+          "url": "https://example.com/scans/evening.pdf",
+          "fileName": "evening.pdf"
+        }
+      ]
+    }
+  ]
+}

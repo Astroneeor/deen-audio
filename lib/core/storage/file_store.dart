@@ -18,6 +18,9 @@ abstract class FileStore {
   /// Size in bytes, or 0 if the file does not exist.
   Future<int> size(String rel);
 
+  /// Reads the whole of [rel] as a byte stream (used to verify checksums).
+  Stream<List<int>> openRead(String rel);
+
   /// Opens [rel] for appending, creating it and its parent directories.
   Future<IOSinkLike> openAppend(String rel);
 

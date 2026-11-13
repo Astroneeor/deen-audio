@@ -120,6 +120,20 @@ for i in $(seq -w 1 114); do
 done
 ```
 
+#### In-app downloads (catalog)
+
+The app also ships a download catalog, `assets/catalog/catalog.json`, listing full-surah MP3s it can fetch on request (a Downloads screen is being added). Nothing is downloaded unless you ask for it; files are stored under the app's data folder in `audio/<pack id>/` and resume after an interruption.
+
+| Pack | Reciter | Source page |
+|---|---|---|
+| `qa-alafasy` | Mishari Rashid al-Afasy | [quranicaudio.com/quran/5](https://quranicaudio.com/quran/5) |
+| `qa-abdulbaset-murattal` | AbdulBaset AbdulSamad (Murattal) | [quranicaudio.com/quran/37](https://quranicaudio.com/quran/37) |
+| `qa-husary` | Mahmoud Khaleel Al-Husary | [quranicaudio.com/quran/16](https://quranicaudio.com/quran/16) |
+| `qa-minshawi` | Muhammad Siddiq al-Minshawi | [quranicaudio.com/quran/6](https://quranicaudio.com/quran/6) |
+| `qa-sudais` | Abdur-Rahman as-Sudais | [quranicaudio.com/quran/7](https://quranicaudio.com/quran/7) |
+
+**Attribution and terms.** All audio in the catalog is downloaded directly from [QuranicAudio.com](https://quranicaudio.com) (`download.quranicaudio.com`), whose [About page](https://quranicaudio.com/about) states: *"Mp3s on this site may be downloaded and used for personal use free of charge. However, you may not use these files for commercial purposes as many of these files have rules and regulations that prevent their sale except by the publishing companies."* The same note is stored in each pack's `licenceNote`. Every URL in the catalog was checked (HTTP 200, `audio/mpeg`) when the catalog was built on 2026-11-13; `sizeBytes` is the size the server reported then, and a download whose size differs is rejected.
+
 ### 3. Arabic font (bundled)
 
 Quran text is rendered with **Amiri Quran** (`assets/fonts/AmiriQuran-Regular.ttf`, family `Amiri Quran` in `pubspec.yaml`), © 2010–2022 The Amiri Project Authors, from [github.com/google/fonts](https://github.com/google/fonts/tree/main/ofl/amiriquran) (upstream: [aliftype/amiri](https://github.com/aliftype/amiri)). It is licensed under the SIL Open Font License 1.1 — see `assets/fonts/AmiriQuran-OFL.txt`.

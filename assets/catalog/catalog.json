@@ -1,0 +1,4616 @@
+{
+ "version": 1,
+ "packs": [
+  {
+   "id": "qa-alafasy",
+   "kind": "quranReciter",
+   "title": "Mishari Rashid al-Afasy",
+   "sourceName": "QuranicAudio.com",
+   "sourceUrl": "https://quranicaudio.com/quran/5",
+   "licenceNote": "QuranicAudio.com (https://quranicaudio.com/about) states: \"Mp3s on this site may be downloaded and used for personal use free of charge. However, you may not use these files for commercial purposes as many of these files have rules and regulations that prevent their sale except by the publishing companies.\"",
+   "files": [
+    {
+     "id": "qa-alafasy-001",
+     "title": "1. Al-Faatiha",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3",
+     "sizeBytes": 839808,
+     "surahNumber": 1,
+     "fileName": "001.mp3"
+    },
+    {
+     "id": "qa-alafasy-002",
+     "title": "2. Al-Baqara",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/002.mp3",
+     "sizeBytes": 120888301,
+     "surahNumber": 2,
+     "fileName": "002.mp3"
+    },
+    {
+     "id": "qa-alafasy-003",
+     "title": "3. Aal-i-Imraan",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/003.mp3",
+     "sizeBytes": 75615653,
+     "surahNumber": 3,
+     "fileName": "003.mp3"
+    },
+    {
+     "id": "qa-alafasy-004",
+     "title": "4. An-Nisaa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/004.mp3",
+     "sizeBytes": 76765312,
+     "surahNumber": 4,
+     "fileName": "004.mp3"
+    },
+    {
+     "id": "qa-alafasy-005",
+     "title": "5. Al-Maaida",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/005.mp3",
+     "sizeBytes": 60512384,
+     "surahNumber": 5,
+     "fileName": "005.mp3"
+    },
+    {
+     "id": "qa-alafasy-006",
+     "title": "6. Al-An'aam",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/006.mp3",
+     "sizeBytes": 69611648,
+     "surahNumber": 6,
+     "fileName": "006.mp3"
+    },
+    {
+     "id": "qa-alafasy-007",
+     "title": "7. Al-A'raaf",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/007.mp3",
+     "sizeBytes": 79570932,
+     "surahNumber": 7,
+     "fileName": "007.mp3"
+    },
+    {
+     "id": "qa-alafasy-008",
+     "title": "8. Al-Anfaal",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/008.mp3",
+     "sizeBytes": 29417600,
+     "surahNumber": 8,
+     "fileName": "008.mp3"
+    },
+    {
+     "id": "qa-alafasy-009",
+     "title": "9. At-Tawba",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/009.mp3",
+     "sizeBytes": 58003584,
+     "surahNumber": 9,
+     "fileName": "009.mp3"
+    },
+    {
+     "id": "qa-alafasy-010",
+     "title": "10. Yunus",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/010.mp3",
+     "sizeBytes": 43061792,
+     "surahNumber": 10,
+     "fileName": "010.mp3"
+    },
+    {
+     "id": "qa-alafasy-011",
+     "title": "11. Hud",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/011.mp3",
+     "sizeBytes": 44580992,
+     "surahNumber": 11,
+     "fileName": "011.mp3"
+    },
+    {
+     "id": "qa-alafasy-012",
+     "title": "12. Yusuf",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/012.mp3",
+     "sizeBytes": 40409216,
+     "surahNumber": 12,
+     "fileName": "012.mp3"
+    },
+    {
+     "id": "qa-alafasy-013",
+     "title": "13. Ar-Ra'd",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/013.mp3",
+     "sizeBytes": 19703936,
+     "surahNumber": 13,
+     "fileName": "013.mp3"
+    },
+    {
+     "id": "qa-alafasy-014",
+     "title": "14. Ibrahim",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/014.mp3",
+     "sizeBytes": 19646592,
+     "surahNumber": 14,
+     "fileName": "014.mp3"
+    },
+    {
+     "id": "qa-alafasy-015",
+     "title": "15. Al-Hijr",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/015.mp3",
+     "sizeBytes": 15286400,
+     "surahNumber": 15,
+     "fileName": "015.mp3"
+    },
+    {
+     "id": "qa-alafasy-016",
+     "title": "16. An-Nahl",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/016.mp3",
+     "sizeBytes": 40706176,
+     "surahNumber": 16,
+     "fileName": "016.mp3"
+    },
+    {
+     "id": "qa-alafasy-017",
+     "title": "17. Al-Israa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/017.mp3",
+     "sizeBytes": 31963264,
+     "surahNumber": 17,
+     "fileName": "017.mp3"
+    },
+    {
+     "id": "qa-alafasy-018",
+     "title": "18. Al-Kahf",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/018.mp3",
+     "sizeBytes": 32172160,
+     "surahNumber": 18,
+     "fileName": "018.mp3"
+    },
+    {
+     "id": "qa-alafasy-019",
+     "title": "19. Maryam",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/019.mp3",
+     "sizeBytes": 20533376,
+     "surahNumber": 19,
+     "fileName": "019.mp3"
+    },
+    {
+     "id": "qa-alafasy-020",
+     "title": "20. Taa-Haa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/020.mp3",
+     "sizeBytes": 26052736,
+     "surahNumber": 20,
+     "fileName": "020.mp3"
+    },
+    {
+     "id": "qa-alafasy-021",
+     "title": "21. Al-Anbiyaa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/021.mp3",
+     "sizeBytes": 25364608,
+     "surahNumber": 21,
+     "fileName": "021.mp3"
+    },
+    {
+     "id": "qa-alafasy-022",
+     "title": "22. Al-Hajj",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/022.mp3",
+     "sizeBytes": 28369024,
+     "surahNumber": 22,
+     "fileName": "022.mp3"
+    },
+    {
+     "id": "qa-alafasy-023",
+     "title": "23. Al-Muminoon",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/023.mp3",
+     "sizeBytes": 24006784,
+     "surahNumber": 23,
+     "fileName": "023.mp3"
+    },
+    {
+     "id": "qa-alafasy-024",
+     "title": "24. An-Noor",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/024.mp3",
+     "sizeBytes": 29458560,
+     "surahNumber": 24,
+     "fileName": "024.mp3"
+    },
+    {
+     "id": "qa-alafasy-025",
+     "title": "25. Al-Furqaan",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/025.mp3",
+     "sizeBytes": 17635456,
+     "surahNumber": 25,
+     "fileName": "025.mp3"
+    },
+    {
+     "id": "qa-alafasy-026",
+     "title": "26. Ash-Shu'araa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/026.mp3",
+     "sizeBytes": 29560960,
+     "surahNumber": 26,
+     "fileName": "026.mp3"
+    },
+    {
+     "id": "qa-alafasy-027",
+     "title": "27. An-Naml",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/027.mp3",
+     "sizeBytes": 25161856,
+     "surahNumber": 27,
+     "fileName": "027.mp3"
+    },
+    {
+     "id": "qa-alafasy-028",
+     "title": "28. Al-Qasas",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/028.mp3",
+     "sizeBytes": 30470272,
+     "surahNumber": 28,
+     "fileName": "028.mp3"
+    },
+    {
+     "id": "qa-alafasy-029",
+     "title": "29. Al-Ankaboot",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/029.mp3",
+     "sizeBytes": 20576384,
+     "surahNumber": 29,
+     "fileName": "029.mp3"
+    },
+    {
+     "id": "qa-alafasy-030",
+     "title": "30. Ar-Room",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/030.mp3",
+     "sizeBytes": 18745472,
+     "surahNumber": 30,
+     "fileName": "030.mp3"
+    },
+    {
+     "id": "qa-alafasy-031",
+     "title": "31. Luqman",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/031.mp3",
+     "sizeBytes": 11450496,
+     "surahNumber": 31,
+     "fileName": "031.mp3"
+    },
+    {
+     "id": "qa-alafasy-032",
+     "title": "32. As-Sajda",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/032.mp3",
+     "sizeBytes": 8392832,
+     "surahNumber": 32,
+     "fileName": "032.mp3"
+    },
+    {
+     "id": "qa-alafasy-033",
+     "title": "33. Al-Ahzaab",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/033.mp3",
+     "sizeBytes": 28123264,
+     "surahNumber": 33,
+     "fileName": "033.mp3"
+    },
+    {
+     "id": "qa-alafasy-034",
+     "title": "34. Saba",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/034.mp3",
+     "sizeBytes": 18294912,
+     "surahNumber": 34,
+     "fileName": "034.mp3"
+    },
+    {
+     "id": "qa-alafasy-035",
+     "title": "35. Faatir",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/035.mp3",
+     "sizeBytes": 16918656,
+     "surahNumber": 35,
+     "fileName": "035.mp3"
+    },
+    {
+     "id": "qa-alafasy-036",
+     "title": "36. Yaseen",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/036.mp3",
+     "sizeBytes": 16965760,
+     "surahNumber": 36,
+     "fileName": "036.mp3"
+    },
+    {
+     "id": "qa-alafasy-037",
+     "title": "37. As-Saaffaat",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/037.mp3",
+     "sizeBytes": 23435392,
+     "surahNumber": 37,
+     "fileName": "037.mp3"
+    },
+    {
+     "id": "qa-alafasy-038",
+     "title": "38. Saad",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/038.mp3",
+     "sizeBytes": 17123456,
+     "surahNumber": 38,
+     "fileName": "038.mp3"
+    },
+    {
+     "id": "qa-alafasy-039",
+     "title": "39. Az-Zumar",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/039.mp3",
+     "sizeBytes": 26085504,
+     "surahNumber": 39,
+     "fileName": "039.mp3"
+    },
+    {
+     "id": "qa-alafasy-040",
+     "title": "40. Al-Ghaafir",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/040.mp3",
+     "sizeBytes": 25323648,
+     "surahNumber": 40,
+     "fileName": "040.mp3"
+    },
+    {
+     "id": "qa-alafasy-041",
+     "title": "41. Fussilat",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/041.mp3",
+     "sizeBytes": 18575488,
+     "surahNumber": 41,
+     "fileName": "041.mp3"
+    },
+    {
+     "id": "qa-alafasy-042",
+     "title": "42. Ash-Shura",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/042.mp3",
+     "sizeBytes": 18724992,
+     "surahNumber": 42,
+     "fileName": "042.mp3"
+    },
+    {
+     "id": "qa-alafasy-043",
+     "title": "43. Az-Zukhruf",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/043.mp3",
+     "sizeBytes": 19662976,
+     "surahNumber": 43,
+     "fileName": "043.mp3"
+    },
+    {
+     "id": "qa-alafasy-044",
+     "title": "44. Ad-Dukhaan",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/044.mp3",
+     "sizeBytes": 9470080,
+     "surahNumber": 44,
+     "fileName": "044.mp3"
+    },
+    {
+     "id": "qa-alafasy-045",
+     "title": "45. Al-Jaathiya",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/045.mp3",
+     "sizeBytes": 10432129,
+     "surahNumber": 45,
+     "fileName": "045.mp3"
+    },
+    {
+     "id": "qa-alafasy-046",
+     "title": "46. Al-Ahqaf",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/046.mp3",
+     "sizeBytes": 15327360,
+     "surahNumber": 46,
+     "fileName": "046.mp3"
+    },
+    {
+     "id": "qa-alafasy-047",
+     "title": "47. Muhammad",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/047.mp3",
+     "sizeBytes": 11815040,
+     "surahNumber": 47,
+     "fileName": "047.mp3"
+    },
+    {
+     "id": "qa-alafasy-048",
+     "title": "48. Al-Fath",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/048.mp3",
+     "sizeBytes": 11554944,
+     "surahNumber": 48,
+     "fileName": "048.mp3"
+    },
+    {
+     "id": "qa-alafasy-049",
+     "title": "49. Al-Hujuraat",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/049.mp3",
+     "sizeBytes": 8257664,
+     "surahNumber": 49,
+     "fileName": "049.mp3"
+    },
+    {
+     "id": "qa-alafasy-050",
+     "title": "50. Qaaf",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/050.mp3",
+     "sizeBytes": 8966272,
+     "surahNumber": 50,
+     "fileName": "050.mp3"
+    },
+    {
+     "id": "qa-alafasy-051",
+     "title": "51. Adh-Dhaariyat",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/051.mp3",
+     "sizeBytes": 8724608,
+     "surahNumber": 51,
+     "fileName": "051.mp3"
+    },
+    {
+     "id": "qa-alafasy-052",
+     "title": "52. At-Tur",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/052.mp3",
+     "sizeBytes": 7774336,
+     "surahNumber": 52,
+     "fileName": "052.mp3"
+    },
+    {
+     "id": "qa-alafasy-053",
+     "title": "53. An-Najm",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/053.mp3",
+     "sizeBytes": 7391360,
+     "surahNumber": 53,
+     "fileName": "053.mp3"
+    },
+    {
+     "id": "qa-alafasy-054",
+     "title": "54. Al-Qamar",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/054.mp3",
+     "sizeBytes": 7731328,
+     "surahNumber": 54,
+     "fileName": "054.mp3"
+    },
+    {
+     "id": "qa-alafasy-055",
+     "title": "55. Ar-Rahmaan",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/055.mp3",
+     "sizeBytes": 10875008,
+     "surahNumber": 55,
+     "fileName": "055.mp3"
+    },
+    {
+     "id": "qa-alafasy-056",
+     "title": "56. Al-Waaqia",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/056.mp3",
+     "sizeBytes": 11481216,
+     "surahNumber": 56,
+     "fileName": "056.mp3"
+    },
+    {
+     "id": "qa-alafasy-057",
+     "title": "57. Al-Hadid",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/057.mp3",
+     "sizeBytes": 13176960,
+     "surahNumber": 57,
+     "fileName": "057.mp3"
+    },
+    {
+     "id": "qa-alafasy-058",
+     "title": "58. Al-Mujaadila",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/058.mp3",
+     "sizeBytes": 9822336,
+     "surahNumber": 58,
+     "fileName": "058.mp3"
+    },
+    {
+     "id": "qa-alafasy-059",
+     "title": "59. Al-Hashr",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/059.mp3",
+     "sizeBytes": 10033280,
+     "surahNumber": 59,
+     "fileName": "059.mp3"
+    },
+    {
+     "id": "qa-alafasy-060",
+     "title": "60. Al-Mumtahana",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/060.mp3",
+     "sizeBytes": 7233664,
+     "surahNumber": 60,
+     "fileName": "060.mp3"
+    },
+    {
+     "id": "qa-alafasy-061",
+     "title": "61. As-Saff",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/061.mp3",
+     "sizeBytes": 4692096,
+     "surahNumber": 61,
+     "fileName": "061.mp3"
+    },
+    {
+     "id": "qa-alafasy-062",
+     "title": "62. Al-Jumu'a",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/062.mp3",
+     "sizeBytes": 3428480,
+     "surahNumber": 62,
+     "fileName": "062.mp3"
+    },
+    {
+     "id": "qa-alafasy-063",
+     "title": "63. Al-Munaafiqoon",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/063.mp3",
+     "sizeBytes": 4141184,
+     "surahNumber": 63,
+     "fileName": "063.mp3"
+    },
+    {
+     "id": "qa-alafasy-064",
+     "title": "64. At-Taghaabun",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/064.mp3",
+     "sizeBytes": 5202048,
+     "surahNumber": 64,
+     "fileName": "064.mp3"
+    },
+    {
+     "id": "qa-alafasy-065",
+     "title": "65. At-Talaaq",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/065.mp3",
+     "sizeBytes": 5787776,
+     "surahNumber": 65,
+     "fileName": "065.mp3"
+    },
+    {
+     "id": "qa-alafasy-066",
+     "title": "66. At-Tahrim",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/066.mp3",
+     "sizeBytes": 5961856,
+     "surahNumber": 66,
+     "fileName": "066.mp3"
+    },
+    {
+     "id": "qa-alafasy-067",
+     "title": "67. Al-Mulk",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/067.mp3",
+     "sizeBytes": 7297152,
+     "surahNumber": 67,
+     "fileName": "067.mp3"
+    },
+    {
+     "id": "qa-alafasy-068",
+     "title": "68. Al-Qalam",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/068.mp3",
+     "sizeBytes": 7307392,
+     "surahNumber": 68,
+     "fileName": "068.mp3"
+    },
+    {
+     "id": "qa-alafasy-069",
+     "title": "69. Al-Haaqqa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/069.mp3",
+     "sizeBytes": 6504576,
+     "surahNumber": 69,
+     "fileName": "069.mp3"
+    },
+    {
+     "id": "qa-alafasy-070",
+     "title": "70. Al-Ma'aarij",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/070.mp3",
+     "sizeBytes": 5095552,
+     "surahNumber": 70,
+     "fileName": "070.mp3"
+    },
+    {
+     "id": "qa-alafasy-071",
+     "title": "71. Nooh",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/071.mp3",
+     "sizeBytes": 4503680,
+     "surahNumber": 71,
+     "fileName": "071.mp3"
+    },
+    {
+     "id": "qa-alafasy-072",
+     "title": "72. Al-Jinn",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/072.mp3",
+     "sizeBytes": 5367936,
+     "surahNumber": 72,
+     "fileName": "072.mp3"
+    },
+    {
+     "id": "qa-alafasy-073",
+     "title": "73. Al-Muzzammil",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/073.mp3",
+     "sizeBytes": 3915904,
+     "surahNumber": 73,
+     "fileName": "073.mp3"
+    },
+    {
+     "id": "qa-alafasy-074",
+     "title": "74. Al-Muddaththir",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/074.mp3",
+     "sizeBytes": 5200000,
+     "surahNumber": 74,
+     "fileName": "074.mp3"
+    },
+    {
+     "id": "qa-alafasy-075",
+     "title": "75. Al-Qiyaama",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/075.mp3",
+     "sizeBytes": 3397760,
+     "surahNumber": 75,
+     "fileName": "075.mp3"
+    },
+    {
+     "id": "qa-alafasy-076",
+     "title": "76. Al-Insaan",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/076.mp3",
+     "sizeBytes": 5050496,
+     "surahNumber": 76,
+     "fileName": "076.mp3"
+    },
+    {
+     "id": "qa-alafasy-077",
+     "title": "77. Al-Mursalaat",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/077.mp3",
+     "sizeBytes": 4796544,
+     "surahNumber": 77,
+     "fileName": "077.mp3"
+    },
+    {
+     "id": "qa-alafasy-078",
+     "title": "78. An-Naba",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/078.mp3",
+     "sizeBytes": 4683904,
+     "surahNumber": 78,
+     "fileName": "078.mp3"
+    },
+    {
+     "id": "qa-alafasy-079",
+     "title": "79. An-Naazi'aat",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/079.mp3",
+     "sizeBytes": 4112512,
+     "surahNumber": 79,
+     "fileName": "079.mp3"
+    },
+    {
+     "id": "qa-alafasy-080",
+     "title": "80. Abasa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/080.mp3",
+     "sizeBytes": 3537024,
+     "surahNumber": 80,
+     "fileName": "080.mp3"
+    },
+    {
+     "id": "qa-alafasy-081",
+     "title": "81. At-Takwir",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/081.mp3",
+     "sizeBytes": 2543744,
+     "surahNumber": 81,
+     "fileName": "081.mp3"
+    },
+    {
+     "id": "qa-alafasy-082",
+     "title": "82. Al-Infitaar",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/082.mp3",
+     "sizeBytes": 2197632,
+     "surahNumber": 82,
+     "fileName": "082.mp3"
+    },
+    {
+     "id": "qa-alafasy-083",
+     "title": "83. Al-Mutaffifin",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/083.mp3",
+     "sizeBytes": 4974720,
+     "surahNumber": 83,
+     "fileName": "083.mp3"
+    },
+    {
+     "id": "qa-alafasy-084",
+     "title": "84. Al-Inshiqaaq",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/084.mp3",
+     "sizeBytes": 2572416,
+     "surahNumber": 84,
+     "fileName": "084.mp3"
+    },
+    {
+     "id": "qa-alafasy-085",
+     "title": "85. Al-Burooj",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/085.mp3",
+     "sizeBytes": 3180672,
+     "surahNumber": 85,
+     "fileName": "085.mp3"
+    },
+    {
+     "id": "qa-alafasy-086",
+     "title": "86. At-Taariq",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/086.mp3",
+     "sizeBytes": 1613952,
+     "surahNumber": 86,
+     "fileName": "086.mp3"
+    },
+    {
+     "id": "qa-alafasy-087",
+     "title": "87. Al-A'laa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/087.mp3",
+     "sizeBytes": 1734784,
+     "surahNumber": 87,
+     "fileName": "087.mp3"
+    },
+    {
+     "id": "qa-alafasy-088",
+     "title": "88. Al-Ghaashiya",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/088.mp3",
+     "sizeBytes": 2156672,
+     "surahNumber": 88,
+     "fileName": "088.mp3"
+    },
+    {
+     "id": "qa-alafasy-089",
+     "title": "89. Al-Fajr",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/089.mp3",
+     "sizeBytes": 3416192,
+     "surahNumber": 89,
+     "fileName": "089.mp3"
+    },
+    {
+     "id": "qa-alafasy-090",
+     "title": "90. Al-Balad",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/090.mp3",
+     "sizeBytes": 1929344,
+     "surahNumber": 90,
+     "fileName": "090.mp3"
+    },
+    {
+     "id": "qa-alafasy-091",
+     "title": "91. Ash-Shams",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/091.mp3",
+     "sizeBytes": 1360000,
+     "surahNumber": 91,
+     "fileName": "091.mp3"
+    },
+    {
+     "id": "qa-alafasy-092",
+     "title": "92. Al-Lail",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/092.mp3",
+     "sizeBytes": 1796224,
+     "surahNumber": 92,
+     "fileName": "092.mp3"
+    },
+    {
+     "id": "qa-alafasy-093",
+     "title": "93. Ad-Dhuhaa",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/093.mp3",
+     "sizeBytes": 1050752,
+     "surahNumber": 93,
+     "fileName": "093.mp3"
+    },
+    {
+     "id": "qa-alafasy-094",
+     "title": "94. Ash-Sharh",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/094.mp3",
+     "sizeBytes": 698496,
+     "surahNumber": 94,
+     "fileName": "094.mp3"
+    },
+    {
+     "id": "qa-alafasy-095",
+     "title": "95. At-Tin",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/095.mp3",
+     "sizeBytes": 1048704,
+     "surahNumber": 95,
+     "fileName": "095.mp3"
+    },
+    {
+     "id": "qa-alafasy-096",
+     "title": "96. Al-Alaq",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/096.mp3",
+     "sizeBytes": 1532032,
+     "surahNumber": 96,
+     "fileName": "096.mp3"
+    },
+    {
+     "id": "qa-alafasy-097",
+     "title": "97. Al-Qadr",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/097.mp3",
+     "sizeBytes": 731264,
+     "surahNumber": 97,
+     "fileName": "097.mp3"
+    },
+    {
+     "id": "qa-alafasy-098",
+     "title": "98. Al-Bayyina",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/098.mp3",
+     "sizeBytes": 2033792,
+     "surahNumber": 98,
+     "fileName": "098.mp3"
+    },
+    {
+     "id": "qa-alafasy-099",
+     "title": "99. Az-Zalzala",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/099.mp3",
+     "sizeBytes": 968832,
+     "surahNumber": 99,
+     "fileName": "099.mp3"
+    },
+    {
+     "id": "qa-alafasy-100",
+     "title": "100. Al-Aadiyaat",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/100.mp3",
+     "sizeBytes": 1130624,
+     "surahNumber": 100,
+     "fileName": "100.mp3"
+    },
+    {
+     "id": "qa-alafasy-101",
+     "title": "101. Al-Qaari'a",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/101.mp3",
+     "sizeBytes": 1009792,
+     "surahNumber": 101,
+     "fileName": "101.mp3"
+    },
+    {
+     "id": "qa-alafasy-102",
+     "title": "102. At-Takaathur",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/102.mp3",
+     "sizeBytes": 1011840,
+     "surahNumber": 102,
+     "fileName": "102.mp3"
+    },
+    {
+     "id": "qa-alafasy-103",
+     "title": "103. Al-Asr",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/103.mp3",
+     "sizeBytes": 448640,
+     "surahNumber": 103,
+     "fileName": "103.mp3"
+    },
+    {
+     "id": "qa-alafasy-104",
+     "title": "104. Al-Humaza",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/104.mp3",
+     "sizeBytes": 938112,
+     "surahNumber": 104,
+     "fileName": "104.mp3"
+    },
+    {
+     "id": "qa-alafasy-105",
+     "title": "105. Al-Fil",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/105.mp3",
+     "sizeBytes": 788608,
+     "surahNumber": 105,
+     "fileName": "105.mp3"
+    },
+    {
+     "id": "qa-alafasy-106",
+     "title": "106. Quraish",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/106.mp3",
+     "sizeBytes": 690304,
+     "surahNumber": 106,
+     "fileName": "106.mp3"
+    },
+    {
+     "id": "qa-alafasy-107",
+     "title": "107. Al-Maa'un",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/107.mp3",
+     "sizeBytes": 929920,
+     "surahNumber": 107,
+     "fileName": "107.mp3"
+    },
+    {
+     "id": "qa-alafasy-108",
+     "title": "108. Al-Kawthar",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/108.mp3",
+     "sizeBytes": 401536,
+     "surahNumber": 108,
+     "fileName": "108.mp3"
+    },
+    {
+     "id": "qa-alafasy-109",
+     "title": "109. Al-Kaafiroon",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/109.mp3",
+     "sizeBytes": 878720,
+     "surahNumber": 109,
+     "fileName": "109.mp3"
+    },
+    {
+     "id": "qa-alafasy-110",
+     "title": "110. An-Nasr",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/110.mp3",
+     "sizeBytes": 569472,
+     "surahNumber": 110,
+     "fileName": "110.mp3"
+    },
+    {
+     "id": "qa-alafasy-111",
+     "title": "111. Al-Masad",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/111.mp3",
+     "sizeBytes": 673920,
+     "surahNumber": 111,
+     "fileName": "111.mp3"
+    },
+    {
+     "id": "qa-alafasy-112",
+     "title": "112. Al-Ikhlaas",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/112.mp3",
+     "sizeBytes": 356480,
+     "surahNumber": 112,
+     "fileName": "112.mp3"
+    },
+    {
+     "id": "qa-alafasy-113",
+     "title": "113. Al-Falaq",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/113.mp3",
+     "sizeBytes": 538752,
+     "surahNumber": 113,
+     "fileName": "113.mp3"
+    },
+    {
+     "id": "qa-alafasy-114",
+     "title": "114. An-Naas",
+     "url": "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/114.mp3",
+     "sizeBytes": 811136,
+     "surahNumber": 114,
+     "fileName": "114.mp3"
+    }
+   ]
+  },
+  {
+   "id": "qa-abdulbaset-murattal",
+   "kind": "quranReciter",
+   "title": "AbdulBaset AbdulSamad",
+   "subtitle": "Murattal",
+   "sourceName": "QuranicAudio.com",
+   "sourceUrl": "https://quranicaudio.com/quran/37",
+   "licenceNote": "QuranicAudio.com (https://quranicaudio.com/about) states: \"Mp3s on this site may be downloaded and used for personal use free of charge. However, you may not use these files for commercial purposes as many of these files have rules and regulations that prevent their sale except by the publishing companies.\"",
+   "files": [
+    {
+     "id": "qa-abdulbaset-murattal-001",
+     "title": "1. Al-Faatiha",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/001.mp3",
+     "sizeBytes": 1132672,
+     "surahNumber": 1,
+     "fileName": "001.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-002",
+     "title": "2. Al-Baqara",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/002.mp3",
+     "sizeBytes": 232575104,
+     "surahNumber": 2,
+     "fileName": "002.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-003",
+     "title": "3. Aal-i-Imraan",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/003.mp3",
+     "sizeBytes": 126455936,
+     "surahNumber": 3,
+     "fileName": "003.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-004",
+     "title": "4. An-Nisaa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/004.mp3",
+     "sizeBytes": 126795904,
+     "surahNumber": 4,
+     "fileName": "004.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-005",
+     "title": "5. Al-Maaida",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/005.mp3",
+     "sizeBytes": 97562752,
+     "surahNumber": 5,
+     "fileName": "005.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-006",
+     "title": "6. Al-An'aam",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/006.mp3",
+     "sizeBytes": 116633728,
+     "surahNumber": 6,
+     "fileName": "006.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-007",
+     "title": "7. Al-A'raaf",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/007.mp3",
+     "sizeBytes": 136878208,
+     "surahNumber": 7,
+     "fileName": "007.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-008",
+     "title": "8. Al-Anfaal",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/008.mp3",
+     "sizeBytes": 40020096,
+     "surahNumber": 8,
+     "fileName": "008.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-009",
+     "title": "9. At-Tawba",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/009.mp3",
+     "sizeBytes": 78657664,
+     "surahNumber": 9,
+     "fileName": "009.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-010",
+     "title": "10. Yunus",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/010.mp3",
+     "sizeBytes": 57108608,
+     "surahNumber": 10,
+     "fileName": "010.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-011",
+     "title": "11. Hud",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/011.mp3",
+     "sizeBytes": 58585216,
+     "surahNumber": 11,
+     "fileName": "011.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-012",
+     "title": "12. Yusuf",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/012.mp3",
+     "sizeBytes": 52945024,
+     "surahNumber": 12,
+     "fileName": "012.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-013",
+     "title": "13. Ar-Ra'd",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/013.mp3",
+     "sizeBytes": 25596032,
+     "surahNumber": 13,
+     "fileName": "013.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-014",
+     "title": "14. Ibrahim",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/014.mp3",
+     "sizeBytes": 24344704,
+     "surahNumber": 14,
+     "fileName": "014.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-015",
+     "title": "15. Al-Hijr",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/015.mp3",
+     "sizeBytes": 20037760,
+     "surahNumber": 15,
+     "fileName": "015.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-016",
+     "title": "16. An-Nahl",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/016.mp3",
+     "sizeBytes": 59199616,
+     "surahNumber": 16,
+     "fileName": "016.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-017",
+     "title": "17. Al-Israa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/017.mp3",
+     "sizeBytes": 53418112,
+     "surahNumber": 17,
+     "fileName": "017.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-018",
+     "title": "18. Al-Kahf",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/018.mp3",
+     "sizeBytes": 55969920,
+     "surahNumber": 18,
+     "fileName": "018.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-019",
+     "title": "19. Maryam",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/019.mp3",
+     "sizeBytes": 33798272,
+     "surahNumber": 19,
+     "fileName": "019.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-020",
+     "title": "20. Taa-Haa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/020.mp3",
+     "sizeBytes": 45940864,
+     "surahNumber": 20,
+     "fileName": "020.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-021",
+     "title": "21. Al-Anbiyaa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/021.mp3",
+     "sizeBytes": 43946112,
+     "surahNumber": 21,
+     "fileName": "021.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-022",
+     "title": "22. Al-Hajj",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/022.mp3",
+     "sizeBytes": 44871808,
+     "surahNumber": 22,
+     "fileName": "022.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-023",
+     "title": "23. Al-Muminoon",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/023.mp3",
+     "sizeBytes": 36907136,
+     "surahNumber": 23,
+     "fileName": "023.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-024",
+     "title": "24. An-Noor",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/024.mp3",
+     "sizeBytes": 39747712,
+     "surahNumber": 24,
+     "fileName": "024.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-025",
+     "title": "25. Al-Furqaan",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/025.mp3",
+     "sizeBytes": 24367232,
+     "surahNumber": 25,
+     "fileName": "025.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-026",
+     "title": "26. Ash-Shu'araa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/026.mp3",
+     "sizeBytes": 44466304,
+     "surahNumber": 26,
+     "fileName": "026.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-027",
+     "title": "27. An-Naml",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/027.mp3",
+     "sizeBytes": 44898432,
+     "surahNumber": 27,
+     "fileName": "027.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-028",
+     "title": "28. Al-Qasas",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/028.mp3",
+     "sizeBytes": 53995648,
+     "surahNumber": 28,
+     "fileName": "028.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-029",
+     "title": "29. Al-Ankaboot",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/029.mp3",
+     "sizeBytes": 35702912,
+     "surahNumber": 29,
+     "fileName": "029.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-030",
+     "title": "30. Ar-Room",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/030.mp3",
+     "sizeBytes": 28278912,
+     "surahNumber": 30,
+     "fileName": "030.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-031",
+     "title": "31. Luqman",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/031.mp3",
+     "sizeBytes": 14780544,
+     "surahNumber": 31,
+     "fileName": "031.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-032",
+     "title": "32. As-Sajda",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/032.mp3",
+     "sizeBytes": 10782848,
+     "surahNumber": 32,
+     "fileName": "032.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-033",
+     "title": "33. Al-Ahzaab",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/033.mp3",
+     "sizeBytes": 38267008,
+     "surahNumber": 33,
+     "fileName": "033.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-034",
+     "title": "34. Saba",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/034.mp3",
+     "sizeBytes": 24772736,
+     "surahNumber": 34,
+     "fileName": "034.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-035",
+     "title": "35. Faatir",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/035.mp3",
+     "sizeBytes": 23324800,
+     "surahNumber": 35,
+     "fileName": "035.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-036",
+     "title": "36. Yaseen",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/036.mp3",
+     "sizeBytes": 20914304,
+     "surahNumber": 36,
+     "fileName": "036.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-037",
+     "title": "37. As-Saaffaat",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/037.mp3",
+     "sizeBytes": 27396224,
+     "surahNumber": 37,
+     "fileName": "037.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-038",
+     "title": "38. Saad",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/038.mp3",
+     "sizeBytes": 23869568,
+     "surahNumber": 38,
+     "fileName": "038.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-039",
+     "title": "39. Az-Zumar",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/039.mp3",
+     "sizeBytes": 41187456,
+     "surahNumber": 39,
+     "fileName": "039.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-040",
+     "title": "40. Al-Ghaafir",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/040.mp3",
+     "sizeBytes": 40771712,
+     "surahNumber": 40,
+     "fileName": "040.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-041",
+     "title": "41. Fussilat",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/041.mp3",
+     "sizeBytes": 29038720,
+     "surahNumber": 41,
+     "fileName": "041.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-042",
+     "title": "42. Ash-Shura",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/042.mp3",
+     "sizeBytes": 31101056,
+     "surahNumber": 42,
+     "fileName": "042.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-043",
+     "title": "43. Az-Zukhruf",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/043.mp3",
+     "sizeBytes": 31862912,
+     "surahNumber": 43,
+     "fileName": "043.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-044",
+     "title": "44. Ad-Dukhaan",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/044.mp3",
+     "sizeBytes": 13119616,
+     "surahNumber": 44,
+     "fileName": "044.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-045",
+     "title": "45. Al-Jaathiya",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/045.mp3",
+     "sizeBytes": 18163840,
+     "surahNumber": 45,
+     "fileName": "045.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-046",
+     "title": "46. Al-Ahqaf",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/046.mp3",
+     "sizeBytes": 24354944,
+     "surahNumber": 46,
+     "fileName": "046.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-047",
+     "title": "47. Muhammad",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/047.mp3",
+     "sizeBytes": 20279424,
+     "surahNumber": 47,
+     "fileName": "047.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-048",
+     "title": "48. Al-Fath",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/048.mp3",
+     "sizeBytes": 19349632,
+     "surahNumber": 48,
+     "fileName": "048.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-049",
+     "title": "49. Al-Hujuraat",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/049.mp3",
+     "sizeBytes": 12122240,
+     "surahNumber": 49,
+     "fileName": "049.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-050",
+     "title": "50. Qaaf",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/050.mp3",
+     "sizeBytes": 11890816,
+     "surahNumber": 50,
+     "fileName": "050.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-051",
+     "title": "51. Adh-Dhaariyat",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/051.mp3",
+     "sizeBytes": 12902528,
+     "surahNumber": 51,
+     "fileName": "051.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-052",
+     "title": "52. At-Tur",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/052.mp3",
+     "sizeBytes": 11114624,
+     "surahNumber": 52,
+     "fileName": "052.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-053",
+     "title": "53. An-Najm",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/053.mp3",
+     "sizeBytes": 12261504,
+     "surahNumber": 53,
+     "fileName": "053.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-054",
+     "title": "54. Al-Qamar",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/054.mp3",
+     "sizeBytes": 13002880,
+     "surahNumber": 54,
+     "fileName": "054.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-055",
+     "title": "55. Ar-Rahmaan",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/055.mp3",
+     "sizeBytes": 14844032,
+     "surahNumber": 55,
+     "fileName": "055.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-056",
+     "title": "56. Al-Waaqia",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/056.mp3",
+     "sizeBytes": 14899328,
+     "surahNumber": 56,
+     "fileName": "056.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-057",
+     "title": "57. Al-Hadid",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/057.mp3",
+     "sizeBytes": 19273856,
+     "surahNumber": 57,
+     "fileName": "057.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-058",
+     "title": "58. Al-Mujaadila",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/058.mp3",
+     "sizeBytes": 16265344,
+     "surahNumber": 58,
+     "fileName": "058.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-059",
+     "title": "59. Al-Hashr",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/059.mp3",
+     "sizeBytes": 16590976,
+     "surahNumber": 59,
+     "fileName": "059.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-060",
+     "title": "60. Al-Mumtahana",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/060.mp3",
+     "sizeBytes": 13973632,
+     "surahNumber": 60,
+     "fileName": "060.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-061",
+     "title": "61. As-Saff",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/061.mp3",
+     "sizeBytes": 7590016,
+     "surahNumber": 61,
+     "fileName": "061.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-062",
+     "title": "62. Al-Jumu'a",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/062.mp3",
+     "sizeBytes": 6049920,
+     "surahNumber": 62,
+     "fileName": "062.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-063",
+     "title": "63. Al-Munaafiqoon",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/063.mp3",
+     "sizeBytes": 6582400,
+     "surahNumber": 63,
+     "fileName": "063.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-064",
+     "title": "64. At-Taghaabun",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/064.mp3",
+     "sizeBytes": 8480896,
+     "surahNumber": 64,
+     "fileName": "064.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-065",
+     "title": "65. At-Talaaq",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/065.mp3",
+     "sizeBytes": 10332288,
+     "surahNumber": 65,
+     "fileName": "065.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-066",
+     "title": "66. At-Tahrim",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/066.mp3",
+     "sizeBytes": 10301568,
+     "surahNumber": 66,
+     "fileName": "066.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-067",
+     "title": "67. Al-Mulk",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/067.mp3",
+     "sizeBytes": 11851904,
+     "surahNumber": 67,
+     "fileName": "067.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-068",
+     "title": "68. Al-Qalam",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/068.mp3",
+     "sizeBytes": 11217024,
+     "surahNumber": 68,
+     "fileName": "068.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-069",
+     "title": "69. Al-Haaqqa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/069.mp3",
+     "sizeBytes": 10072192,
+     "surahNumber": 69,
+     "fileName": "069.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-070",
+     "title": "70. Al-Ma'aarij",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/070.mp3",
+     "sizeBytes": 8425600,
+     "surahNumber": 70,
+     "fileName": "070.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-071",
+     "title": "71. Nooh",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/071.mp3",
+     "sizeBytes": 8540288,
+     "surahNumber": 71,
+     "fileName": "071.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-072",
+     "title": "72. Al-Jinn",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/072.mp3",
+     "sizeBytes": 9961600,
+     "surahNumber": 72,
+     "fileName": "072.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-073",
+     "title": "73. Al-Muzzammil",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/073.mp3",
+     "sizeBytes": 7143552,
+     "surahNumber": 73,
+     "fileName": "073.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-074",
+     "title": "74. Al-Muddaththir",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/074.mp3",
+     "sizeBytes": 9769088,
+     "surahNumber": 74,
+     "fileName": "074.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-075",
+     "title": "75. Al-Qiyaama",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/075.mp3",
+     "sizeBytes": 6066304,
+     "surahNumber": 75,
+     "fileName": "075.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-076",
+     "title": "76. Al-Insaan",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/076.mp3",
+     "sizeBytes": 8812672,
+     "surahNumber": 76,
+     "fileName": "076.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-077",
+     "title": "77. Al-Mursalaat",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/077.mp3",
+     "sizeBytes": 6887552,
+     "surahNumber": 77,
+     "fileName": "077.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-078",
+     "title": "78. An-Naba",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/078.mp3",
+     "sizeBytes": 6740096,
+     "surahNumber": 78,
+     "fileName": "078.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-079",
+     "title": "79. An-Naazi'aat",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/079.mp3",
+     "sizeBytes": 6240384,
+     "surahNumber": 79,
+     "fileName": "079.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-080",
+     "title": "80. Abasa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/080.mp3",
+     "sizeBytes": 5138560,
+     "surahNumber": 80,
+     "fileName": "080.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-081",
+     "title": "81. At-Takwir",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/081.mp3",
+     "sizeBytes": 3569792,
+     "surahNumber": 81,
+     "fileName": "081.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-082",
+     "title": "82. Al-Infitaar",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/082.mp3",
+     "sizeBytes": 2838656,
+     "surahNumber": 82,
+     "fileName": "082.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-083",
+     "title": "83. Al-Mutaffifin",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/083.mp3",
+     "sizeBytes": 6111360,
+     "surahNumber": 83,
+     "fileName": "083.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-084",
+     "title": "84. Al-Inshiqaaq",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/084.mp3",
+     "sizeBytes": 3561600,
+     "surahNumber": 84,
+     "fileName": "084.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-085",
+     "title": "85. Al-Burooj",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/085.mp3",
+     "sizeBytes": 3481728,
+     "surahNumber": 85,
+     "fileName": "085.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-086",
+     "title": "86. At-Taariq",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/086.mp3",
+     "sizeBytes": 2222208,
+     "surahNumber": 86,
+     "fileName": "086.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-087",
+     "title": "87. Al-A'laa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/087.mp3",
+     "sizeBytes": 2521216,
+     "surahNumber": 87,
+     "fileName": "087.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-088",
+     "title": "88. Al-Ghaashiya",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/088.mp3",
+     "sizeBytes": 3129472,
+     "surahNumber": 88,
+     "fileName": "088.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-089",
+     "title": "89. Al-Fajr",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/089.mp3",
+     "sizeBytes": 4622464,
+     "surahNumber": 89,
+     "fileName": "089.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-090",
+     "title": "90. Al-Balad",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/090.mp3",
+     "sizeBytes": 2732160,
+     "surahNumber": 90,
+     "fileName": "090.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-091",
+     "title": "91. Ash-Shams",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/091.mp3",
+     "sizeBytes": 2039936,
+     "surahNumber": 91,
+     "fileName": "091.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-092",
+     "title": "92. Al-Lail",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/092.mp3",
+     "sizeBytes": 2715776,
+     "surahNumber": 92,
+     "fileName": "092.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-093",
+     "title": "93. Ad-Dhuhaa",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/093.mp3",
+     "sizeBytes": 1534080,
+     "surahNumber": 93,
+     "fileName": "093.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-094",
+     "title": "94. Ash-Sharh",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/094.mp3",
+     "sizeBytes": 938112,
+     "surahNumber": 94,
+     "fileName": "094.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-095",
+     "title": "95. At-Tin",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/095.mp3",
+     "sizeBytes": 1200256,
+     "surahNumber": 95,
+     "fileName": "095.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-096",
+     "title": "96. Al-Alaq",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/096.mp3",
+     "sizeBytes": 2437248,
+     "surahNumber": 96,
+     "fileName": "096.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-097",
+     "title": "97. Al-Qadr",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/097.mp3",
+     "sizeBytes": 983168,
+     "surahNumber": 97,
+     "fileName": "097.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-098",
+     "title": "98. Al-Bayyina",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/098.mp3",
+     "sizeBytes": 2971776,
+     "surahNumber": 98,
+     "fileName": "098.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-099",
+     "title": "99. Az-Zalzala",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/099.mp3",
+     "sizeBytes": 1312896,
+     "surahNumber": 99,
+     "fileName": "099.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-100",
+     "title": "100. Al-Aadiyaat",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/100.mp3",
+     "sizeBytes": 1392768,
+     "surahNumber": 100,
+     "fileName": "100.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-101",
+     "title": "101. Al-Qaari'a",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/101.mp3",
+     "sizeBytes": 1343616,
+     "surahNumber": 101,
+     "fileName": "101.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-102",
+     "title": "102. At-Takaathur",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/102.mp3",
+     "sizeBytes": 1093760,
+     "surahNumber": 102,
+     "fileName": "102.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-103",
+     "title": "103. Al-Asr",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/103.mp3",
+     "sizeBytes": 553088,
+     "surahNumber": 103,
+     "fileName": "103.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-104",
+     "title": "104. Al-Humaza",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/104.mp3",
+     "sizeBytes": 1214592,
+     "surahNumber": 104,
+     "fileName": "104.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-105",
+     "title": "105. Al-Fil",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/105.mp3",
+     "sizeBytes": 815232,
+     "surahNumber": 105,
+     "fileName": "105.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-106",
+     "title": "106. Quraish",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/106.mp3",
+     "sizeBytes": 727168,
+     "surahNumber": 106,
+     "fileName": "106.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-107",
+     "title": "107. Al-Maa'un",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/107.mp3",
+     "sizeBytes": 938112,
+     "surahNumber": 107,
+     "fileName": "107.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-108",
+     "title": "108. Al-Kawthar",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/108.mp3",
+     "sizeBytes": 444544,
+     "surahNumber": 108,
+     "fileName": "108.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-109",
+     "title": "109. Al-Kaafiroon",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/109.mp3",
+     "sizeBytes": 977024,
+     "surahNumber": 109,
+     "fileName": "109.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-110",
+     "title": "110. An-Nasr",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/110.mp3",
+     "sizeBytes": 661632,
+     "surahNumber": 110,
+     "fileName": "110.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-111",
+     "title": "111. Al-Masad",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/111.mp3",
+     "sizeBytes": 792704,
+     "surahNumber": 111,
+     "fileName": "111.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-112",
+     "title": "112. Al-Ikhlaas",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/112.mp3",
+     "sizeBytes": 438400,
+     "surahNumber": 112,
+     "fileName": "112.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-113",
+     "title": "113. Al-Falaq",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/113.mp3",
+     "sizeBytes": 696448,
+     "surahNumber": 113,
+     "fileName": "113.mp3"
+    },
+    {
+     "id": "qa-abdulbaset-murattal-114",
+     "title": "114. An-Naas",
+     "url": "https://download.quranicaudio.com/quran/abdul_basit_murattal/114.mp3",
+     "sizeBytes": 827520,
+     "surahNumber": 114,
+     "fileName": "114.mp3"
+    }
+   ]
+  },
+  {
+   "id": "qa-husary",
+   "kind": "quranReciter",
+   "title": "Mahmoud Khaleel Al-Husary",
+   "sourceName": "QuranicAudio.com",
+   "sourceUrl": "https://quranicaudio.com/quran/16",
+   "licenceNote": "QuranicAudio.com (https://quranicaudio.com/about) states: \"Mp3s on this site may be downloaded and used for personal use free of charge. However, you may not use these files for commercial purposes as many of these files have rules and regulations that prevent their sale except by the publishing companies.\"",
+   "files": [
+    {
+     "id": "qa-husary-001",
+     "title": "1. Al-Faatiha",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/001.mp3",
+     "sizeBytes": 919680,
+     "surahNumber": 1,
+     "fileName": "001.mp3"
+    },
+    {
+     "id": "qa-husary-002",
+     "title": "2. Al-Baqara",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/002.mp3",
+     "sizeBytes": 191328384,
+     "surahNumber": 2,
+     "fileName": "002.mp3"
+    },
+    {
+     "id": "qa-husary-003",
+     "title": "3. Aal-i-Imraan",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/003.mp3",
+     "sizeBytes": 110221440,
+     "surahNumber": 3,
+     "fileName": "003.mp3"
+    },
+    {
+     "id": "qa-husary-004",
+     "title": "4. An-Nisaa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/004.mp3",
+     "sizeBytes": 110434432,
+     "surahNumber": 4,
+     "fileName": "004.mp3"
+    },
+    {
+     "id": "qa-husary-005",
+     "title": "5. Al-Maaida",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/005.mp3",
+     "sizeBytes": 88928384,
+     "surahNumber": 5,
+     "fileName": "005.mp3"
+    },
+    {
+     "id": "qa-husary-006",
+     "title": "6. Al-An'aam",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/006.mp3",
+     "sizeBytes": 100429952,
+     "surahNumber": 6,
+     "fileName": "006.mp3"
+    },
+    {
+     "id": "qa-husary-007",
+     "title": "7. Al-A'raaf",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/007.mp3",
+     "sizeBytes": 103628928,
+     "surahNumber": 7,
+     "fileName": "007.mp3"
+    },
+    {
+     "id": "qa-husary-008",
+     "title": "8. Al-Anfaal",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/008.mp3",
+     "sizeBytes": 40024192,
+     "surahNumber": 8,
+     "fileName": "008.mp3"
+    },
+    {
+     "id": "qa-husary-009",
+     "title": "9. At-Tawba",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/009.mp3",
+     "sizeBytes": 82976896,
+     "surahNumber": 9,
+     "fileName": "009.mp3"
+    },
+    {
+     "id": "qa-husary-010",
+     "title": "10. Yunus",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/010.mp3",
+     "sizeBytes": 57079936,
+     "surahNumber": 10,
+     "fileName": "010.mp3"
+    },
+    {
+     "id": "qa-husary-011",
+     "title": "11. Hud",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/011.mp3",
+     "sizeBytes": 52852864,
+     "surahNumber": 11,
+     "fileName": "011.mp3"
+    },
+    {
+     "id": "qa-husary-012",
+     "title": "12. Yusuf",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/012.mp3",
+     "sizeBytes": 54888576,
+     "surahNumber": 12,
+     "fileName": "012.mp3"
+    },
+    {
+     "id": "qa-husary-013",
+     "title": "13. Ar-Ra'd",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/013.mp3",
+     "sizeBytes": 26144896,
+     "surahNumber": 13,
+     "fileName": "013.mp3"
+    },
+    {
+     "id": "qa-husary-014",
+     "title": "14. Ibrahim",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/014.mp3",
+     "sizeBytes": 26501248,
+     "surahNumber": 14,
+     "fileName": "014.mp3"
+    },
+    {
+     "id": "qa-husary-015",
+     "title": "15. Al-Hijr",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/015.mp3",
+     "sizeBytes": 21790848,
+     "surahNumber": 15,
+     "fileName": "015.mp3"
+    },
+    {
+     "id": "qa-husary-016",
+     "title": "16. An-Nahl",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/016.mp3",
+     "sizeBytes": 55982208,
+     "surahNumber": 16,
+     "fileName": "016.mp3"
+    },
+    {
+     "id": "qa-husary-017",
+     "title": "17. Al-Israa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/017.mp3",
+     "sizeBytes": 48345216,
+     "surahNumber": 17,
+     "fileName": "017.mp3"
+    },
+    {
+     "id": "qa-husary-018",
+     "title": "18. Al-Kahf",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/018.mp3",
+     "sizeBytes": 45920384,
+     "surahNumber": 18,
+     "fileName": "018.mp3"
+    },
+    {
+     "id": "qa-husary-019",
+     "title": "19. Maryam",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/019.mp3",
+     "sizeBytes": 23773312,
+     "surahNumber": 19,
+     "fileName": "019.mp3"
+    },
+    {
+     "id": "qa-husary-020",
+     "title": "20. Taa-Haa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/020.mp3",
+     "sizeBytes": 36886656,
+     "surahNumber": 20,
+     "fileName": "020.mp3"
+    },
+    {
+     "id": "qa-husary-021",
+     "title": "21. Al-Anbiyaa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/021.mp3",
+     "sizeBytes": 35290292,
+     "surahNumber": 21,
+     "fileName": "021.mp3"
+    },
+    {
+     "id": "qa-husary-022",
+     "title": "22. Al-Hajj",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/022.mp3",
+     "sizeBytes": 40548480,
+     "surahNumber": 22,
+     "fileName": "022.mp3"
+    },
+    {
+     "id": "qa-husary-023",
+     "title": "23. Al-Muminoon",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/023.mp3",
+     "sizeBytes": 34064512,
+     "surahNumber": 23,
+     "fileName": "023.mp3"
+    },
+    {
+     "id": "qa-husary-024",
+     "title": "24. An-Noor",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/024.mp3",
+     "sizeBytes": 42877056,
+     "surahNumber": 24,
+     "fileName": "024.mp3"
+    },
+    {
+     "id": "qa-husary-025",
+     "title": "25. Al-Furqaan",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/025.mp3",
+     "sizeBytes": 28153984,
+     "surahNumber": 25,
+     "fileName": "025.mp3"
+    },
+    {
+     "id": "qa-husary-026",
+     "title": "26. Ash-Shu'araa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/026.mp3",
+     "sizeBytes": 47644800,
+     "surahNumber": 26,
+     "fileName": "026.mp3"
+    },
+    {
+     "id": "qa-husary-027",
+     "title": "27. An-Naml",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/027.mp3",
+     "sizeBytes": 40992896,
+     "surahNumber": 27,
+     "fileName": "027.mp3"
+    },
+    {
+     "id": "qa-husary-028",
+     "title": "28. Al-Qasas",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/028.mp3",
+     "sizeBytes": 50307533,
+     "surahNumber": 28,
+     "fileName": "028.mp3"
+    },
+    {
+     "id": "qa-husary-029",
+     "title": "29. Al-Ankaboot",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/029.mp3",
+     "sizeBytes": 32718976,
+     "surahNumber": 29,
+     "fileName": "029.mp3"
+    },
+    {
+     "id": "qa-husary-030",
+     "title": "30. Ar-Room",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/030.mp3",
+     "sizeBytes": 27635840,
+     "surahNumber": 30,
+     "fileName": "030.mp3"
+    },
+    {
+     "id": "qa-husary-031",
+     "title": "31. Luqman",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/031.mp3",
+     "sizeBytes": 18265526,
+     "surahNumber": 31,
+     "fileName": "031.mp3"
+    },
+    {
+     "id": "qa-husary-032",
+     "title": "32. As-Sajda",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/032.mp3",
+     "sizeBytes": 13238400,
+     "surahNumber": 32,
+     "fileName": "032.mp3"
+    },
+    {
+     "id": "qa-husary-033",
+     "title": "33. Al-Ahzaab",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/033.mp3",
+     "sizeBytes": 38895744,
+     "surahNumber": 33,
+     "fileName": "033.mp3"
+    },
+    {
+     "id": "qa-husary-034",
+     "title": "34. Saba",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/034.mp3",
+     "sizeBytes": 23629952,
+     "surahNumber": 34,
+     "fileName": "034.mp3"
+    },
+    {
+     "id": "qa-husary-035",
+     "title": "35. Faatir",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/035.mp3",
+     "sizeBytes": 22857856,
+     "surahNumber": 35,
+     "fileName": "035.mp3"
+    },
+    {
+     "id": "qa-husary-036",
+     "title": "36. Yaseen",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/036.mp3",
+     "sizeBytes": 22900864,
+     "surahNumber": 36,
+     "fileName": "036.mp3"
+    },
+    {
+     "id": "qa-husary-037",
+     "title": "37. As-Saaffaat",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/037.mp3",
+     "sizeBytes": 33052800,
+     "surahNumber": 37,
+     "fileName": "037.mp3"
+    },
+    {
+     "id": "qa-husary-038",
+     "title": "38. Saad",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/038.mp3",
+     "sizeBytes": 24328320,
+     "surahNumber": 38,
+     "fileName": "038.mp3"
+    },
+    {
+     "id": "qa-husary-039",
+     "title": "39. Az-Zumar",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/039.mp3",
+     "sizeBytes": 37167232,
+     "surahNumber": 39,
+     "fileName": "039.mp3"
+    },
+    {
+     "id": "qa-husary-040",
+     "title": "40. Al-Ghaafir",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/040.mp3",
+     "sizeBytes": 37570688,
+     "surahNumber": 40,
+     "fileName": "040.mp3"
+    },
+    {
+     "id": "qa-husary-041",
+     "title": "41. Fussilat",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/041.mp3",
+     "sizeBytes": 23851136,
+     "surahNumber": 41,
+     "fileName": "041.mp3"
+    },
+    {
+     "id": "qa-husary-042",
+     "title": "42. Ash-Shura",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/042.mp3",
+     "sizeBytes": 27472000,
+     "surahNumber": 42,
+     "fileName": "042.mp3"
+    },
+    {
+     "id": "qa-husary-043",
+     "title": "43. Az-Zukhruf",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/043.mp3",
+     "sizeBytes": 30017664,
+     "surahNumber": 43,
+     "fileName": "043.mp3"
+    },
+    {
+     "id": "qa-husary-044",
+     "title": "44. Ad-Dukhaan",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/044.mp3",
+     "sizeBytes": 13451392,
+     "surahNumber": 44,
+     "fileName": "044.mp3"
+    },
+    {
+     "id": "qa-husary-045",
+     "title": "45. Al-Jaathiya",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/045.mp3",
+     "sizeBytes": 17168512,
+     "surahNumber": 45,
+     "fileName": "045.mp3"
+    },
+    {
+     "id": "qa-husary-046",
+     "title": "46. Al-Ahqaf",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/046.mp3",
+     "sizeBytes": 18477184,
+     "surahNumber": 46,
+     "fileName": "046.mp3"
+    },
+    {
+     "id": "qa-husary-047",
+     "title": "47. Muhammad",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/047.mp3",
+     "sizeBytes": 17481856,
+     "surahNumber": 47,
+     "fileName": "047.mp3"
+    },
+    {
+     "id": "qa-husary-048",
+     "title": "48. Al-Fath",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/048.mp3",
+     "sizeBytes": 16431232,
+     "surahNumber": 48,
+     "fileName": "048.mp3"
+    },
+    {
+     "id": "qa-husary-049",
+     "title": "49. Al-Hujuraat",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/049.mp3",
+     "sizeBytes": 12466304,
+     "surahNumber": 49,
+     "fileName": "049.mp3"
+    },
+    {
+     "id": "qa-husary-050",
+     "title": "50. Qaaf",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/050.mp3",
+     "sizeBytes": 12667008,
+     "surahNumber": 50,
+     "fileName": "050.mp3"
+    },
+    {
+     "id": "qa-husary-051",
+     "title": "51. Adh-Dhaariyat",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/051.mp3",
+     "sizeBytes": 11008128,
+     "surahNumber": 51,
+     "fileName": "051.mp3"
+    },
+    {
+     "id": "qa-husary-052",
+     "title": "52. At-Tur",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/052.mp3",
+     "sizeBytes": 9576576,
+     "surahNumber": 52,
+     "fileName": "052.mp3"
+    },
+    {
+     "id": "qa-husary-053",
+     "title": "53. An-Najm",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/053.mp3",
+     "sizeBytes": 10983552,
+     "surahNumber": 53,
+     "fileName": "053.mp3"
+    },
+    {
+     "id": "qa-husary-054",
+     "title": "54. Al-Qamar",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/054.mp3",
+     "sizeBytes": 11722880,
+     "surahNumber": 54,
+     "fileName": "054.mp3"
+    },
+    {
+     "id": "qa-husary-055",
+     "title": "55. Ar-Rahmaan",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/055.mp3",
+     "sizeBytes": 16484480,
+     "surahNumber": 55,
+     "fileName": "055.mp3"
+    },
+    {
+     "id": "qa-husary-056",
+     "title": "56. Al-Waaqia",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/056.mp3",
+     "sizeBytes": 15939712,
+     "surahNumber": 56,
+     "fileName": "056.mp3"
+    },
+    {
+     "id": "qa-husary-057",
+     "title": "57. Al-Hadid",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/057.mp3",
+     "sizeBytes": 17752192,
+     "surahNumber": 57,
+     "fileName": "057.mp3"
+    },
+    {
+     "id": "qa-husary-058",
+     "title": "58. Al-Mujaadila",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/058.mp3",
+     "sizeBytes": 16007296,
+     "surahNumber": 58,
+     "fileName": "058.mp3"
+    },
+    {
+     "id": "qa-husary-059",
+     "title": "59. Al-Hashr",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/059.mp3",
+     "sizeBytes": 13480064,
+     "surahNumber": 59,
+     "fileName": "059.mp3"
+    },
+    {
+     "id": "qa-husary-060",
+     "title": "60. Al-Mumtahana",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/060.mp3",
+     "sizeBytes": 9703552,
+     "surahNumber": 60,
+     "fileName": "060.mp3"
+    },
+    {
+     "id": "qa-husary-061",
+     "title": "61. As-Saff",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/061.mp3",
+     "sizeBytes": 6770816,
+     "surahNumber": 61,
+     "fileName": "061.mp3"
+    },
+    {
+     "id": "qa-husary-062",
+     "title": "62. Al-Jumu'a",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/062.mp3",
+     "sizeBytes": 5261440,
+     "surahNumber": 62,
+     "fileName": "062.mp3"
+    },
+    {
+     "id": "qa-husary-063",
+     "title": "63. Al-Munaafiqoon",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/063.mp3",
+     "sizeBytes": 6256768,
+     "surahNumber": 63,
+     "fileName": "063.mp3"
+    },
+    {
+     "id": "qa-husary-064",
+     "title": "64. At-Taghaabun",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/064.mp3",
+     "sizeBytes": 8116352,
+     "surahNumber": 64,
+     "fileName": "064.mp3"
+    },
+    {
+     "id": "qa-husary-065",
+     "title": "65. At-Talaaq",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/065.mp3",
+     "sizeBytes": 8693888,
+     "surahNumber": 65,
+     "fileName": "065.mp3"
+    },
+    {
+     "id": "qa-husary-066",
+     "title": "66. At-Tahrim",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/066.mp3",
+     "sizeBytes": 9273472,
+     "surahNumber": 66,
+     "fileName": "066.mp3"
+    },
+    {
+     "id": "qa-husary-067",
+     "title": "67. Al-Mulk",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/067.mp3",
+     "sizeBytes": 10780800,
+     "surahNumber": 67,
+     "fileName": "067.mp3"
+    },
+    {
+     "id": "qa-husary-068",
+     "title": "68. Al-Qalam",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/068.mp3",
+     "sizeBytes": 10893440,
+     "surahNumber": 68,
+     "fileName": "068.mp3"
+    },
+    {
+     "id": "qa-husary-069",
+     "title": "69. Al-Haaqqa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/069.mp3",
+     "sizeBytes": 7682176,
+     "surahNumber": 69,
+     "fileName": "069.mp3"
+    },
+    {
+     "id": "qa-husary-070",
+     "title": "70. Al-Ma'aarij",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/070.mp3",
+     "sizeBytes": 6946944,
+     "surahNumber": 70,
+     "fileName": "070.mp3"
+    },
+    {
+     "id": "qa-husary-071",
+     "title": "71. Nooh",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/071.mp3",
+     "sizeBytes": 6723712,
+     "surahNumber": 71,
+     "fileName": "071.mp3"
+    },
+    {
+     "id": "qa-husary-072",
+     "title": "72. Al-Jinn",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/072.mp3",
+     "sizeBytes": 8243328,
+     "surahNumber": 72,
+     "fileName": "072.mp3"
+    },
+    {
+     "id": "qa-husary-073",
+     "title": "73. Al-Muzzammil",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/073.mp3",
+     "sizeBytes": 6156416,
+     "surahNumber": 73,
+     "fileName": "073.mp3"
+    },
+    {
+     "id": "qa-husary-074",
+     "title": "74. Al-Muddaththir",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/074.mp3",
+     "sizeBytes": 7108736,
+     "surahNumber": 74,
+     "fileName": "074.mp3"
+    },
+    {
+     "id": "qa-husary-075",
+     "title": "75. Al-Qiyaama",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/075.mp3",
+     "sizeBytes": 4866176,
+     "surahNumber": 75,
+     "fileName": "075.mp3"
+    },
+    {
+     "id": "qa-husary-076",
+     "title": "76. Al-Insaan",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/076.mp3",
+     "sizeBytes": 8413312,
+     "surahNumber": 76,
+     "fileName": "076.mp3"
+    },
+    {
+     "id": "qa-husary-077",
+     "title": "77. Al-Mursalaat",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/077.mp3",
+     "sizeBytes": 7161984,
+     "surahNumber": 77,
+     "fileName": "077.mp3"
+    },
+    {
+     "id": "qa-husary-078",
+     "title": "78. An-Naba",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/078.mp3",
+     "sizeBytes": 6480000,
+     "surahNumber": 78,
+     "fileName": "078.mp3"
+    },
+    {
+     "id": "qa-husary-079",
+     "title": "79. An-Naazi'aat",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/079.mp3",
+     "sizeBytes": 6426752,
+     "surahNumber": 79,
+     "fileName": "079.mp3"
+    },
+    {
+     "id": "qa-husary-080",
+     "title": "80. Abasa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/080.mp3",
+     "sizeBytes": 4538496,
+     "surahNumber": 80,
+     "fileName": "080.mp3"
+    },
+    {
+     "id": "qa-husary-081",
+     "title": "81. At-Takwir",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/081.mp3",
+     "sizeBytes": 3448960,
+     "surahNumber": 81,
+     "fileName": "081.mp3"
+    },
+    {
+     "id": "qa-husary-082",
+     "title": "82. Al-Infitaar",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/082.mp3",
+     "sizeBytes": 2891904,
+     "surahNumber": 82,
+     "fileName": "082.mp3"
+    },
+    {
+     "id": "qa-husary-083",
+     "title": "83. Al-Mutaffifin",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/083.mp3",
+     "sizeBytes": 6525056,
+     "surahNumber": 83,
+     "fileName": "083.mp3"
+    },
+    {
+     "id": "qa-husary-084",
+     "title": "84. Al-Inshiqaaq",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/084.mp3",
+     "sizeBytes": 3766400,
+     "surahNumber": 84,
+     "fileName": "084.mp3"
+    },
+    {
+     "id": "qa-husary-085",
+     "title": "85. Al-Burooj",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/085.mp3",
+     "sizeBytes": 3874944,
+     "surahNumber": 85,
+     "fileName": "085.mp3"
+    },
+    {
+     "id": "qa-husary-086",
+     "title": "86. At-Taariq",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/086.mp3",
+     "sizeBytes": 2207872,
+     "surahNumber": 86,
+     "fileName": "086.mp3"
+    },
+    {
+     "id": "qa-husary-087",
+     "title": "87. Al-A'laa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/087.mp3",
+     "sizeBytes": 2607232,
+     "surahNumber": 87,
+     "fileName": "087.mp3"
+    },
+    {
+     "id": "qa-husary-088",
+     "title": "88. Al-Ghaashiya",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/088.mp3",
+     "sizeBytes": 3530880,
+     "surahNumber": 88,
+     "fileName": "088.mp3"
+    },
+    {
+     "id": "qa-husary-089",
+     "title": "89. Al-Fajr",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/089.mp3",
+     "sizeBytes": 5204096,
+     "surahNumber": 89,
+     "fileName": "089.mp3"
+    },
+    {
+     "id": "qa-husary-090",
+     "title": "90. Al-Balad",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/090.mp3",
+     "sizeBytes": 2930816,
+     "surahNumber": 90,
+     "fileName": "090.mp3"
+    },
+    {
+     "id": "qa-husary-091",
+     "title": "91. Ash-Shams",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/091.mp3",
+     "sizeBytes": 2031744,
+     "surahNumber": 91,
+     "fileName": "091.mp3"
+    },
+    {
+     "id": "qa-husary-092",
+     "title": "92. Al-Lail",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/092.mp3",
+     "sizeBytes": 2672768,
+     "surahNumber": 92,
+     "fileName": "092.mp3"
+    },
+    {
+     "id": "qa-husary-093",
+     "title": "93. Ad-Dhuhaa",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/093.mp3",
+     "sizeBytes": 1517696,
+     "surahNumber": 93,
+     "fileName": "093.mp3"
+    },
+    {
+     "id": "qa-husary-094",
+     "title": "94. Ash-Sharh",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/094.mp3",
+     "sizeBytes": 1017984,
+     "surahNumber": 94,
+     "fileName": "094.mp3"
+    },
+    {
+     "id": "qa-husary-095",
+     "title": "95. At-Tin",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/095.mp3",
+     "sizeBytes": 1355904,
+     "surahNumber": 95,
+     "fileName": "095.mp3"
+    },
+    {
+     "id": "qa-husary-096",
+     "title": "96. Al-Alaq",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/096.mp3",
+     "sizeBytes": 2510976,
+     "surahNumber": 96,
+     "fileName": "096.mp3"
+    },
+    {
+     "id": "qa-husary-097",
+     "title": "97. Al-Qadr",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/097.mp3",
+     "sizeBytes": 1079424,
+     "surahNumber": 97,
+     "fileName": "097.mp3"
+    },
+    {
+     "id": "qa-husary-098",
+     "title": "98. Al-Bayyina",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/098.mp3",
+     "sizeBytes": 3014784,
+     "surahNumber": 98,
+     "fileName": "098.mp3"
+    },
+    {
+     "id": "qa-husary-099",
+     "title": "99. Az-Zalzala",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/099.mp3",
+     "sizeBytes": 1437824,
+     "surahNumber": 99,
+     "fileName": "099.mp3"
+    },
+    {
+     "id": "qa-husary-100",
+     "title": "100. Al-Aadiyaat",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/100.mp3",
+     "sizeBytes": 1523840,
+     "surahNumber": 100,
+     "fileName": "100.mp3"
+    },
+    {
+     "id": "qa-husary-101",
+     "title": "101. Al-Qaari'a",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/101.mp3",
+     "sizeBytes": 1450112,
+     "surahNumber": 101,
+     "fileName": "101.mp3"
+    },
+    {
+     "id": "qa-husary-102",
+     "title": "102. At-Takaathur",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/102.mp3",
+     "sizeBytes": 1183872,
+     "surahNumber": 102,
+     "fileName": "102.mp3"
+    },
+    {
+     "id": "qa-husary-103",
+     "title": "103. Al-Asr",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/103.mp3",
+     "sizeBytes": 645248,
+     "surahNumber": 103,
+     "fileName": "103.mp3"
+    },
+    {
+     "id": "qa-husary-104",
+     "title": "104. Al-Humaza",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/104.mp3",
+     "sizeBytes": 1265792,
+     "surahNumber": 104,
+     "fileName": "104.mp3"
+    },
+    {
+     "id": "qa-husary-105",
+     "title": "105. Al-Fil",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/105.mp3",
+     "sizeBytes": 938112,
+     "surahNumber": 105,
+     "fileName": "105.mp3"
+    },
+    {
+     "id": "qa-husary-106",
+     "title": "106. Quraish",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/106.mp3",
+     "sizeBytes": 813184,
+     "surahNumber": 106,
+     "fileName": "106.mp3"
+    },
+    {
+     "id": "qa-husary-107",
+     "title": "107. Al-Maa'un",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/107.mp3",
+     "sizeBytes": 1099904,
+     "surahNumber": 107,
+     "fileName": "107.mp3"
+    },
+    {
+     "id": "qa-husary-108",
+     "title": "108. Al-Kawthar",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/108.mp3",
+     "sizeBytes": 530560,
+     "surahNumber": 108,
+     "fileName": "108.mp3"
+    },
+    {
+     "id": "qa-husary-109",
+     "title": "109. Al-Kaafiroon",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/109.mp3",
+     "sizeBytes": 1052800,
+     "surahNumber": 109,
+     "fileName": "109.mp3"
+    },
+    {
+     "id": "qa-husary-110",
+     "title": "110. An-Nasr",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/110.mp3",
+     "sizeBytes": 792704,
+     "surahNumber": 110,
+     "fileName": "110.mp3"
+    },
+    {
+     "id": "qa-husary-111",
+     "title": "111. Al-Masad",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/111.mp3",
+     "sizeBytes": 878720,
+     "surahNumber": 111,
+     "fileName": "111.mp3"
+    },
+    {
+     "id": "qa-husary-112",
+     "title": "112. Al-Ikhlaas",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/112.mp3",
+     "sizeBytes": 565376,
+     "surahNumber": 112,
+     "fileName": "112.mp3"
+    },
+    {
+     "id": "qa-husary-113",
+     "title": "113. Al-Falaq",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/113.mp3",
+     "sizeBytes": 780416,
+     "surahNumber": 113,
+     "fileName": "113.mp3"
+    },
+    {
+     "id": "qa-husary-114",
+     "title": "114. An-Naas",
+     "url": "https://download.quranicaudio.com/quran/mahmood_khaleel_al-husaree/114.mp3",
+     "sizeBytes": 917632,
+     "surahNumber": 114,
+     "fileName": "114.mp3"
+    }
+   ]
+  },
+  {
+   "id": "qa-minshawi",
+   "kind": "quranReciter",
+   "title": "Muhammad Siddiq al-Minshawi",
+   "sourceName": "QuranicAudio.com",
+   "sourceUrl": "https://quranicaudio.com/quran/6",
+   "licenceNote": "QuranicAudio.com (https://quranicaudio.com/about) states: \"Mp3s on this site may be downloaded and used for personal use free of charge. However, you may not use these files for commercial purposes as many of these files have rules and regulations that prevent their sale except by the publishing companies.\"",
+   "files": [
+    {
+     "id": "qa-minshawi-001",
+     "title": "1. Al-Faatiha",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/001.mp3",
+     "sizeBytes": 841856,
+     "surahNumber": 1,
+     "fileName": "001.mp3"
+    },
+    {
+     "id": "qa-minshawi-002",
+     "title": "2. Al-Baqara",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/002.mp3",
+     "sizeBytes": 131480641,
+     "surahNumber": 2,
+     "fileName": "002.mp3"
+    },
+    {
+     "id": "qa-minshawi-003",
+     "title": "3. Aal-i-Imraan",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/003.mp3",
+     "sizeBytes": 83327104,
+     "surahNumber": 3,
+     "fileName": "003.mp3"
+    },
+    {
+     "id": "qa-minshawi-004",
+     "title": "4. An-Nisaa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/004.mp3",
+     "sizeBytes": 82724992,
+     "surahNumber": 4,
+     "fileName": "004.mp3"
+    },
+    {
+     "id": "qa-minshawi-005",
+     "title": "5. Al-Maaida",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/005.mp3",
+     "sizeBytes": 64579712,
+     "surahNumber": 5,
+     "fileName": "005.mp3"
+    },
+    {
+     "id": "qa-minshawi-006",
+     "title": "6. Al-An'aam",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/006.mp3",
+     "sizeBytes": 63828086,
+     "surahNumber": 6,
+     "fileName": "006.mp3"
+    },
+    {
+     "id": "qa-minshawi-007",
+     "title": "7. Al-A'raaf",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/007.mp3",
+     "sizeBytes": 69931136,
+     "surahNumber": 7,
+     "fileName": "007.mp3"
+    },
+    {
+     "id": "qa-minshawi-008",
+     "title": "8. Al-Anfaal",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/008.mp3",
+     "sizeBytes": 28530816,
+     "surahNumber": 8,
+     "fileName": "008.mp3"
+    },
+    {
+     "id": "qa-minshawi-009",
+     "title": "9. At-Tawba",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/009.mp3",
+     "sizeBytes": 51783339,
+     "surahNumber": 9,
+     "fileName": "009.mp3"
+    },
+    {
+     "id": "qa-minshawi-010",
+     "title": "10. Yunus",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/010.mp3",
+     "sizeBytes": 41666688,
+     "surahNumber": 10,
+     "fileName": "010.mp3"
+    },
+    {
+     "id": "qa-minshawi-011",
+     "title": "11. Hud",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/011.mp3",
+     "sizeBytes": 46039168,
+     "surahNumber": 11,
+     "fileName": "011.mp3"
+    },
+    {
+     "id": "qa-minshawi-012",
+     "title": "12. Yusuf",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/012.mp3",
+     "sizeBytes": 43227264,
+     "surahNumber": 12,
+     "fileName": "012.mp3"
+    },
+    {
+     "id": "qa-minshawi-013",
+     "title": "13. Ar-Ra'd",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/013.mp3",
+     "sizeBytes": 18475136,
+     "surahNumber": 13,
+     "fileName": "013.mp3"
+    },
+    {
+     "id": "qa-minshawi-014",
+     "title": "14. Ibrahim",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/014.mp3",
+     "sizeBytes": 17897600,
+     "surahNumber": 14,
+     "fileName": "014.mp3"
+    },
+    {
+     "id": "qa-minshawi-015",
+     "title": "15. Al-Hijr",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/015.mp3",
+     "sizeBytes": 13727872,
+     "surahNumber": 15,
+     "fileName": "015.mp3"
+    },
+    {
+     "id": "qa-minshawi-016",
+     "title": "16. An-Nahl",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/016.mp3",
+     "sizeBytes": 35684480,
+     "surahNumber": 16,
+     "fileName": "016.mp3"
+    },
+    {
+     "id": "qa-minshawi-017",
+     "title": "17. Al-Israa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/017.mp3",
+     "sizeBytes": 30736512,
+     "surahNumber": 17,
+     "fileName": "017.mp3"
+    },
+    {
+     "id": "qa-minshawi-018",
+     "title": "18. Al-Kahf",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/018.mp3",
+     "sizeBytes": 33646720,
+     "surahNumber": 18,
+     "fileName": "018.mp3"
+    },
+    {
+     "id": "qa-minshawi-019",
+     "title": "19. Maryam",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/019.mp3",
+     "sizeBytes": 20252800,
+     "surahNumber": 19,
+     "fileName": "019.mp3"
+    },
+    {
+     "id": "qa-minshawi-020",
+     "title": "20. Taa-Haa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/020.mp3",
+     "sizeBytes": 26036352,
+     "surahNumber": 20,
+     "fileName": "020.mp3"
+    },
+    {
+     "id": "qa-minshawi-021",
+     "title": "21. Al-Anbiyaa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/021.mp3",
+     "sizeBytes": 27531392,
+     "surahNumber": 21,
+     "fileName": "021.mp3"
+    },
+    {
+     "id": "qa-minshawi-022",
+     "title": "22. Al-Hajj",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/022.mp3",
+     "sizeBytes": 26546304,
+     "surahNumber": 22,
+     "fileName": "022.mp3"
+    },
+    {
+     "id": "qa-minshawi-023",
+     "title": "23. Al-Muminoon",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/023.mp3",
+     "sizeBytes": 22634624,
+     "surahNumber": 23,
+     "fileName": "023.mp3"
+    },
+    {
+     "id": "qa-minshawi-024",
+     "title": "24. An-Noor",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/024.mp3",
+     "sizeBytes": 28033152,
+     "surahNumber": 24,
+     "fileName": "024.mp3"
+    },
+    {
+     "id": "qa-minshawi-025",
+     "title": "25. Al-Furqaan",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/025.mp3",
+     "sizeBytes": 17313920,
+     "surahNumber": 25,
+     "fileName": "025.mp3"
+    },
+    {
+     "id": "qa-minshawi-026",
+     "title": "26. Ash-Shu'araa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/026.mp3",
+     "sizeBytes": 25874560,
+     "surahNumber": 26,
+     "fileName": "026.mp3"
+    },
+    {
+     "id": "qa-minshawi-027",
+     "title": "27. An-Naml",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/027.mp3",
+     "sizeBytes": 23500928,
+     "surahNumber": 27,
+     "fileName": "027.mp3"
+    },
+    {
+     "id": "qa-minshawi-028",
+     "title": "28. Al-Qasas",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/028.mp3",
+     "sizeBytes": 28401792,
+     "surahNumber": 28,
+     "fileName": "028.mp3"
+    },
+    {
+     "id": "qa-minshawi-029",
+     "title": "29. Al-Ankaboot",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/029.mp3",
+     "sizeBytes": 19916928,
+     "surahNumber": 29,
+     "fileName": "029.mp3"
+    },
+    {
+     "id": "qa-minshawi-030",
+     "title": "30. Ar-Room",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/030.mp3",
+     "sizeBytes": 16541824,
+     "surahNumber": 30,
+     "fileName": "030.mp3"
+    },
+    {
+     "id": "qa-minshawi-031",
+     "title": "31. Luqman",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/031.mp3",
+     "sizeBytes": 10139453,
+     "surahNumber": 31,
+     "fileName": "031.mp3"
+    },
+    {
+     "id": "qa-minshawi-032",
+     "title": "32. As-Sajda",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/032.mp3",
+     "sizeBytes": 7182464,
+     "surahNumber": 32,
+     "fileName": "032.mp3"
+    },
+    {
+     "id": "qa-minshawi-033",
+     "title": "33. Al-Ahzaab",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/033.mp3",
+     "sizeBytes": 26529920,
+     "surahNumber": 33,
+     "fileName": "033.mp3"
+    },
+    {
+     "id": "qa-minshawi-034",
+     "title": "34. Saba",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/034.mp3",
+     "sizeBytes": 17281152,
+     "surahNumber": 34,
+     "fileName": "034.mp3"
+    },
+    {
+     "id": "qa-minshawi-035",
+     "title": "35. Faatir",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/035.mp3",
+     "sizeBytes": 16005248,
+     "surahNumber": 35,
+     "fileName": "035.mp3"
+    },
+    {
+     "id": "qa-minshawi-036",
+     "title": "36. Yaseen",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/036.mp3",
+     "sizeBytes": 15251584,
+     "surahNumber": 36,
+     "fileName": "036.mp3"
+    },
+    {
+     "id": "qa-minshawi-037",
+     "title": "37. As-Saaffaat",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/037.mp3",
+     "sizeBytes": 20070528,
+     "surahNumber": 37,
+     "fileName": "037.mp3"
+    },
+    {
+     "id": "qa-minshawi-038",
+     "title": "38. Saad",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/038.mp3",
+     "sizeBytes": 15997056,
+     "surahNumber": 38,
+     "fileName": "038.mp3"
+    },
+    {
+     "id": "qa-minshawi-039",
+     "title": "39. Az-Zumar",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/039.mp3",
+     "sizeBytes": 24111232,
+     "surahNumber": 39,
+     "fileName": "039.mp3"
+    },
+    {
+     "id": "qa-minshawi-040",
+     "title": "40. Al-Ghaafir",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/040.mp3",
+     "sizeBytes": 23013504,
+     "surahNumber": 40,
+     "fileName": "040.mp3"
+    },
+    {
+     "id": "qa-minshawi-041",
+     "title": "41. Fussilat",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/041.mp3",
+     "sizeBytes": 15538304,
+     "surahNumber": 41,
+     "fileName": "041.mp3"
+    },
+    {
+     "id": "qa-minshawi-042",
+     "title": "42. Ash-Shura",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/042.mp3",
+     "sizeBytes": 16218240,
+     "surahNumber": 42,
+     "fileName": "042.mp3"
+    },
+    {
+     "id": "qa-minshawi-043",
+     "title": "43. Az-Zukhruf",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/043.mp3",
+     "sizeBytes": 16392320,
+     "surahNumber": 43,
+     "fileName": "043.mp3"
+    },
+    {
+     "id": "qa-minshawi-044",
+     "title": "44. Ad-Dukhaan",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/044.mp3",
+     "sizeBytes": 6905984,
+     "surahNumber": 44,
+     "fileName": "044.mp3"
+    },
+    {
+     "id": "qa-minshawi-045",
+     "title": "45. Al-Jaathiya",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/045.mp3",
+     "sizeBytes": 9324672,
+     "surahNumber": 45,
+     "fileName": "045.mp3"
+    },
+    {
+     "id": "qa-minshawi-046",
+     "title": "46. Al-Ahqaf",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/046.mp3",
+     "sizeBytes": 11565184,
+     "surahNumber": 46,
+     "fileName": "046.mp3"
+    },
+    {
+     "id": "qa-minshawi-047",
+     "title": "47. Muhammad",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/047.mp3",
+     "sizeBytes": 10336384,
+     "surahNumber": 47,
+     "fileName": "047.mp3"
+    },
+    {
+     "id": "qa-minshawi-048",
+     "title": "48. Al-Fath",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/048.mp3",
+     "sizeBytes": 11579520,
+     "surahNumber": 48,
+     "fileName": "048.mp3"
+    },
+    {
+     "id": "qa-minshawi-049",
+     "title": "49. Al-Hujuraat",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/049.mp3",
+     "sizeBytes": 7510144,
+     "surahNumber": 49,
+     "fileName": "049.mp3"
+    },
+    {
+     "id": "qa-minshawi-050",
+     "title": "50. Qaaf",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/050.mp3",
+     "sizeBytes": 7141504,
+     "surahNumber": 50,
+     "fileName": "050.mp3"
+    },
+    {
+     "id": "qa-minshawi-051",
+     "title": "51. Adh-Dhaariyat",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/051.mp3",
+     "sizeBytes": 7016576,
+     "surahNumber": 51,
+     "fileName": "051.mp3"
+    },
+    {
+     "id": "qa-minshawi-052",
+     "title": "52. At-Tur",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/052.mp3",
+     "sizeBytes": 6033526,
+     "surahNumber": 52,
+     "fileName": "052.mp3"
+    },
+    {
+     "id": "qa-minshawi-053",
+     "title": "53. An-Najm",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/053.mp3",
+     "sizeBytes": 6808006,
+     "surahNumber": 53,
+     "fileName": "053.mp3"
+    },
+    {
+     "id": "qa-minshawi-054",
+     "title": "54. Al-Qamar",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/054.mp3",
+     "sizeBytes": 7269852,
+     "surahNumber": 54,
+     "fileName": "054.mp3"
+    },
+    {
+     "id": "qa-minshawi-055",
+     "title": "55. Ar-Rahmaan",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/055.mp3",
+     "sizeBytes": 8519968,
+     "surahNumber": 55,
+     "fileName": "055.mp3"
+    },
+    {
+     "id": "qa-minshawi-056",
+     "title": "56. Al-Waaqia",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/056.mp3",
+     "sizeBytes": 10092748,
+     "surahNumber": 56,
+     "fileName": "056.mp3"
+    },
+    {
+     "id": "qa-minshawi-057",
+     "title": "57. Al-Hadid",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/057.mp3",
+     "sizeBytes": 13668807,
+     "surahNumber": 57,
+     "fileName": "057.mp3"
+    },
+    {
+     "id": "qa-minshawi-058",
+     "title": "58. Al-Mujaadila",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/058.mp3",
+     "sizeBytes": 9535616,
+     "surahNumber": 58,
+     "fileName": "058.mp3"
+    },
+    {
+     "id": "qa-minshawi-059",
+     "title": "59. Al-Hashr",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/059.mp3",
+     "sizeBytes": 9144448,
+     "surahNumber": 59,
+     "fileName": "059.mp3"
+    },
+    {
+     "id": "qa-minshawi-060",
+     "title": "60. Al-Mumtahana",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/060.mp3",
+     "sizeBytes": 7532672,
+     "surahNumber": 60,
+     "fileName": "060.mp3"
+    },
+    {
+     "id": "qa-minshawi-061",
+     "title": "61. As-Saff",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/061.mp3",
+     "sizeBytes": 4259968,
+     "surahNumber": 61,
+     "fileName": "061.mp3"
+    },
+    {
+     "id": "qa-minshawi-062",
+     "title": "62. Al-Jumu'a",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/062.mp3",
+     "sizeBytes": 3354752,
+     "surahNumber": 62,
+     "fileName": "062.mp3"
+    },
+    {
+     "id": "qa-minshawi-063",
+     "title": "63. Al-Munaafiqoon",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/063.mp3",
+     "sizeBytes": 3651712,
+     "surahNumber": 63,
+     "fileName": "063.mp3"
+    },
+    {
+     "id": "qa-minshawi-064",
+     "title": "64. At-Taghaabun",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/064.mp3",
+     "sizeBytes": 4587648,
+     "surahNumber": 64,
+     "fileName": "064.mp3"
+    },
+    {
+     "id": "qa-minshawi-065",
+     "title": "65. At-Talaaq",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/065.mp3",
+     "sizeBytes": 6006912,
+     "surahNumber": 65,
+     "fileName": "065.mp3"
+    },
+    {
+     "id": "qa-minshawi-066",
+     "title": "66. At-Tahrim",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/066.mp3",
+     "sizeBytes": 5879936,
+     "surahNumber": 66,
+     "fileName": "066.mp3"
+    },
+    {
+     "id": "qa-minshawi-067",
+     "title": "67. Al-Mulk",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/067.mp3",
+     "sizeBytes": 6674560,
+     "surahNumber": 67,
+     "fileName": "067.mp3"
+    },
+    {
+     "id": "qa-minshawi-068",
+     "title": "68. Al-Qalam",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/068.mp3",
+     "sizeBytes": 6852736,
+     "surahNumber": 68,
+     "fileName": "068.mp3"
+    },
+    {
+     "id": "qa-minshawi-069",
+     "title": "69. Al-Haaqqa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/069.mp3",
+     "sizeBytes": 6305920,
+     "surahNumber": 69,
+     "fileName": "069.mp3"
+    },
+    {
+     "id": "qa-minshawi-070",
+     "title": "70. Al-Ma'aarij",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/070.mp3",
+     "sizeBytes": 5294208,
+     "surahNumber": 70,
+     "fileName": "070.mp3"
+    },
+    {
+     "id": "qa-minshawi-071",
+     "title": "71. Nooh",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/071.mp3",
+     "sizeBytes": 5324928,
+     "surahNumber": 71,
+     "fileName": "071.mp3"
+    },
+    {
+     "id": "qa-minshawi-072",
+     "title": "72. Al-Jinn",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/072.mp3",
+     "sizeBytes": 6033536,
+     "surahNumber": 72,
+     "fileName": "072.mp3"
+    },
+    {
+     "id": "qa-minshawi-073",
+     "title": "73. Al-Muzzammil",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/073.mp3",
+     "sizeBytes": 4356224,
+     "surahNumber": 73,
+     "fileName": "073.mp3"
+    },
+    {
+     "id": "qa-minshawi-074",
+     "title": "74. Al-Muddaththir",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/074.mp3",
+     "sizeBytes": 6000768,
+     "surahNumber": 74,
+     "fileName": "074.mp3"
+    },
+    {
+     "id": "qa-minshawi-075",
+     "title": "75. Al-Qiyaama",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/075.mp3",
+     "sizeBytes": 3774592,
+     "surahNumber": 75,
+     "fileName": "075.mp3"
+    },
+    {
+     "id": "qa-minshawi-076",
+     "title": "76. Al-Insaan",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/076.mp3",
+     "sizeBytes": 6389888,
+     "surahNumber": 76,
+     "fileName": "076.mp3"
+    },
+    {
+     "id": "qa-minshawi-077",
+     "title": "77. Al-Mursalaat",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/077.mp3",
+     "sizeBytes": 5058688,
+     "surahNumber": 77,
+     "fileName": "077.mp3"
+    },
+    {
+     "id": "qa-minshawi-078",
+     "title": "78. An-Naba",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/078.mp3",
+     "sizeBytes": 5058688,
+     "surahNumber": 78,
+     "fileName": "078.mp3"
+    },
+    {
+     "id": "qa-minshawi-079",
+     "title": "79. An-Naazi'aat",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/079.mp3",
+     "sizeBytes": 4757632,
+     "surahNumber": 79,
+     "fileName": "079.mp3"
+    },
+    {
+     "id": "qa-minshawi-080",
+     "title": "80. Abasa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/080.mp3",
+     "sizeBytes": 3788928,
+     "surahNumber": 80,
+     "fileName": "080.mp3"
+    },
+    {
+     "id": "qa-minshawi-081",
+     "title": "81. At-Takwir",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/081.mp3",
+     "sizeBytes": 2650240,
+     "surahNumber": 81,
+     "fileName": "081.mp3"
+    },
+    {
+     "id": "qa-minshawi-082",
+     "title": "82. Al-Infitaar",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/082.mp3",
+     "sizeBytes": 2072704,
+     "surahNumber": 82,
+     "fileName": "082.mp3"
+    },
+    {
+     "id": "qa-minshawi-083",
+     "title": "83. Al-Mutaffifin",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/083.mp3",
+     "sizeBytes": 4554880,
+     "surahNumber": 83,
+     "fileName": "083.mp3"
+    },
+    {
+     "id": "qa-minshawi-084",
+     "title": "84. Al-Inshiqaaq",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/084.mp3",
+     "sizeBytes": 2855040,
+     "surahNumber": 84,
+     "fileName": "084.mp3"
+    },
+    {
+     "id": "qa-minshawi-085",
+     "title": "85. Al-Burooj",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/085.mp3",
+     "sizeBytes": 2879616,
+     "surahNumber": 85,
+     "fileName": "085.mp3"
+    },
+    {
+     "id": "qa-minshawi-086",
+     "title": "86. At-Taariq",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/086.mp3",
+     "sizeBytes": 1689728,
+     "surahNumber": 86,
+     "fileName": "086.mp3"
+    },
+    {
+     "id": "qa-minshawi-087",
+     "title": "87. Al-A'laa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/087.mp3",
+     "sizeBytes": 1869952,
+     "surahNumber": 87,
+     "fileName": "087.mp3"
+    },
+    {
+     "id": "qa-minshawi-088",
+     "title": "88. Al-Ghaashiya",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/088.mp3",
+     "sizeBytes": 2418816,
+     "surahNumber": 88,
+     "fileName": "088.mp3"
+    },
+    {
+     "id": "qa-minshawi-089",
+     "title": "89. Al-Fajr",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/089.mp3",
+     "sizeBytes": 3655808,
+     "surahNumber": 89,
+     "fileName": "089.mp3"
+    },
+    {
+     "id": "qa-minshawi-090",
+     "title": "90. Al-Balad",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/090.mp3",
+     "sizeBytes": 2109568,
+     "surahNumber": 90,
+     "fileName": "090.mp3"
+    },
+    {
+     "id": "qa-minshawi-091",
+     "title": "91. Ash-Shams",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/091.mp3",
+     "sizeBytes": 1595520,
+     "surahNumber": 91,
+     "fileName": "091.mp3"
+    },
+    {
+     "id": "qa-minshawi-092",
+     "title": "92. Al-Lail",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/092.mp3",
+     "sizeBytes": 2060416,
+     "surahNumber": 92,
+     "fileName": "092.mp3"
+    },
+    {
+     "id": "qa-minshawi-093",
+     "title": "93. Ad-Dhuhaa",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/093.mp3",
+     "sizeBytes": 1128576,
+     "surahNumber": 93,
+     "fileName": "093.mp3"
+    },
+    {
+     "id": "qa-minshawi-094",
+     "title": "94. Ash-Sharh",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/094.mp3",
+     "sizeBytes": 721024,
+     "surahNumber": 94,
+     "fileName": "094.mp3"
+    },
+    {
+     "id": "qa-minshawi-095",
+     "title": "95. At-Tin",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/095.mp3",
+     "sizeBytes": 913536,
+     "surahNumber": 95,
+     "fileName": "095.mp3"
+    },
+    {
+     "id": "qa-minshawi-096",
+     "title": "96. Al-Alaq",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/096.mp3",
+     "sizeBytes": 1808512,
+     "surahNumber": 96,
+     "fileName": "096.mp3"
+    },
+    {
+     "id": "qa-minshawi-097",
+     "title": "97. Al-Qadr",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/097.mp3",
+     "sizeBytes": 790656,
+     "surahNumber": 97,
+     "fileName": "097.mp3"
+    },
+    {
+     "id": "qa-minshawi-098",
+     "title": "98. Al-Bayyina",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/098.mp3",
+     "sizeBytes": 2476160,
+     "surahNumber": 98,
+     "fileName": "098.mp3"
+    },
+    {
+     "id": "qa-minshawi-099",
+     "title": "99. Az-Zalzala",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/099.mp3",
+     "sizeBytes": 1009792,
+     "surahNumber": 99,
+     "fileName": "099.mp3"
+    },
+    {
+     "id": "qa-minshawi-100",
+     "title": "100. Al-Aadiyaat",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/100.mp3",
+     "sizeBytes": 1071232,
+     "surahNumber": 100,
+     "fileName": "100.mp3"
+    },
+    {
+     "id": "qa-minshawi-101",
+     "title": "101. Al-Qaari'a",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/101.mp3",
+     "sizeBytes": 1022080,
+     "surahNumber": 101,
+     "fileName": "101.mp3"
+    },
+    {
+     "id": "qa-minshawi-102",
+     "title": "102. At-Takaathur",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/102.mp3",
+     "sizeBytes": 809088,
+     "surahNumber": 102,
+     "fileName": "102.mp3"
+    },
+    {
+     "id": "qa-minshawi-103",
+     "title": "103. Al-Asr",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/103.mp3",
+     "sizeBytes": 448640,
+     "surahNumber": 103,
+     "fileName": "103.mp3"
+    },
+    {
+     "id": "qa-minshawi-104",
+     "title": "104. Al-Humaza",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/104.mp3",
+     "sizeBytes": 911488,
+     "surahNumber": 104,
+     "fileName": "104.mp3"
+    },
+    {
+     "id": "qa-minshawi-105",
+     "title": "105. Al-Fil",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/105.mp3",
+     "sizeBytes": 616576,
+     "surahNumber": 105,
+     "fileName": "105.mp3"
+    },
+    {
+     "id": "qa-minshawi-106",
+     "title": "106. Quraish",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/106.mp3",
+     "sizeBytes": 551040,
+     "surahNumber": 106,
+     "fileName": "106.mp3"
+    },
+    {
+     "id": "qa-minshawi-107",
+     "title": "107. Al-Maa'un",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/107.mp3",
+     "sizeBytes": 684160,
+     "surahNumber": 107,
+     "fileName": "107.mp3"
+    },
+    {
+     "id": "qa-minshawi-108",
+     "title": "108. Al-Kawthar",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/108.mp3",
+     "sizeBytes": 350336,
+     "surahNumber": 108,
+     "fileName": "108.mp3"
+    },
+    {
+     "id": "qa-minshawi-109",
+     "title": "109. Al-Kaafiroon",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/109.mp3",
+     "sizeBytes": 743552,
+     "surahNumber": 109,
+     "fileName": "109.mp3"
+    },
+    {
+     "id": "qa-minshawi-110",
+     "title": "110. An-Nasr",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/110.mp3",
+     "sizeBytes": 542848,
+     "surahNumber": 110,
+     "fileName": "110.mp3"
+    },
+    {
+     "id": "qa-minshawi-111",
+     "title": "111. Al-Masad",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/111.mp3",
+     "sizeBytes": 587904,
+     "surahNumber": 111,
+     "fileName": "111.mp3"
+    },
+    {
+     "id": "qa-minshawi-112",
+     "title": "112. Al-Ikhlaas",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/112.mp3",
+     "sizeBytes": 313472,
+     "surahNumber": 112,
+     "fileName": "112.mp3"
+    },
+    {
+     "id": "qa-minshawi-113",
+     "title": "113. Al-Falaq",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/113.mp3",
+     "sizeBytes": 489600,
+     "surahNumber": 113,
+     "fileName": "113.mp3"
+    },
+    {
+     "id": "qa-minshawi-114",
+     "title": "114. An-Naas",
+     "url": "https://download.quranicaudio.com/quran/muhammad_siddeeq_al-minshaawee/114.mp3",
+     "sizeBytes": 624768,
+     "surahNumber": 114,
+     "fileName": "114.mp3"
+    }
+   ]
+  },
+  {
+   "id": "qa-sudais",
+   "kind": "quranReciter",
+   "title": "Abdur-Rahman as-Sudais",
+   "sourceName": "QuranicAudio.com",
+   "sourceUrl": "https://quranicaudio.com/quran/7",
+   "licenceNote": "QuranicAudio.com (https://quranicaudio.com/about) states: \"Mp3s on this site may be downloaded and used for personal use free of charge. However, you may not use these files for commercial purposes as many of these files have rules and regulations that prevent their sale except by the publishing companies.\"",
+   "files": [
+    {
+     "id": "qa-sudais-001",
+     "title": "1. Al-Faatiha",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/001.mp3",
+     "sizeBytes": 927872,
+     "surahNumber": 1,
+     "fileName": "001.mp3"
+    },
+    {
+     "id": "qa-sudais-002",
+     "title": "2. Al-Baqara",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/002.mp3",
+     "sizeBytes": 87198694,
+     "surahNumber": 2,
+     "fileName": "002.mp3"
+    },
+    {
+     "id": "qa-sudais-003",
+     "title": "3. Aal-i-Imraan",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/003.mp3",
+     "sizeBytes": 79571072,
+     "surahNumber": 3,
+     "fileName": "003.mp3"
+    },
+    {
+     "id": "qa-sudais-004",
+     "title": "4. An-Nisaa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/004.mp3",
+     "sizeBytes": 87697536,
+     "surahNumber": 4,
+     "fileName": "004.mp3"
+    },
+    {
+     "id": "qa-sudais-005",
+     "title": "5. Al-Maaida",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/005.mp3",
+     "sizeBytes": 64643200,
+     "surahNumber": 5,
+     "fileName": "005.mp3"
+    },
+    {
+     "id": "qa-sudais-006",
+     "title": "6. Al-An'aam",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/006.mp3",
+     "sizeBytes": 45250220,
+     "surahNumber": 6,
+     "fileName": "006.mp3"
+    },
+    {
+     "id": "qa-sudais-007",
+     "title": "7. Al-A'raaf",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/007.mp3",
+     "sizeBytes": 51546774,
+     "surahNumber": 7,
+     "fileName": "007.mp3"
+    },
+    {
+     "id": "qa-sudais-008",
+     "title": "8. Al-Anfaal",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/008.mp3",
+     "sizeBytes": 28856448,
+     "surahNumber": 8,
+     "fileName": "008.mp3"
+    },
+    {
+     "id": "qa-sudais-009",
+     "title": "9. At-Tawba",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/009.mp3",
+     "sizeBytes": 58914944,
+     "surahNumber": 9,
+     "fileName": "009.mp3"
+    },
+    {
+     "id": "qa-sudais-010",
+     "title": "10. Yunus",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/010.mp3",
+     "sizeBytes": 41949312,
+     "surahNumber": 10,
+     "fileName": "010.mp3"
+    },
+    {
+     "id": "qa-sudais-011",
+     "title": "11. Hud",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/011.mp3",
+     "sizeBytes": 45207680,
+     "surahNumber": 11,
+     "fileName": "011.mp3"
+    },
+    {
+     "id": "qa-sudais-012",
+     "title": "12. Yusuf",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/012.mp3",
+     "sizeBytes": 39092352,
+     "surahNumber": 12,
+     "fileName": "012.mp3"
+    },
+    {
+     "id": "qa-sudais-013",
+     "title": "13. Ar-Ra'd",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/013.mp3",
+     "sizeBytes": 21393536,
+     "surahNumber": 13,
+     "fileName": "013.mp3"
+    },
+    {
+     "id": "qa-sudais-014",
+     "title": "14. Ibrahim",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/014.mp3",
+     "sizeBytes": 18886784,
+     "surahNumber": 14,
+     "fileName": "014.mp3"
+    },
+    {
+     "id": "qa-sudais-015",
+     "title": "15. Al-Hijr",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/015.mp3",
+     "sizeBytes": 15812736,
+     "surahNumber": 15,
+     "fileName": "015.mp3"
+    },
+    {
+     "id": "qa-sudais-016",
+     "title": "16. An-Nahl",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/016.mp3",
+     "sizeBytes": 41498752,
+     "surahNumber": 16,
+     "fileName": "016.mp3"
+    },
+    {
+     "id": "qa-sudais-017",
+     "title": "17. Al-Israa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/017.mp3",
+     "sizeBytes": 36520064,
+     "surahNumber": 17,
+     "fileName": "017.mp3"
+    },
+    {
+     "id": "qa-sudais-018",
+     "title": "18. Al-Kahf",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/018.mp3",
+     "sizeBytes": 34109568,
+     "surahNumber": 18,
+     "fileName": "018.mp3"
+    },
+    {
+     "id": "qa-sudais-019",
+     "title": "19. Maryam",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/019.mp3",
+     "sizeBytes": 22583424,
+     "surahNumber": 19,
+     "fileName": "019.mp3"
+    },
+    {
+     "id": "qa-sudais-020",
+     "title": "20. Taa-Haa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/020.mp3",
+     "sizeBytes": 27453568,
+     "surahNumber": 20,
+     "fileName": "020.mp3"
+    },
+    {
+     "id": "qa-sudais-021",
+     "title": "21. Al-Anbiyaa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/021.mp3",
+     "sizeBytes": 27731387,
+     "surahNumber": 21,
+     "fileName": "021.mp3"
+    },
+    {
+     "id": "qa-sudais-022",
+     "title": "22. Al-Hajj",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/022.mp3",
+     "sizeBytes": 28512384,
+     "surahNumber": 22,
+     "fileName": "022.mp3"
+    },
+    {
+     "id": "qa-sudais-023",
+     "title": "23. Al-Muminoon",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/023.mp3",
+     "sizeBytes": 23875712,
+     "surahNumber": 23,
+     "fileName": "023.mp3"
+    },
+    {
+     "id": "qa-sudais-024",
+     "title": "24. An-Noor",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/024.mp3",
+     "sizeBytes": 31504512,
+     "surahNumber": 24,
+     "fileName": "024.mp3"
+    },
+    {
+     "id": "qa-sudais-025",
+     "title": "25. Al-Furqaan",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/025.mp3",
+     "sizeBytes": 20306048,
+     "surahNumber": 25,
+     "fileName": "025.mp3"
+    },
+    {
+     "id": "qa-sudais-026",
+     "title": "26. Ash-Shu'araa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/026.mp3",
+     "sizeBytes": 28792960,
+     "surahNumber": 26,
+     "fileName": "026.mp3"
+    },
+    {
+     "id": "qa-sudais-027",
+     "title": "27. An-Naml",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/027.mp3",
+     "sizeBytes": 17173812,
+     "surahNumber": 27,
+     "fileName": "027.mp3"
+    },
+    {
+     "id": "qa-sudais-028",
+     "title": "28. Al-Qasas",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/028.mp3",
+     "sizeBytes": 21116840,
+     "surahNumber": 28,
+     "fileName": "028.mp3"
+    },
+    {
+     "id": "qa-sudais-029",
+     "title": "29. Al-Ankaboot",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/029.mp3",
+     "sizeBytes": 21690496,
+     "surahNumber": 29,
+     "fileName": "029.mp3"
+    },
+    {
+     "id": "qa-sudais-030",
+     "title": "30. Ar-Room",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/030.mp3",
+     "sizeBytes": 17166464,
+     "surahNumber": 30,
+     "fileName": "030.mp3"
+    },
+    {
+     "id": "qa-sudais-031",
+     "title": "31. Luqman",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/031.mp3",
+     "sizeBytes": 12449920,
+     "surahNumber": 31,
+     "fileName": "031.mp3"
+    },
+    {
+     "id": "qa-sudais-032",
+     "title": "32. As-Sajda",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/032.mp3",
+     "sizeBytes": 8386688,
+     "surahNumber": 32,
+     "fileName": "032.mp3"
+    },
+    {
+     "id": "qa-sudais-033",
+     "title": "33. Al-Ahzaab",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/033.mp3",
+     "sizeBytes": 34435200,
+     "surahNumber": 33,
+     "fileName": "033.mp3"
+    },
+    {
+     "id": "qa-sudais-034",
+     "title": "34. Saba",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/034.mp3",
+     "sizeBytes": 20752512,
+     "surahNumber": 34,
+     "fileName": "034.mp3"
+    },
+    {
+     "id": "qa-sudais-035",
+     "title": "35. Faatir",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/035.mp3",
+     "sizeBytes": 16709760,
+     "surahNumber": 35,
+     "fileName": "035.mp3"
+    },
+    {
+     "id": "qa-sudais-036",
+     "title": "36. Yaseen",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/036.mp3",
+     "sizeBytes": 18145408,
+     "surahNumber": 36,
+     "fileName": "036.mp3"
+    },
+    {
+     "id": "qa-sudais-037",
+     "title": "37. As-Saaffaat",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/037.mp3",
+     "sizeBytes": 20412544,
+     "surahNumber": 37,
+     "fileName": "037.mp3"
+    },
+    {
+     "id": "qa-sudais-038",
+     "title": "38. Saad",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/038.mp3",
+     "sizeBytes": 16580736,
+     "surahNumber": 38,
+     "fileName": "038.mp3"
+    },
+    {
+     "id": "qa-sudais-039",
+     "title": "39. Az-Zumar",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/039.mp3",
+     "sizeBytes": 27132032,
+     "surahNumber": 39,
+     "fileName": "039.mp3"
+    },
+    {
+     "id": "qa-sudais-040",
+     "title": "40. Al-Ghaafir",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/040.mp3",
+     "sizeBytes": 20097857,
+     "surahNumber": 40,
+     "fileName": "040.mp3"
+    },
+    {
+     "id": "qa-sudais-041",
+     "title": "41. Fussilat",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/041.mp3",
+     "sizeBytes": 18358400,
+     "surahNumber": 41,
+     "fileName": "041.mp3"
+    },
+    {
+     "id": "qa-sudais-042",
+     "title": "42. Ash-Shura",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/042.mp3",
+     "sizeBytes": 21436544,
+     "surahNumber": 42,
+     "fileName": "042.mp3"
+    },
+    {
+     "id": "qa-sudais-043",
+     "title": "43. Az-Zukhruf",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/043.mp3",
+     "sizeBytes": 23058560,
+     "surahNumber": 43,
+     "fileName": "043.mp3"
+    },
+    {
+     "id": "qa-sudais-044",
+     "title": "44. Ad-Dukhaan",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/044.mp3",
+     "sizeBytes": 9347200,
+     "surahNumber": 44,
+     "fileName": "044.mp3"
+    },
+    {
+     "id": "qa-sudais-045",
+     "title": "45. Al-Jaathiya",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/045.mp3",
+     "sizeBytes": 11989120,
+     "surahNumber": 45,
+     "fileName": "045.mp3"
+    },
+    {
+     "id": "qa-sudais-046",
+     "title": "46. Al-Ahqaf",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/046.mp3",
+     "sizeBytes": 15198336,
+     "surahNumber": 46,
+     "fileName": "046.mp3"
+    },
+    {
+     "id": "qa-sudais-047",
+     "title": "47. Muhammad",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/047.mp3",
+     "sizeBytes": 13318272,
+     "surahNumber": 47,
+     "fileName": "047.mp3"
+    },
+    {
+     "id": "qa-sudais-048",
+     "title": "48. Al-Fath",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/048.mp3",
+     "sizeBytes": 9273472,
+     "surahNumber": 48,
+     "fileName": "048.mp3"
+    },
+    {
+     "id": "qa-sudais-049",
+     "title": "49. Al-Hujuraat",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/049.mp3",
+     "sizeBytes": 5927040,
+     "surahNumber": 49,
+     "fileName": "049.mp3"
+    },
+    {
+     "id": "qa-sudais-050",
+     "title": "50. Qaaf",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/050.mp3",
+     "sizeBytes": 10578048,
+     "surahNumber": 50,
+     "fileName": "050.mp3"
+    },
+    {
+     "id": "qa-sudais-051",
+     "title": "51. Adh-Dhaariyat",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/051.mp3",
+     "sizeBytes": 9715840,
+     "surahNumber": 51,
+     "fileName": "051.mp3"
+    },
+    {
+     "id": "qa-sudais-052",
+     "title": "52. At-Tur",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/052.mp3",
+     "sizeBytes": 8110208,
+     "surahNumber": 52,
+     "fileName": "052.mp3"
+    },
+    {
+     "id": "qa-sudais-053",
+     "title": "53. An-Najm",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/053.mp3",
+     "sizeBytes": 9539712,
+     "surahNumber": 53,
+     "fileName": "053.mp3"
+    },
+    {
+     "id": "qa-sudais-054",
+     "title": "54. Al-Qamar",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/054.mp3",
+     "sizeBytes": 8325248,
+     "surahNumber": 54,
+     "fileName": "054.mp3"
+    },
+    {
+     "id": "qa-sudais-055",
+     "title": "55. Ar-Rahmaan",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/055.mp3",
+     "sizeBytes": 11401344,
+     "surahNumber": 55,
+     "fileName": "055.mp3"
+    },
+    {
+     "id": "qa-sudais-056",
+     "title": "56. Al-Waaqia",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/056.mp3",
+     "sizeBytes": 9097344,
+     "surahNumber": 56,
+     "fileName": "056.mp3"
+    },
+    {
+     "id": "qa-sudais-057",
+     "title": "57. Al-Hadid",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/057.mp3",
+     "sizeBytes": 12669056,
+     "surahNumber": 57,
+     "fileName": "057.mp3"
+    },
+    {
+     "id": "qa-sudais-058",
+     "title": "58. Al-Mujaadila",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/058.mp3",
+     "sizeBytes": 9367593,
+     "surahNumber": 58,
+     "fileName": "058.mp3"
+    },
+    {
+     "id": "qa-sudais-059",
+     "title": "59. Al-Hashr",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/059.mp3",
+     "sizeBytes": 11180160,
+     "surahNumber": 59,
+     "fileName": "059.mp3"
+    },
+    {
+     "id": "qa-sudais-060",
+     "title": "60. Al-Mumtahana",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/060.mp3",
+     "sizeBytes": 8827008,
+     "surahNumber": 60,
+     "fileName": "060.mp3"
+    },
+    {
+     "id": "qa-sudais-061",
+     "title": "61. As-Saff",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/061.mp3",
+     "sizeBytes": 5589120,
+     "surahNumber": 61,
+     "fileName": "061.mp3"
+    },
+    {
+     "id": "qa-sudais-062",
+     "title": "62. Al-Jumu'a",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/062.mp3",
+     "sizeBytes": 4368512,
+     "surahNumber": 62,
+     "fileName": "062.mp3"
+    },
+    {
+     "id": "qa-sudais-063",
+     "title": "63. Al-Munaafiqoon",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/063.mp3",
+     "sizeBytes": 4769920,
+     "surahNumber": 63,
+     "fileName": "063.mp3"
+    },
+    {
+     "id": "qa-sudais-064",
+     "title": "64. At-Taghaabun",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/064.mp3",
+     "sizeBytes": 5898368,
+     "surahNumber": 64,
+     "fileName": "064.mp3"
+    },
+    {
+     "id": "qa-sudais-065",
+     "title": "65. At-Talaaq",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/065.mp3",
+     "sizeBytes": 6918272,
+     "surahNumber": 65,
+     "fileName": "065.mp3"
+    },
+    {
+     "id": "qa-sudais-066",
+     "title": "66. At-Tahrim",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/066.mp3",
+     "sizeBytes": 6766720,
+     "surahNumber": 66,
+     "fileName": "066.mp3"
+    },
+    {
+     "id": "qa-sudais-067",
+     "title": "67. Al-Mulk",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/067.mp3",
+     "sizeBytes": 8589440,
+     "surahNumber": 67,
+     "fileName": "067.mp3"
+    },
+    {
+     "id": "qa-sudais-068",
+     "title": "68. Al-Qalam",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/068.mp3",
+     "sizeBytes": 7932032,
+     "surahNumber": 68,
+     "fileName": "068.mp3"
+    },
+    {
+     "id": "qa-sudais-069",
+     "title": "69. Al-Haaqqa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/069.mp3",
+     "sizeBytes": 7815296,
+     "surahNumber": 69,
+     "fileName": "069.mp3"
+    },
+    {
+     "id": "qa-sudais-070",
+     "title": "70. Al-Ma'aarij",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/070.mp3",
+     "sizeBytes": 6967424,
+     "surahNumber": 70,
+     "fileName": "070.mp3"
+    },
+    {
+     "id": "qa-sudais-071",
+     "title": "71. Nooh",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/071.mp3",
+     "sizeBytes": 6094976,
+     "surahNumber": 71,
+     "fileName": "071.mp3"
+    },
+    {
+     "id": "qa-sudais-072",
+     "title": "72. Al-Jinn",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/072.mp3",
+     "sizeBytes": 6482048,
+     "surahNumber": 72,
+     "fileName": "072.mp3"
+    },
+    {
+     "id": "qa-sudais-073",
+     "title": "73. Al-Muzzammil",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/073.mp3",
+     "sizeBytes": 4900992,
+     "surahNumber": 73,
+     "fileName": "073.mp3"
+    },
+    {
+     "id": "qa-sudais-074",
+     "title": "74. Al-Muddaththir",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/074.mp3",
+     "sizeBytes": 6174848,
+     "surahNumber": 74,
+     "fileName": "074.mp3"
+    },
+    {
+     "id": "qa-sudais-075",
+     "title": "75. Al-Qiyaama",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/075.mp3",
+     "sizeBytes": 3854464,
+     "surahNumber": 75,
+     "fileName": "075.mp3"
+    },
+    {
+     "id": "qa-sudais-076",
+     "title": "76. Al-Insaan",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/076.mp3",
+     "sizeBytes": 6021248,
+     "surahNumber": 76,
+     "fileName": "076.mp3"
+    },
+    {
+     "id": "qa-sudais-077",
+     "title": "77. Al-Mursalaat",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/077.mp3",
+     "sizeBytes": 4987008,
+     "surahNumber": 77,
+     "fileName": "077.mp3"
+    },
+    {
+     "id": "qa-sudais-078",
+     "title": "78. An-Naba",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/078.mp3",
+     "sizeBytes": 5075072,
+     "surahNumber": 78,
+     "fileName": "078.mp3"
+    },
+    {
+     "id": "qa-sudais-079",
+     "title": "79. An-Naazi'aat",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/079.mp3",
+     "sizeBytes": 4309120,
+     "surahNumber": 79,
+     "fileName": "079.mp3"
+    },
+    {
+     "id": "qa-sudais-080",
+     "title": "80. Abasa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/080.mp3",
+     "sizeBytes": 3578902,
+     "surahNumber": 80,
+     "fileName": "080.mp3"
+    },
+    {
+     "id": "qa-sudais-081",
+     "title": "81. At-Takwir",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/081.mp3",
+     "sizeBytes": 2455680,
+     "surahNumber": 81,
+     "fileName": "081.mp3"
+    },
+    {
+     "id": "qa-sudais-082",
+     "title": "82. Al-Infitaar",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/082.mp3",
+     "sizeBytes": 1839232,
+     "surahNumber": 82,
+     "fileName": "082.mp3"
+    },
+    {
+     "id": "qa-sudais-083",
+     "title": "83. Al-Mutaffifin",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/083.mp3",
+     "sizeBytes": 4079744,
+     "surahNumber": 83,
+     "fileName": "083.mp3"
+    },
+    {
+     "id": "qa-sudais-084",
+     "title": "84. Al-Inshiqaaq",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/084.mp3",
+     "sizeBytes": 2562176,
+     "surahNumber": 84,
+     "fileName": "084.mp3"
+    },
+    {
+     "id": "qa-sudais-085",
+     "title": "85. Al-Burooj",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/085.mp3",
+     "sizeBytes": 2642048,
+     "surahNumber": 85,
+     "fileName": "085.mp3"
+    },
+    {
+     "id": "qa-sudais-086",
+     "title": "86. At-Taariq",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/086.mp3",
+     "sizeBytes": 1683584,
+     "surahNumber": 86,
+     "fileName": "086.mp3"
+    },
+    {
+     "id": "qa-sudais-087",
+     "title": "87. Al-A'laa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/087.mp3",
+     "sizeBytes": 1747072,
+     "surahNumber": 87,
+     "fileName": "087.mp3"
+    },
+    {
+     "id": "qa-sudais-088",
+     "title": "88. Al-Ghaashiya",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/088.mp3",
+     "sizeBytes": 2437248,
+     "surahNumber": 88,
+     "fileName": "088.mp3"
+    },
+    {
+     "id": "qa-sudais-089",
+     "title": "89. Al-Fajr",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/089.mp3",
+     "sizeBytes": 3494016,
+     "surahNumber": 89,
+     "fileName": "089.mp3"
+    },
+    {
+     "id": "qa-sudais-090",
+     "title": "90. Al-Balad",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/090.mp3",
+     "sizeBytes": 1915008,
+     "surahNumber": 90,
+     "fileName": "090.mp3"
+    },
+    {
+     "id": "qa-sudais-091",
+     "title": "91. Ash-Shams",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/091.mp3",
+     "sizeBytes": 1462400,
+     "surahNumber": 91,
+     "fileName": "091.mp3"
+    },
+    {
+     "id": "qa-sudais-092",
+     "title": "92. Al-Lail",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/092.mp3",
+     "sizeBytes": 1859712,
+     "surahNumber": 92,
+     "fileName": "092.mp3"
+    },
+    {
+     "id": "qa-sudais-093",
+     "title": "93. Ad-Dhuhaa",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/093.mp3",
+     "sizeBytes": 1101952,
+     "surahNumber": 93,
+     "fileName": "093.mp3"
+    },
+    {
+     "id": "qa-sudais-094",
+     "title": "94. Ash-Sharh",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/094.mp3",
+     "sizeBytes": 637056,
+     "surahNumber": 94,
+     "fileName": "094.mp3"
+    },
+    {
+     "id": "qa-sudais-095",
+     "title": "95. At-Tin",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/095.mp3",
+     "sizeBytes": 917632,
+     "surahNumber": 95,
+     "fileName": "095.mp3"
+    },
+    {
+     "id": "qa-sudais-096",
+     "title": "96. Al-Alaq",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/096.mp3",
+     "sizeBytes": 1699968,
+     "surahNumber": 96,
+     "fileName": "096.mp3"
+    },
+    {
+     "id": "qa-sudais-097",
+     "title": "97. Al-Qadr",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/097.mp3",
+     "sizeBytes": 780416,
+     "surahNumber": 97,
+     "fileName": "097.mp3"
+    },
+    {
+     "id": "qa-sudais-098",
+     "title": "98. Al-Bayyina",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/098.mp3",
+     "sizeBytes": 2246784,
+     "surahNumber": 98,
+     "fileName": "098.mp3"
+    },
+    {
+     "id": "qa-sudais-099",
+     "title": "99. Az-Zalzala",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/099.mp3",
+     "sizeBytes": 1206400,
+     "surahNumber": 99,
+     "fileName": "099.mp3"
+    },
+    {
+     "id": "qa-sudais-100",
+     "title": "100. Al-Aadiyaat",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/100.mp3",
+     "sizeBytes": 1347712,
+     "surahNumber": 100,
+     "fileName": "100.mp3"
+    },
+    {
+     "id": "qa-sudais-101",
+     "title": "101. Al-Qaari'a",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/101.mp3",
+     "sizeBytes": 1263744,
+     "surahNumber": 101,
+     "fileName": "101.mp3"
+    },
+    {
+     "id": "qa-sudais-102",
+     "title": "102. At-Takaathur",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/102.mp3",
+     "sizeBytes": 1028224,
+     "surahNumber": 102,
+     "fileName": "102.mp3"
+    },
+    {
+     "id": "qa-sudais-103",
+     "title": "103. Al-Asr",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/103.mp3",
+     "sizeBytes": 624768,
+     "surahNumber": 103,
+     "fileName": "103.mp3"
+    },
+    {
+     "id": "qa-sudais-104",
+     "title": "104. Al-Humaza",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/104.mp3",
+     "sizeBytes": 1007744,
+     "surahNumber": 104,
+     "fileName": "104.mp3"
+    },
+    {
+     "id": "qa-sudais-105",
+     "title": "105. Al-Fil",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/105.mp3",
+     "sizeBytes": 850048,
+     "surahNumber": 105,
+     "fileName": "105.mp3"
+    },
+    {
+     "id": "qa-sudais-106",
+     "title": "106. Quraish",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/106.mp3",
+     "sizeBytes": 733312,
+     "surahNumber": 106,
+     "fileName": "106.mp3"
+    },
+    {
+     "id": "qa-sudais-107",
+     "title": "107. Al-Maa'un",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/107.mp3",
+     "sizeBytes": 835712,
+     "surahNumber": 107,
+     "fileName": "107.mp3"
+    },
+    {
+     "id": "qa-sudais-108",
+     "title": "108. Al-Kawthar",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/108.mp3",
+     "sizeBytes": 415872,
+     "surahNumber": 108,
+     "fileName": "108.mp3"
+    },
+    {
+     "id": "qa-sudais-109",
+     "title": "109. Al-Kaafiroon",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/109.mp3",
+     "sizeBytes": 743552,
+     "surahNumber": 109,
+     "fileName": "109.mp3"
+    },
+    {
+     "id": "qa-sudais-110",
+     "title": "110. An-Nasr",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/110.mp3",
+     "sizeBytes": 645248,
+     "surahNumber": 110,
+     "fileName": "110.mp3"
+    },
+    {
+     "id": "qa-sudais-111",
+     "title": "111. Al-Masad",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/111.mp3",
+     "sizeBytes": 716928,
+     "surahNumber": 111,
+     "fileName": "111.mp3"
+    },
+    {
+     "id": "qa-sudais-112",
+     "title": "112. Al-Ikhlaas",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/112.mp3",
+     "sizeBytes": 424064,
+     "surahNumber": 112,
+     "fileName": "112.mp3"
+    },
+    {
+     "id": "qa-sudais-113",
+     "title": "113. Al-Falaq",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/113.mp3",
+     "sizeBytes": 624768,
+     "surahNumber": 113,
+     "fileName": "113.mp3"
+    },
+    {
+     "id": "qa-sudais-114",
+     "title": "114. An-Naas",
+     "url": "https://download.quranicaudio.com/quran/abdurrahmaan_as-sudays/114.mp3",
+     "sizeBytes": 737408,
+     "surahNumber": 114,
+     "fileName": "114.mp3"
+    }
+   ]
+  }
+ ]
+}

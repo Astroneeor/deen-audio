@@ -62,6 +62,16 @@ void main() {
         expect(await s.usedBytes('other'), 1);
       });
 
+      test('openRead returns the contents', () async {
+        final s = make();
+        await append(s, 'audio/pack/r.bin', [1, 2, 3]);
+        await append(s, 'audio/pack/r.bin', [4]);
+        final read = await s
+            .openRead('audio/pack/r.bin')
+            .fold<List<int>>([], (all, c) => all..addAll(c));
+        expect(read, [1, 2, 3, 4]);
+      });
+
       test('absolute resolves under basePath', () async {
         final s = make();
         final base = await s.basePath();
@@ -86,10 +96,17 @@ void main() {
         [1, 2]);
   });
 
-  test('MemoryFileStore can be made to fail writes', () async {
+  test('MemoryFileStore write errors surface from flush/close, like IOSink',
+      () async {
     final s = MemoryFileStore()
       ..writeError = const FileSystemException('disk full');
     final sink = await s.openAppend('audio/p/f.part');
-    expect(() => sink.add([1]), throwsA(isA<FileSystemException>()));
+    sink.add([1]); // does not throw
+    await expectLater(sink.flush(), throwsA(isA<FileSystemException>()));
+    expect(await s.size('audio/p/f.part'), 0);
+
+    final sink2 = await s.openAppend('audio/p/g.part');
+    sink2.add([1]);
+    await expectLater(sink2.close(), throwsA(isA<FileSystemException>()));
   });
 }

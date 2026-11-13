@@ -32,6 +32,9 @@ class IoFileStore implements FileStore {
   }
 
   @override
+  Stream<List<int>> openRead(String rel) => File(_abs(rel)).openRead();
+
+  @override
   Future<IOSinkLike> openAppend(String rel) async {
     final file = File(_abs(rel));
     await file.parent.create(recursive: true);
