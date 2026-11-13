@@ -56,10 +56,15 @@ final packDownloadItemsProvider =
       (ref, packId) => ref.watch(downloadRepositoryProvider).watchPack(packId),
     );
 
-/// Provides the bytes used by downloaded files; refreshed whenever the
-/// download rows change.
+/// Provides the bytes used by downloaded files; rescanned only when a row
+/// appears, disappears or changes status (not on progress writes).
 final downloadsUsedBytesProvider = FutureProvider<int>((ref) async {
-  ref.watch(downloadItemsProvider);
+  ref.watch(downloadItemsProvider.select((items) => _statusKey(items.value)));
   final service = await ref.watch(downloadServiceProvider.future);
   return service.usedBytes();
 });
+
+/// `fileId:status` of every row; equal for two lists that differ only in
+/// progress.
+String? _statusKey(List<DownloadItem>? items) =>
+    items?.map((i) => '${i.fileId}:${i.status.name}').join(',');

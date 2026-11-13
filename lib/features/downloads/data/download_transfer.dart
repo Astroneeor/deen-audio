@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 
@@ -8,15 +7,10 @@ import '../../../core/storage/file_store.dart';
 import 'catalog.dart';
 import 'download_models.dart';
 import 'download_repository.dart';
+import 'transfer_support.dart';
 
 /// How a [DownloadTransfer] ended.
 enum TransferOutcome { done, failed, aborted }
-
-/// A failure with the reason shown to the user.
-class _Failure implements Exception {
-  _Failure(this.reason);
-  final String reason;
-}
 
 /// Downloads one catalog file into `<relativePath>.part` (resuming an
 /// existing part with a Range request), verifies size and checksum, then
@@ -30,28 +24,36 @@ class DownloadTransfer {
     required this.repo,
     required this.file,
     required this.relativePath,
+    this.stallTimeout = const Duration(seconds: 30),
+    this.progressInterval = const Duration(milliseconds: 500),
   });
-
-  /// Progress is written to the database at most once per this many bytes.
-  static const progressStep = 256 * 1024;
 
   final http.Client client;
   final FileStore files;
   final DownloadRepository repo;
   final CatalogFile file;
   final String relativePath;
+
+  /// How long the server may send nothing (headers or body) before the
+  /// transfer fails as stalled.
+  final Duration stallTimeout;
+
+  /// Progress is written to the database at most this often (plus once at
+  /// the end).
+  final Duration progressInterval;
+
   final _abort = Completer<void>();
 
   String get partPath => '$relativePath.part';
   bool get aborted => _abort.isCompleted;
 
-  /// Stops the transfer at the next chunk (or before the request is sent).
+  /// Stops the transfer now, even while waiting for the server.
   void abort() {
     if (!_abort.isCompleted) _abort.complete();
   }
 
   /// Runs the transfer. Never throws: failures end as [TransferOutcome.failed]
-  /// with the reason stored on the row.
+  /// with the reason stored on the row (best effort).
   Future<TransferOutcome> run() async {
     try {
       await repo.setStatus(file.id, DownloadStatus.running);
@@ -60,14 +62,11 @@ class DownloadTransfer {
         await repo.setStatus(file.id, DownloadStatus.done);
       }
       return outcome;
-    } on _Failure catch (f) {
-      await repo.setStatus(file.id, DownloadStatus.failed, error: f.reason);
-      return TransferOutcome.failed;
     } catch (e) {
-      await repo.setStatus(
+      await markFailed(
+        repo,
         file.id,
-        DownloadStatus.failed,
-        error: 'Download failed: $e',
+        e is TransferFailure ? e.reason : 'Download failed: $e',
       );
       return TransferOutcome.failed;
     }
@@ -78,75 +77,103 @@ class DownloadTransfer {
     var offset = await files.size(partPath);
     final request = http.Request('GET', file.url);
     if (offset > 0) request.headers['Range'] = 'bytes=$offset-';
-
-    final http.StreamedResponse res;
-    try {
-      res = await client.send(request);
-    } on http.ClientException catch (e) {
-      throw _Failure('Could not reach ${file.url.host}: ${e.message}');
-    } catch (e) {
-      throw _Failure('Could not reach ${file.url.host}: $e');
-    }
-    if (aborted) return _discard(res, TransferOutcome.aborted);
+    final res = await _send(request);
+    if (res == null) return TransferOutcome.aborted;
 
     final code = res.statusCode;
     if (code == 416 && offset > 0) {
       // The part may already be complete; otherwise start again from zero.
-      if (offset == file.sizeBytes) {
-        await _discard(res, null);
-        return _finish(offset);
-      }
-      await _discard(res, null);
+      await discardBody(res);
+      if (offset == file.sizeBytes) return _finish(offset);
       await files.delete(partPath);
       if (mayRestart) return _download(mayRestart: false);
-      throw _Failure('Server refused to resume (416). Try again.');
+      throw TransferFailure('Server refused to resume (416). Try again.');
     }
     if (code == 206) {
-      final start = RegExp(
-        r'bytes (\d+)-',
-      ).firstMatch(res.headers['content-range'] ?? '')?.group(1);
-      if (start != null && int.parse(start) != offset) {
-        await _discard(res, null);
+      if (contentRangeStart(res) != offset) {
+        await discardBody(res);
         await files.delete(partPath);
-        throw _Failure('Server resumed at the wrong position. Try again.');
+        throw TransferFailure(
+          'Server resumed at the wrong position. '
+          'Try again.',
+        );
       }
     } else if (code == 200) {
       if (offset > 0) await files.delete(partPath); // Range ignored: restart.
       offset = 0;
     } else {
-      await _discard(res, null);
+      await discardBody(res);
       final reason = res.reasonPhrase == null ? '' : ' ${res.reasonPhrase}';
-      throw _Failure('Server returned $code$reason for ${file.url}');
+      throw TransferFailure('Server returned $code$reason for ${file.url}');
     }
 
-    final declared = res.contentLength == null
-        ? null
-        : offset + res.contentLength!;
-    await repo.setProgress(
-      file.id,
-      offset,
-      bytesTotal: file.sizeBytes ?? declared,
-    );
+    final total = serverTotal(res, offset);
+    final expected = file.sizeBytes;
+    if (expected != null && total != null && total != expected) {
+      await discardBody(res);
+      await files.delete(partPath);
+      throw TransferFailure(
+        '$outOfDateReason (the server has $total bytes, '
+        'the catalog says $expected). Nothing was downloaded.',
+      );
+    }
+    await repo.setProgress(file.id, offset, bytesTotal: expected ?? total);
     final written = await _stream(res, offset);
     if (aborted) return TransferOutcome.aborted;
-    if (declared != null && written < declared) {
-      throw _Failure(
-        'Download ended early ($written of $declared bytes). '
-        'Resume to continue.',
+    if (total != null && written < total) {
+      throw TransferFailure(
+        'Download ended early ($written of $total '
+        'bytes). Resume to continue.',
       );
     }
     return _finish(written);
   }
 
+  /// Sends [request]; null if aborted before the answer arrived.
+  Future<http.StreamedResponse?> _send(http.Request request) async {
+    final sent = client.send(request);
+    final http.StreamedResponse? res;
+    try {
+      res = await Future.any<http.StreamedResponse?>([
+        sent,
+        _abort.future.then((_) => null),
+      ]).timeout(stallTimeout);
+    } on TimeoutException {
+      unawaited(sent.then(discardBody, onError: (Object _) {}));
+      throw TransferFailure(stalledReason);
+    } on http.ClientException catch (e) {
+      throw TransferFailure('Could not reach ${file.url.host}: ${e.message}');
+    } catch (e) {
+      throw TransferFailure('Could not reach ${file.url.host}: $e');
+    }
+    if (res == null) {
+      unawaited(sent.then(discardBody, onError: (Object _) {}));
+      return null;
+    }
+    if (aborted) {
+      await discardBody(res);
+      return null;
+    }
+    return res;
+  }
+
   /// Appends the body to the part; returns the part's size afterwards.
   Future<int> _stream(http.StreamedResponse res, int offset) async {
     var written = offset;
-    var saved = offset;
+    final clock = Stopwatch()..start();
+    var lastSave = Duration.zero;
     final sink = await _guardWrite(() => files.openAppend(partPath));
+    final body = res.stream
+        .timeout(
+          stallTimeout,
+          onTimeout: (s) {
+            s.addError(const StalledError());
+            s.close();
+          },
+        )
+        .takeUntil(_abort.future.asStream());
     try {
-      await for (final chunk in res.stream.takeUntil(
-        _abort.future.asStream(),
-      )) {
+      await for (final chunk in body) {
         // A real IOSink reports write errors only on flush/close, so a chunk
         // counts as written once the flush has succeeded.
         await _guardWrite(() async {
@@ -154,21 +181,23 @@ class DownloadTransfer {
           await sink.flush();
         });
         written += chunk.length;
-        if (written - saved >= progressStep) {
-          await repo.setProgress(file.id, written);
-          saved = written;
+        if (clock.elapsed - lastSave >= progressInterval) {
+          await _guardDb(() => repo.setProgress(file.id, written));
+          lastSave = clock.elapsed;
         }
       }
       await _guardWrite(sink.close);
-    } on _Failure {
-      await _closeQuietly(sink);
-      await repo.setProgress(file.id, written);
-      rethrow;
     } catch (e) {
-      await _closeQuietly(sink);
-      await repo.setProgress(file.id, written);
+      await closeQuietly(sink);
+      try {
+        await repo.setProgress(file.id, written);
+      } catch (_) {
+        // Best effort; the original error is the one reported.
+      }
+      if (e is TransferFailure) rethrow;
+      if (e is StalledError) throw TransferFailure(stalledReason);
       final message = e is http.ClientException ? e.message : '$e';
-      throw _Failure('Connection lost: $message. Resume to continue.');
+      throw TransferFailure('Connection lost: $message. Resume to continue.');
     }
     await repo.setProgress(file.id, written);
     return written;
@@ -179,59 +208,39 @@ class DownloadTransfer {
     final expected = file.sizeBytes;
     if (expected != null && size != expected) {
       await files.delete(partPath);
-      throw _Failure(
+      throw TransferFailure(
         'Downloaded size does not match the catalog '
         '(expected $expected bytes, got $size). The file was discarded.',
       );
     }
     final checksum = file.checksum;
-    if (checksum != null) {
-      final digest = await _hash(
-        file.checksumAlgo!,
-      ).bind(files.openRead(partPath)).first;
-      if (digest.toString() != checksum) {
-        await files.delete(partPath);
-        throw _Failure(
-          'The file checksum does not match the catalog. '
-          'The file was discarded.',
-        );
-      }
+    if (checksum != null &&
+        await digestOf(file.checksumAlgo!, files.openRead(partPath)) !=
+            checksum) {
+      await files.delete(partPath);
+      throw TransferFailure(
+        'The file checksum does not match the catalog. '
+        'The file was discarded.',
+      );
     }
     await _guardWrite(() => files.rename(partPath, relativePath));
     await repo.setProgress(file.id, size, bytesTotal: size);
     return TransferOutcome.done;
   }
 
-  static Hash _hash(String algo) => switch (algo) {
-    'sha256' => sha256,
-    'sha1' => sha1,
-    'md5' => md5,
-    _ => throw _Failure('Unsupported checksum algorithm "$algo"'),
-  };
-
   Future<T> _guardWrite<T>(Future<T> Function() op) async {
     try {
       return await op();
     } catch (e) {
-      throw _Failure('Could not save the file: $e');
+      throw TransferFailure('Could not save the file: $e');
     }
   }
 
-  static Future<void> _closeQuietly(IOSinkLike sink) async {
+  Future<void> _guardDb(Future<void> Function() op) async {
     try {
-      await sink.close();
-    } catch (_) {
-      // Already failing; the original error is the one reported.
+      await op();
+    } catch (e) {
+      throw TransferFailure('Download failed: $e');
     }
-  }
-
-  /// Drops an unread response body and returns [outcome].
-  static Future<T> _discard<T>(http.StreamedResponse res, T outcome) async {
-    try {
-      await res.stream.listen(null).cancel();
-    } catch (_) {
-      // Nothing to clean up.
-    }
-    return outcome;
   }
 }

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../core/storage/file_store.dart';
 import 'catalog.dart';
 import 'download_models.dart';
+import 'download_queue.dart';
 import 'download_repository.dart';
 import 'download_transfer.dart';
 
@@ -14,6 +15,10 @@ import 'download_transfer.dart';
 /// `.part` file that is renamed once verified). State lives in
 /// `download_items`, so an interrupted download can be resumed after a
 /// restart; nothing starts without a call from the user.
+///
+/// Every request for a file (enqueue/resume, pause, cancel/delete) bumps that
+/// file's generation synchronously; a request that is still awaiting the
+/// database gives up once a newer one exists, so the last call wins.
 class DownloadService {
   DownloadService({
     required http.Client client,
@@ -21,11 +26,19 @@ class DownloadService {
     required DownloadRepository repo,
     required this.catalog,
     this.maxConcurrent = 2,
+    this.stallTimeout = const Duration(seconds: 30),
+    this.progressInterval = const Duration(milliseconds: 500),
     this.onFileDone,
     this.onFileRemoved,
   }) : _client = client,
        _files = files,
-       _repo = repo;
+       _repo = repo {
+    _queue = DownloadQueue(
+      maxConcurrent: maxConcurrent,
+      createTransfer: _transferFor,
+      onFinished: _finished,
+    );
+  }
 
   /// Root directory of downloaded files in the store.
   static const audioDir = 'audio';
@@ -35,6 +48,8 @@ class DownloadService {
   final DownloadRepository _repo;
   final Catalog catalog;
   final int maxConcurrent;
+  final Duration stallTimeout;
+  final Duration progressInterval;
 
   /// Called once a file is verified and in place (relative store path).
   final void Function(CatalogPack, CatalogFile, String relativePath)?
@@ -43,44 +58,67 @@ class DownloadService {
   /// Called when a downloaded file is deleted.
   final void Function(CatalogFile)? onFileRemoved;
 
-  final List<String> _queue = [];
-  final Map<String, DownloadTransfer> _active = {};
-  final Map<String, Future<void>> _finished = {};
-  Completer<void>? _idle;
+  late final DownloadQueue _queue;
+  final Map<String, int> _generation = {};
   bool _disposed = false;
 
   static String pathFor(CatalogPack pack, CatalogFile file) =>
       '$audioDir/${pack.id}/${file.fileName}';
 
-  /// Queues [fileId] (a no-op if it is queued, running, or done and present).
-  /// Also resumes a paused or failed file. Throws [ArgumentError] for an id
-  /// that is not in the catalog.
+  int _bump(String id) => _generation[id] = (_generation[id] ?? 0) + 1;
+
+  /// Queues [fileId] (a no-op if it is queued, running, or done and present;
+  /// a file already on disk with the catalog size is just marked done).
+  /// Also resumes a paused or failed file, after a pause that is still
+  /// draining. Throws [ArgumentError] for an id not in the catalog.
   Future<void> enqueueFile(String fileId) async {
     final (pack, file) = catalog.requireFile(fileId);
-    if (_disposed || _queue.contains(fileId) || _active.containsKey(fileId)) {
+    final running = _queue.active(fileId);
+    if (_disposed ||
+        _queue.isWaiting(fileId) ||
+        (running != null && !running.aborted)) {
       return;
     }
+    final gen = _bump(fileId);
+    bool superseded() => _disposed || _generation[fileId] != gen;
+    if (running != null) await _queue.drained(fileId);
+
     final path = pathFor(pack, file);
     final existing = await _repo.get(fileId);
-    if (existing?.status == DownloadStatus.done && await _files.exists(path)) {
-      return;
+    if (superseded()) return;
+    if (await _files.exists(path)) {
+      if (existing?.status == DownloadStatus.done) return;
+      final size = await _files.size(path);
+      if (size == file.sizeBytes && !superseded()) {
+        await _record(pack, file, DownloadStatus.done, size);
+        _notify(() => onFileDone?.call(pack, file, path));
+        return;
+      }
     }
-    await _repo.upsert(
-      DownloadItem(
-        fileId: fileId,
-        packId: pack.id,
-        status: DownloadStatus.queued,
-        bytesDone: await _files.size('$path.part'),
-        bytesTotal: file.sizeBytes,
-        relativePath: path,
-      ),
-      url: file.url,
-      checksum: file.checksum,
-    );
-    if (_queue.contains(fileId) || _active.containsKey(fileId)) return;
-    _queue.add(fileId);
-    _pump();
+    final partSize = await _files.size('$path.part');
+    if (superseded()) return;
+    await _record(pack, file, DownloadStatus.queued, partSize);
+    if (!superseded()) _queue.add(fileId);
   }
+
+  Future<void> _record(
+    CatalogPack pack,
+    CatalogFile file,
+    DownloadStatus status,
+    int bytesDone,
+  ) => _repo.upsert(
+    DownloadItem(
+      fileId: file.id,
+      packId: pack.id,
+      status: status,
+      bytesDone: bytesDone,
+      bytesTotal:
+          file.sizeBytes ?? (status == DownloadStatus.done ? bytesDone : null),
+      relativePath: pathFor(pack, file),
+    ),
+    url: file.url,
+    checksum: file.checksum,
+  );
 
   /// Queues every file of [packId] in catalog order.
   Future<void> enqueuePack(String packId) async {
@@ -124,21 +162,23 @@ class DownloadService {
   }
 
   Future<void> _pauseAll(Set<String> ids) async {
-    final dequeued = ids.where(_queue.contains).toList();
-    _queue.removeWhere(ids.contains);
-    await _stop(ids);
+    final gens = {for (final id in ids) id: _bump(id)};
+    _queue.removeWaiting(ids);
+    await _queue.stop(ids);
+    const unfinished = {DownloadStatus.queued, DownloadStatus.running};
     for (final id in ids) {
+      if (_generation[id] != gens[id]) continue; // resumed meanwhile
       final item = await _repo.get(id);
-      if (dequeued.contains(id) || item?.status == DownloadStatus.running) {
+      if (item != null && unfinished.contains(item.status)) {
         await _repo.setStatus(id, DownloadStatus.paused);
       }
     }
-    _checkIdle();
   }
 
   Future<void> _deleteAll(Set<String> ids) async {
-    _queue.removeWhere(ids.contains);
-    await _stop(ids);
+    ids.forEach(_bump);
+    _queue.removeWaiting(ids);
+    await _queue.stop(ids);
     for (final id in ids) {
       final (pack, file) = catalog.requireFile(id);
       final path = pathFor(pack, file);
@@ -151,80 +191,42 @@ class DownloadService {
         _notify(() => onFileRemoved?.call(file));
       }
     }
-    _checkIdle();
   }
 
-  /// Aborts the running transfers among [ids] and waits for them to end.
-  Future<void> _stop(Set<String> ids) async {
-    final running = ids.where(_active.containsKey).toList();
-    for (final id in running) {
-      _active[id]!.abort();
-    }
-    await Future.wait(running.map((id) => _finished[id] ?? Future.value()));
-  }
-
-  /// Call once at startup: downloads left running by a previous session
-  /// become paused. Issues no network request.
-  Future<void> restore() => _repo.resetRunningToPaused();
+  /// Call once at startup: downloads left running or queued by a previous
+  /// session become paused. Issues no network request.
+  Future<void> restore() => _repo.pauseUnfinished();
 
   /// Bytes used by downloaded (and partial) files.
   Future<int> usedBytes() => _files.usedBytes(audioDir);
 
   /// Completes when nothing is queued or running.
-  Future<void> whenIdle() {
-    if (_queue.isEmpty && _active.isEmpty) return Future.value();
-    return (_idle ??= Completer<void>()).future;
-  }
+  Future<void> whenIdle() => _queue.whenIdle();
 
   /// Aborts transfers without changing their rows (the next [restore] marks
   /// them paused).
   Future<void> dispose() async {
     _disposed = true;
-    _queue.clear();
-    await _stop(_active.keys.toSet());
-    _checkIdle();
+    await _queue.close();
   }
 
-  void _pump() {
-    while (!_disposed && _active.length < maxConcurrent && _queue.isNotEmpty) {
-      _start(_queue.removeAt(0));
-    }
-    _checkIdle();
-  }
-
-  void _start(String fileId) {
+  DownloadTransfer _transferFor(String fileId) {
     final (pack, file) = catalog.requireFile(fileId);
-    final path = pathFor(pack, file);
-    final transfer = DownloadTransfer(
+    return DownloadTransfer(
       client: _client,
       files: _files,
       repo: _repo,
       file: file,
-      relativePath: path,
+      relativePath: pathFor(pack, file),
+      stallTimeout: stallTimeout,
+      progressInterval: progressInterval,
     );
-    _active[fileId] = transfer;
-    _finished[fileId] = transfer
-        .run()
-        .then((outcome) {
-          if (outcome == TransferOutcome.done) {
-            _notify(() => onFileDone?.call(pack, file, path));
-          }
-        })
-        .whenComplete(() {
-          if (identical(_active[fileId], transfer)) {
-            _active.remove(fileId);
-            _finished.remove(fileId);
-          }
-          _pump();
-        });
   }
 
-  void _checkIdle() {
-    final idle = _idle;
-    if (idle != null && _queue.isEmpty && _active.isEmpty) {
-      _idle = null;
-      idle.complete();
-    }
+  void _finished(String fileId, TransferOutcome outcome) {
+    if (outcome != TransferOutcome.done) return;
+    final (pack, file) = catalog.requireFile(fileId);
+    _notify(() => onFileDone?.call(pack, file, pathFor(pack, file)));
   }
 
   void _notify(void Function() callback) {

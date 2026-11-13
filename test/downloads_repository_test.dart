@@ -64,12 +64,12 @@ void main() {
     expect((await repo.watchAll().first).single.fileId, 'b');
   });
 
-  test('resetRunningToPaused turns running (and queued) into paused', () async {
+  test('pauseUnfinished turns running (and queued) into paused', () async {
     await repo.upsert(item('r', status: DownloadStatus.running), url: url);
     await repo.upsert(item('q', status: DownloadStatus.queued), url: url);
     await repo.upsert(item('d', status: DownloadStatus.done), url: url);
     await repo.upsert(item('x', status: DownloadStatus.failed), url: url);
-    await repo.resetRunningToPaused();
+    await repo.pauseUnfinished();
     final byId = {for (final i in await repo.getAll()) i.fileId: i.status};
     expect(byId, {
       'r': DownloadStatus.paused,

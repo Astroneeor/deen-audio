@@ -27,6 +27,15 @@ class FakeDownloadServer {
   /// Throw this from the client instead of answering (e.g. offline).
   Object? connectError;
 
+  /// URL paths whose requests never get an answer (no headers, ever).
+  final Set<String> neverAnswer = {};
+
+  /// Send a Content-Length header (and set `contentLength`).
+  bool sendLength = true;
+
+  /// Leave out the Content-Range header of 206 answers.
+  bool omitContentRange = false;
+
   final List<http.BaseRequest> requests = [];
   final Map<String, StreamController<List<int>>> held = {};
   int inFlight = 0;
@@ -42,6 +51,9 @@ class FakeDownloadServer {
     final error = connectError;
     if (error != null) throw error;
     final path = req.url.path;
+    if (neverAnswer.contains(path)) {
+      return Completer<http.StreamedResponse>().future;
+    }
 
     final status = statusFor[path];
     if (status != null) {
@@ -62,11 +74,13 @@ class FakeDownloadServer {
     if (range != null && !ignoreRange) {
       start = int.parse(range.group(1)!);
       code = 206;
-      headers['content-range'] =
-          'bytes $start-${full.length - 1}/${full.length}';
+      if (!omitContentRange) {
+        headers['content-range'] =
+            'bytes $start-${full.length - 1}/${full.length}';
+      }
     }
     final slice = full.sublist(start);
-    headers['content-length'] = '${slice.length}';
+    if (sendLength) headers['content-length'] = '${slice.length}';
 
     inFlight++;
     maxInFlight = math.max(maxInFlight, inFlight);
@@ -90,7 +104,7 @@ class FakeDownloadServer {
     return http.StreamedResponse(
       body.stream,
       code,
-      contentLength: slice.length,
+      contentLength: sendLength ? slice.length : null,
       headers: headers,
     );
   }

@@ -87,7 +87,7 @@ class DownloadRepository {
   /// After an app restart nothing is in flight: rows left `running` (and
   /// `queued`, whose in-memory queue is gone) become `paused`, so the user
   /// can resume them. Starts nothing.
-  Future<void> resetRunningToPaused() =>
+  Future<void> pauseUnfinished() =>
       (_db.update(_db.downloadItems)..where(
             (t) => t.status.isIn([
               DownloadStatus.running.name,

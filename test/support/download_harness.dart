@@ -3,8 +3,10 @@ import 'dart:io';
 
 import 'package:deen_audio/core/database/app_database.dart';
 import 'package:deen_audio/features/downloads/data/catalog.dart';
+import 'package:deen_audio/features/downloads/data/download_models.dart';
 import 'package:deen_audio/features/downloads/data/download_repository.dart';
 import 'package:deen_audio/features/downloads/data/download_service.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import 'fake_download_server.dart';
 import 'memory_file_store.dart';
@@ -52,14 +54,39 @@ class DownloadHarness {
     service = newService();
   }
 
-  DownloadService newService() => DownloadService(
+  DownloadService newService({
+    int maxConcurrent = 2,
+    Duration stallTimeout = const Duration(seconds: 30),
+    Duration progressInterval = const Duration(milliseconds: 500),
+    DownloadRepository? repository,
+  }) => DownloadService(
     client: server.client,
     files: files,
-    repo: repo,
+    repo: repository ?? repo,
     catalog: catalog,
+    maxConcurrent: maxConcurrent,
+    stallTimeout: stallTimeout,
+    progressInterval: progressInterval,
     onFileDone: (pack, file, rel) => done.add((pack, file, rel)),
     onFileRemoved: removed.add,
   );
+
+  /// Replaces [service] (disposing the old one) with one built by [make].
+  Future<void> replaceService(DownloadService Function() make) async {
+    await service.dispose();
+    service = make();
+  }
+
+  Future<DownloadItem> row(String id) async => (await repo.get(id))!;
+
+  /// Starts [fatiha] with held bodies and delivers its first 3 bytes.
+  Future<void> startHeld() async {
+    server.hold = true;
+    await service.enqueueFile(fatiha);
+    await pumpEventQueue();
+    server.held[fatihaUrl]!.add([1, 2, 3]);
+    await pumpEventQueue();
+  }
 
   Future<void> tearDown() async {
     await service.dispose();
