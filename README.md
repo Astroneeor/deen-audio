@@ -16,8 +16,8 @@ Offline-first Islamic desktop audio player — Spotify for halal content.
 
 ## Requirements
 
-- Flutter 3.38 or later (`flutter --version`) — the SQLite package (`sqlite3` 3.x, used through Drift) relies on Dart build hooks
-- Dart SDK ≥ 3.10
+- Flutter 3.41 or later (`flutter --version`) — the SQLite package (`sqlite3` 3.x, used through Drift) relies on Dart build hooks
+- Dart SDK ≥ 3.11 (bundled with Flutter 3.41)
 
 ### Linux
 

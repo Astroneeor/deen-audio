@@ -187,10 +187,8 @@ class LibraryRepository {
   /// was never stored (empty trackKey).
   Future<void> toggleFavorite(Track track) async {
     _requireKey(track);
-    track.isFavorite = await _writeState(
-      track.trackKey,
-      isFavorite: (existing) => !(existing?.isFavorite ?? false),
-    ) as bool;
+    track.isFavorite = await _writeState(track.trackKey,
+        isFavorite: (e) => !(e?.isFavorite ?? false)) as bool;
   }
 
   /// Records that [track] was just played. Throws [ArgumentError] if [track]
@@ -210,7 +208,8 @@ class LibraryRepository {
 
   /// Creates or updates (reviving if soft-deleted) the state row of [key].
   ///
-  /// [isFavorite] computes the new flag from the stored row (null if none);
+  /// [isFavorite] computes the new flag from the stored row (null if none or
+  /// a tombstone, whose old state is dropped: revival starts from defaults);
   /// its result is returned, or null when not given.
   Future<bool?> _writeState(
     String key, {
@@ -221,10 +220,15 @@ class LibraryRepository {
         final existing = await (_db.select(_db.trackStates)
               ..where((t) => t.trackKey.equals(key)))
             .getSingleOrNull();
-        final favourite = isFavorite?.call(existing);
+        final revive = existing != null && existing.deletedAt != null;
+        final favourite = isFavorite?.call(revive ? null : existing);
         final stamp = TrackStatesCompanion(
-          isFavorite: favourite == null ? const Value.absent() : Value(favourite),
-          lastPlayed: lastPlayed == null ? const Value.absent() : Value(lastPlayed),
+          isFavorite: favourite != null
+              ? Value(favourite)
+              : revive ? const Value(false) : const Value.absent(),
+          lastPlayed: lastPlayed != null
+              ? Value(lastPlayed)
+              : revive ? const Value(null) : const Value.absent(),
           updatedAt: Value(_stamper.nowUtc()),
           deletedAt: const Value(null),
           deviceId: Value(_stamper.deviceId),

@@ -75,8 +75,8 @@ description: Halal offline-first desktop audio app
 version: 0.1.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=3.13.0'
+  sdk: '>=3.11.0 <4.0.0'
+  flutter: '>=3.41.0'
 
 dependencies:
   flutter:
@@ -723,7 +723,7 @@ Zero frontend rewrites required because of TrackSource abstraction.
 - **Large audio files**: Do NOT bundle in app assets. Always reference external path.
 - **Arabic font**: Must be loaded via `pubspec.yaml` assets — do not rely on system fonts for Arabic.
 - **Drift**: Requires running `build_runner` after changing a table in `core/database/tables/` (regenerates `app_database.g.dart`).
-- **SQLite library**: `package:sqlite3`'s build hook downloads a prebuilt SQLite for the target platform during `flutter run`/`build`/`test` (needs network the first time, then cached; `hooks: user_defines: sqlite3:` in pubspec can point it at a system library or a mirror instead). Requires Flutter 3.38+.
+- **SQLite library**: `package:sqlite3`'s build hook downloads a prebuilt SQLite for the target platform during `flutter run`/`build`/`test` (needs network the first time, then cached; `hooks: user_defines: sqlite3:` in pubspec can point it at a system library or a mirror instead). Requires Flutter 3.41+ (Dart 3.11).
 
 ---
 

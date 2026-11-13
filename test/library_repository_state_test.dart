@@ -1,5 +1,7 @@
 // LibraryRepository: downloaded tracks, favourites, play state, streams.
+import 'package:deen_audio/core/database/app_database.dart';
 import 'package:deen_audio/core/models/track.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/library_repo_harness.dart';
@@ -157,5 +159,52 @@ void main() {
     await settle();
     expect(emissions.last.length, 2);
     await sub.cancel();
+  });
+
+  group('tombstoned state rows', () {
+    // Favourite a track, then soft-delete its state row directly.
+    Future<TrackStateRow> tombstoned() async {
+      await h.scan([libTrack('/m/a.mp3')]);
+      await h.repo.toggleFavorite(await h.byPath('/m/a.mp3'));
+      final row = (await h.db.select(h.db.trackStates).get()).single;
+      expect(row.isFavorite, isTrue);
+      await (h.db.update(h.db.trackStates)
+            ..where((t) => t.id.equals(row.id)))
+          .write(TrackStatesCompanion(
+              deletedAt: Value(DateTime.utc(2026, 11, 13, 8))));
+      h.now = DateTime.utc(2026, 11, 13, 10);
+      return row;
+    }
+
+    test('toggleFavorite revives with defaults, so it becomes favourite',
+        () async {
+      final old = await tombstoned();
+
+      final t = await h.byPath('/m/a.mp3');
+      expect(t.isFavorite, isFalse); // tombstone is invisible
+      await h.repo.toggleFavorite(t);
+
+      final rows = await h.db.select(h.db.trackStates).get();
+      expect(rows.length, 1);
+      expect(rows.single.id, old.id);
+      expect(rows.single.deletedAt, isNull);
+      expect(rows.single.updatedAt, DateTime.utc(2026, 11, 13, 10));
+      expect((await h.byPath('/m/a.mp3')).isFavorite, isTrue);
+    });
+
+    test('markPlayed revives with default favourite', () async {
+      final old = await tombstoned();
+
+      await h.repo.markPlayed(await h.byPath('/m/a.mp3'));
+
+      final rows = await h.db.select(h.db.trackStates).get();
+      expect(rows.length, 1);
+      expect(rows.single.id, old.id);
+      expect(rows.single.deletedAt, isNull);
+      final visible = await h.byPath('/m/a.mp3');
+      expect(visible.isFavorite, isFalse);
+      expect(visible.lastPlayed, DateTime.utc(2026, 11, 13, 10));
+      expect(visible.lastPlayed!.isUtc, isTrue);
+    });
   });
 }
