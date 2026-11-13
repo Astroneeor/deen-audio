@@ -44,6 +44,12 @@ const _navItems = [
     activeIcon: Icons.mosque,
     route: AppRoutes.prayer,
   ),
+  _NavItem(
+    label: 'Downloads',
+    icon: Icons.download_outlined,
+    activeIcon: Icons.download,
+    route: AppRoutes.downloads,
+  ),
 ];
 
 /// Left navigation sidebar — 220px wide, dark background.

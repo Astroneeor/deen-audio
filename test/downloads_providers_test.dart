@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:deen_audio/core/database/app_database.dart';
 import 'package:deen_audio/core/providers/foundation_providers.dart';
+import 'package:deen_audio/core/sync/auth_session.dart';
 import 'package:deen_audio/features/downloads/data/catalog.dart';
 import 'package:deen_audio/features/downloads/data/catalog_loader.dart';
 import 'package:deen_audio/features/downloads/data/download_models.dart';
@@ -52,6 +53,9 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         appDatabaseProvider.overrideWithValue(db),
+        authSessionProvider.overrideWithValue(
+          const LocalAuthSession(deviceId: 'device-1'),
+        ),
         fileStoreProvider.overrideWithValue(MemoryFileStore()),
         downloadHttpClientProvider.overrideWithValue(server.client),
         catalogLoaderProvider.overrideWithValue(_FixtureLoader()),
@@ -73,6 +77,9 @@ void main() {
     final container = ProviderContainer(
       overrides: [
         appDatabaseProvider.overrideWithValue(db),
+        authSessionProvider.overrideWithValue(
+          const LocalAuthSession(deviceId: 'device-1'),
+        ),
         fileStoreProvider.overrideWithValue(store),
         downloadHttpClientProvider.overrideWithValue(
           FakeDownloadServer({}).client,

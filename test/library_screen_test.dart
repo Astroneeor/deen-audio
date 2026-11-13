@@ -1,4 +1,5 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:deen_audio/app/router.dart';
 import 'package:deen_audio/core/audio/audio_player_service.dart';
 import 'package:deen_audio/core/models/track.dart';
 import 'package:deen_audio/features/library/data/library_scanner.dart';
@@ -7,14 +8,18 @@ import 'package:deen_audio/features/library/ui/library_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 class _FakeScanner implements LibraryScanner {
+  _FakeScanner({this.lastFolder = '/home/u/HalalAudio'});
+
+  final String? lastFolder;
   Object? scanError;
   int picks = 0;
   final scanned = <String>[];
 
   @override
-  Future<String?> getLastFolder() async => '/home/u/HalalAudio';
+  Future<String?> getLastFolder() async => lastFolder;
 
   @override
   Future<String?> pickAndScan() async {
@@ -39,8 +44,25 @@ Track _track(int i, TrackType type) => Track()
   ..type = type
   ..filePath = '/m/$i.mp3';
 
-Future<_FakeScanner> _pump(WidgetTester tester, List<Track> tracks) async {
-  final scanner = _FakeScanner();
+Future<_FakeScanner> _pump(
+  WidgetTester tester,
+  List<Track> tracks, {
+  String? lastFolder = '/home/u/HalalAudio',
+}) async {
+  final scanner = _FakeScanner(lastFolder: lastFolder);
+  final router = GoRouter(
+    initialLocation: AppRoutes.library,
+    routes: [
+      GoRoute(
+        path: AppRoutes.library,
+        builder: (_, __) => const Scaffold(body: LibraryScreen()),
+      ),
+      GoRoute(
+        path: AppRoutes.downloads,
+        builder: (_, __) => const Text('downloads page'),
+      ),
+    ],
+  );
   await tester.pumpWidget(ProviderScope(
     overrides: [
       libraryScannerProvider.overrideWithValue(scanner),
@@ -48,7 +70,7 @@ Future<_FakeScanner> _pump(WidgetTester tester, List<Track> tracks) async {
       currentTrackProvider
           .overrideWith((ref) => Stream<MediaItem?>.value(null)),
     ],
-    child: const MaterialApp(home: Scaffold(body: LibraryScreen())),
+    child: MaterialApp.router(routerConfig: router),
   ));
   await tester.pump();
   await tester.pump();
@@ -119,5 +141,29 @@ void main() {
 
     await _pump(tester, [for (var i = 0; i < 30; i++) _track(i, TrackType.quran)]);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('downloaded tracks are listed when no folder is chosen',
+      (tester) async {
+    final downloaded = _track(1, TrackType.quran)
+      ..source = TrackSourceKind.downloaded;
+    await _pump(tester, [downloaded], lastFolder: null);
+
+    expect(find.text('Track 1'), findsOneWidget);
+    expect(find.text('Your library is empty'), findsNothing);
+  });
+
+  testWidgets('the empty library offers a folder and the downloads',
+      (tester) async {
+    final scanner = await _pump(tester, [], lastFolder: null);
+    expect(find.text('Your library is empty'), findsOneWidget);
+
+    await tester.tap(find.text('Choose a folder'));
+    await tester.pump();
+    expect(scanner.picks, 1);
+
+    await tester.tap(find.text('Browse downloads'));
+    await tester.pumpAndSettle();
+    expect(find.text('downloads page'), findsOneWidget);
   });
 }

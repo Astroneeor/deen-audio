@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/router.dart';
 import '../../../core/models/track.dart';
 import '../../../core/theme/app_colors.dart';
 import '../providers/library_providers.dart';
@@ -65,16 +67,29 @@ class LibraryEmptyState extends ConsumerWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Put your audio files in ~/HalalAudio/\nthen tap Scan Folder to import them.',
+              'Download recitations, or choose a folder of your own audio\n'
+              '(for example ~/HalalAudio/) to import it.',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: () =>
-                  ref.read(scanNotifierProvider.notifier).pickAndScan(),
-              icon: const Icon(Icons.folder_open_outlined, size: 18),
-              label: const Text('Scan Folder'),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 12,
+              runSpacing: 8,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () =>
+                      ref.read(scanNotifierProvider.notifier).pickAndScan(),
+                  icon: const Icon(Icons.folder_open_outlined, size: 18),
+                  label: const Text('Choose a folder'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => context.go(AppRoutes.downloads),
+                  icon: const Icon(Icons.download_outlined, size: 18),
+                  label: const Text('Browse downloads'),
+                ),
+              ],
             ),
           ],
         ),

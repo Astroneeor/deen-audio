@@ -19,6 +19,7 @@ GoRouter _router() => GoRouter(
               AppRoutes.quran,
               AppRoutes.adhkar,
               AppRoutes.prayer,
+              AppRoutes.downloads,
               AppRoutes.settings,
             ])
               GoRoute(
@@ -49,11 +50,17 @@ void main() {
     expect(_labelColor(tester, 'Quran'), AppColors.gold);
     expect(_labelColor(tester, 'Library'), isNot(AppColors.gold));
 
+    await tester.tap(find.text('Downloads'));
+    await tester.pumpAndSettle();
+    expect(find.text('page /downloads'), findsOneWidget);
+    expect(_labelColor(tester, 'Downloads'), AppColors.gold);
+    expect(_labelColor(tester, 'Quran'), isNot(AppColors.gold));
+
     await tester.tap(find.text('Settings'));
     await tester.pumpAndSettle();
     expect(find.text('page /settings'), findsOneWidget);
     expect(_labelColor(tester, 'Settings'), AppColors.gold);
-    expect(_labelColor(tester, 'Quran'), isNot(AppColors.gold));
+    expect(_labelColor(tester, 'Downloads'), isNot(AppColors.gold));
   });
 
   testWidgets('does not overflow in a short window', (tester) async {

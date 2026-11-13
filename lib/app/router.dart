@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../features/adhkar/ui/adhkar_screen.dart';
+import '../features/downloads/ui/downloads_screen.dart';
 import '../features/library/ui/library_screen.dart';
 import '../features/prayer/ui/prayer_screen.dart';
 import '../features/quran/ui/quran_screen.dart';
@@ -15,6 +16,7 @@ class AppRoutes {
   static const String library = '/library';
   static const String adhkar = '/adhkar';
   static const String prayer = '/prayer';
+  static const String downloads = '/downloads';
   static const String settings = '/settings';
 }
 
@@ -46,6 +48,12 @@ final router = GoRouter(
           path: AppRoutes.prayer,
           pageBuilder: (context, state) => const NoTransitionPage(
             child: PrayerScreen(),
+          ),
+        ),
+        GoRoute(
+          path: AppRoutes.downloads,
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: DownloadsScreen(),
           ),
         ),
         GoRoute(
