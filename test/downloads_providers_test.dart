@@ -118,6 +118,50 @@ void main() {
     expect(store.usedBytesCalls, greaterThan(before));
   });
 
+  test('a burst of status changes walks the store once', () async {
+    final store = _CountingStore();
+    final repo = DownloadRepository(db);
+    final container = ProviderContainer(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        authSessionProvider.overrideWithValue(
+          const LocalAuthSession(deviceId: 'device-1'),
+        ),
+        fileStoreProvider.overrideWithValue(store),
+        downloadHttpClientProvider.overrideWithValue(
+          FakeDownloadServer({}).client,
+        ),
+        catalogLoaderProvider.overrideWithValue(_FixtureLoader()),
+      ],
+    );
+    addTearDown(container.dispose);
+    final sub = container.listen(downloadsUsedBytesProvider, (_, _) {});
+    addTearDown(sub.close);
+    await container.read(downloadsUsedBytesProvider.future);
+    await pumpEventQueue();
+    final before = store.usedBytesCalls;
+
+    // As "Download all" does: one new row after another.
+    final catalog = await container.read(catalogProvider.future);
+    for (final f in catalog.pack('test-reciter')!.files) {
+      await repo.upsert(
+        DownloadItem(
+          fileId: f.id,
+          packId: 'test-reciter',
+          status: DownloadStatus.queued,
+          relativePath: 'audio/test-reciter/${f.fileName}',
+        ),
+        url: f.url,
+      );
+      await pumpEventQueue();
+    }
+    await Future<void>.delayed(const Duration(milliseconds: 700));
+    await pumpEventQueue();
+    await container.read(downloadsUsedBytesProvider.future);
+
+    expect(store.usedBytesCalls - before, 1);
+  });
+
   test('used bytes still resolve when the items stream errors', () async {
     final container = ProviderContainer(
       overrides: [

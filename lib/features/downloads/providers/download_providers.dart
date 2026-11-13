@@ -107,11 +107,24 @@ final packDownloadItemsProvider =
       (ref, packId) => ref.watch(downloadRepositoryProvider).watchPack(packId),
     );
 
+/// How long the used-bytes total waits after a status change, so a burst
+/// (e.g. "Download all" adding a row per file) causes one directory walk.
+const usedBytesDebounce = Duration(milliseconds: 500);
+
 /// Provides the bytes used by downloaded files; rescanned only when a row
-/// appears, disappears or changes status (not on progress writes).
+/// appears, disappears or changes status (not on progress writes), and
+/// debounced by [usedBytesDebounce] after the first value.
 final downloadsUsedBytesProvider = FutureProvider<int>((ref) async {
   ref.watch(downloadItemsProvider.select((items) => _statusKey(items.valueOrNull)));
+  var stale = false;
+  ref.onDispose(() => stale = true);
   final service = await ref.watch(downloadServiceProvider.future);
+  if (ref.state.hasValue) {
+    await Future<void>.delayed(usedBytesDebounce);
+    // Rebuilt meanwhile: the newer build does the walk, and Riverpod
+    // discards this stale result.
+    if (stale) return 0;
+  }
   return service.usedBytes();
 });
 
