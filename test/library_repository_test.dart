@@ -192,6 +192,74 @@ void main() {
     expect(row.deletedAt, isNull);
   });
 
+  test('toggleFavorite flips the stored value, not the stale Track value',
+      () async {
+    await scan([_track('/m/a.mp3')]);
+    final stale = await byPath('/m/a.mp3'); // isFavorite == false
+    await repo.toggleFavorite(await byPath('/m/a.mp3')); // stored: true
+    stale.isFavorite = false;
+
+    await repo.toggleFavorite(stale);
+
+    final row = (await db.select(db.trackStates).get()).single;
+    expect(row.isFavorite, isFalse);
+    expect(stale.isFavorite, isFalse);
+  });
+
+  test('toggleFavorite and markPlayed reject an empty trackKey', () async {
+    final unstored = _track('/m/x.mp3');
+    expect(unstored.trackKey, isEmpty);
+    expect(() => repo.toggleFavorite(unstored), throwsArgumentError);
+    expect(() => repo.markPlayed(unstored), throwsArgumentError);
+    await Future<void>.delayed(Duration.zero);
+    expect(await db.select(db.trackStates).get(), isEmpty);
+  });
+
+  test('nested file gets a posix key and its favourite survives a rescan',
+      () async {
+    const path = '/m/Quran/Alafasy/001.mp3';
+    await scan([_track(path, type: TrackType.quran)]);
+    final t = await byPath(path);
+    expect(t.trackKey, 'lib:Quran/Alafasy/001.mp3');
+    await repo.toggleFavorite(t);
+
+    await scan([_track(path, type: TrackType.quran)]);
+
+    final after = await byPath(path);
+    expect(after.trackKey, 'lib:Quran/Alafasy/001.mp3');
+    expect(after.isFavorite, isTrue);
+  });
+
+  test('a library root with a trailing slash gives the same keys', () async {
+    final paths = ['/m/a.mp3', '/m/Quran/Alafasy/001.mp3'];
+    await repo.replaceAllTracks([for (final x in paths) _track(x)],
+        libraryRoot: '/m');
+    final plain = {for (final t in await repo.getAllTracks()) t.trackKey};
+
+    await repo.replaceAllTracks([for (final x in paths) _track(x)],
+        libraryRoot: '/m/');
+    final slashed = {for (final t in await repo.getAllTracks()) t.trackKey};
+
+    expect(slashed, plain);
+    expect(slashed, {'lib:a.mp3', 'lib:Quran/Alafasy/001.mp3'});
+  });
+
+  test('markPlayed then toggleFavorite keeps one state row with the same id',
+      () async {
+    await scan([_track('/m/a.mp3')]);
+    final a = await byPath('/m/a.mp3');
+
+    await repo.markPlayed(a);
+    final first = (await db.select(db.trackStates).get()).single;
+    await repo.toggleFavorite(a);
+
+    final rows = await db.select(db.trackStates).get();
+    expect(rows.length, 1);
+    expect(rows.single.id, first.id);
+    expect(rows.single.isFavorite, isTrue);
+    expect(rows.single.lastPlayed, isNotNull);
+  });
+
   test('watchAllTracks emits after each change', () async {
     final emissions = <List<String>>[];
     final sub = repo.watchAllTracks().listen((l) =>

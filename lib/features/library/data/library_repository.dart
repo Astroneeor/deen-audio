@@ -180,33 +180,51 @@ class LibraryRepository {
       (_db.update(_db.tracks)..where((t) => t.id.equals(track.id)))
           .write(TracksCompanion(durationMs: Value(milliseconds)));
 
-  /// Flips the favourite flag of [track] (stored in `track_states`).
+  /// Flips the stored favourite flag of [track] (in `track_states`).
+  ///
+  /// The current value is read inside the write transaction, so a stale
+  /// [track] cannot cause a wrong write. Throws [ArgumentError] if [track]
+  /// was never stored (empty trackKey).
   Future<void> toggleFavorite(Track track) async {
-    final favourite = !track.isFavorite;
-    await _writeState(track.trackKey, isFavorite: Value(favourite));
-    track.isFavorite = favourite;
+    _requireKey(track);
+    track.isFavorite = await _writeState(
+      track.trackKey,
+      isFavorite: (existing) => !(existing?.isFavorite ?? false),
+    ) as bool;
   }
 
-  /// Records that [track] was just played.
+  /// Records that [track] was just played. Throws [ArgumentError] if [track]
+  /// was never stored (empty trackKey).
   Future<void> markPlayed(Track track) async {
+    _requireKey(track);
     final at = _stamper.nowUtc();
-    await _writeState(track.trackKey, lastPlayed: Value(at));
+    await _writeState(track.trackKey, lastPlayed: at);
     track.lastPlayed = at;
   }
 
+  void _requireKey(Track track) {
+    if (track.trackKey.isEmpty) {
+      throw ArgumentError.value(track.title, 'track', 'has no trackKey');
+    }
+  }
+
   /// Creates or updates (reviving if soft-deleted) the state row of [key].
-  Future<void> _writeState(
+  ///
+  /// [isFavorite] computes the new flag from the stored row (null if none);
+  /// its result is returned, or null when not given.
+  Future<bool?> _writeState(
     String key, {
-    Value<bool> isFavorite = const Value.absent(),
-    Value<DateTime?> lastPlayed = const Value.absent(),
+    bool Function(TrackStateRow? existing)? isFavorite,
+    DateTime? lastPlayed,
   }) =>
       _db.transaction(() async {
         final existing = await (_db.select(_db.trackStates)
               ..where((t) => t.trackKey.equals(key)))
             .getSingleOrNull();
+        final favourite = isFavorite?.call(existing);
         final stamp = TrackStatesCompanion(
-          isFavorite: isFavorite,
-          lastPlayed: lastPlayed,
+          isFavorite: favourite == null ? const Value.absent() : Value(favourite),
+          lastPlayed: lastPlayed == null ? const Value.absent() : Value(lastPlayed),
           updatedAt: Value(_stamper.nowUtc()),
           deletedAt: const Value(null),
           deviceId: Value(_stamper.deviceId),
@@ -222,5 +240,6 @@ class LibraryRepository {
                 ..where((t) => t.id.equals(existing.id)))
               .write(stamp);
         }
+        return favourite;
       });
 }
