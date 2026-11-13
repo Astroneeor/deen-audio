@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'app/app.dart';
+import 'app/startup_error_app.dart';
 import 'core/audio/audio_handler.dart';
 import 'core/audio/audio_player_service.dart';
 import 'core/database/app_database.dart';
@@ -19,10 +21,17 @@ import 'core/sync/auth_session.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 1. Open the SQLite database. It is required: if it cannot be opened this
-  //    throws and the app does not start, rather than running without its
-  //    data.
-  final foundation = await _openFoundation();
+  // 1. Open the SQLite database. It is required: if it cannot be opened, a
+  //    plain error screen is shown and nothing else starts, rather than
+  //    running without its data.
+  final ({AppDatabase db, LocalAuthSession session, IoFileStore files})
+      foundation;
+  try {
+    foundation = await _openFoundation();
+  } catch (e) {
+    runApp(StartupErrorApp(error: e, databasePath: await _databasePath()));
+    return;
+  }
 
   // 1b. Remove files left by pre-SQLite versions. Not awaited, and it never
   //     throws (failures are logged and retried next launch), so it cannot
@@ -73,6 +82,17 @@ Future<({AppDatabase db, LocalAuthSession session, IoFileStore files})>
     debugPrint('Could not open the Deen Audio database: $e');
     await db.close().catchError((_) {});
     rethrow;
+  }
+}
+
+/// Full path of the database file, or null if the app-support directory
+/// cannot be resolved either.
+Future<String?> _databasePath() async {
+  try {
+    final dir = await getApplicationSupportDirectory();
+    return p.join(dir.path, databaseFileName);
+  } catch (_) {
+    return null;
   }
 }
 
