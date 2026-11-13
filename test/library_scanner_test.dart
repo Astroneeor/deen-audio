@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:deen_audio/core/database/app_database.dart';
+import 'package:deen_audio/core/database/device_settings_repository.dart';
 import 'package:deen_audio/core/models/track.dart';
 import 'package:deen_audio/features/library/data/library_repository.dart';
 import 'package:deen_audio/features/library/data/library_scanner.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
+
+import 'support/test_database.dart';
 
 /// Records what the scanner hands to the repository.
 class _RecordingRepo implements LibraryRepository {
@@ -14,6 +18,7 @@ class _RecordingRepo implements LibraryRepository {
   @override
   Future<void> replaceAllTracks(
     List<Track> tracks, {
+    required String libraryRoot,
     Iterable<String> keepUnder = const [],
   }) async {
     replaced = tracks;
@@ -28,6 +33,8 @@ void main() {
   late Directory root;
   late _RecordingRepo repo;
   late LibraryScanner scanner;
+  late AppDatabase db;
+  late DeviceSettingsRepository settings;
 
   File touch(String relative) =>
       File(p.join(root.path, relative))..createSync(recursive: true);
@@ -39,12 +46,23 @@ void main() {
   setUp(() {
     root = Directory.systemTemp.createTempSync('deen_audio_scan_test');
     repo = _RecordingRepo();
-    scanner = LibraryScanner(repo);
+    db = testDatabase();
+    settings = DeviceSettingsRepository(db);
+    scanner = LibraryScanner(repo, settings);
   });
 
-  tearDown(() {
+  tearDown(() async {
+    await db.close();
     Process.runSync('chmod', ['-R', 'u+rwx', root.path]);
     root.deleteSync(recursive: true);
+  });
+
+  test('remembers the last scanned folder in device settings', () async {
+    expect(await scanner.getLastFolder(), isNull);
+    touch('Nasheeds/a.mp3');
+    await scanner.scanPath(root.path);
+    expect(await scanner.getLastFolder(), root.path);
+    expect(await settings.read('library.folder'), root.path);
   });
 
   test('finds audio recursively and infers type and artist from folders',

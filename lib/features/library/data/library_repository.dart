@@ -1,107 +1,226 @@
-import 'package:isar/isar.dart';
+import 'package:drift/drift.dart';
 import 'package:path/path.dart' as p;
 
+import '../../../core/database/app_database.dart';
 import '../../../core/models/track.dart';
+import '../../../core/storage/file_store.dart';
+import '../../../core/sync/sync_stamper.dart';
 
-/// All Isar CRUD for [Track].
-/// Features read from this; nothing writes directly to Isar outside this class.
+/// Reads and writes the audio library in the SQLite [AppDatabase].
+///
+/// Tracks are device-local (`tracks`); favourite and last-played are user
+/// data (`track_states`, keyed by track key) so they survive rescans and can
+/// sync. Both are joined into [Track] on read.
 class LibraryRepository {
-  final Isar _isar;
+  LibraryRepository(this._db, this._stamper, this._files);
 
-  const LibraryRepository(this._isar);
+  final AppDatabase _db;
+  final SyncStamper _stamper;
+  final FileStore _files;
 
   // ── Reads ─────────────────────────────────────────────────────────────────
 
-  /// Returns all tracks, sorted by type → title in Dart
-  /// (avoids needing a composite Isar index).
-  Future<List<Track>> getAllTracks() async {
-    final list = await _isar.tracks.where().findAll();
-    _sortInPlace(list);
-    return list;
+  /// All tracks, sorted by type → title.
+  Future<List<Track>> getAllTracks() async => _toTracks(await _joined().get());
+
+  /// Live list: emits now and after every change to tracks or their state.
+  Stream<List<Track>> watchAllTracks() =>
+      _joined().watch().asyncMap(_toTracks);
+
+  Future<int> count() async {
+    final n = countAll();
+    final row = await (_db.selectOnly(_db.tracks)..addColumns([n])).getSingle();
+    return row.read(n)!;
   }
 
-  /// Live stream that fires immediately and on every DB change.
-  Stream<List<Track>> watchAllTracks() {
-    return _isar.tracks
-        .where()
-        .watch(fireImmediately: true)
-        .map((list) => list..sort(_compareTrack));
+  JoinedSelectStatement<HasResultSet, dynamic> _joined() =>
+      _db.select(_db.tracks).join([
+        leftOuterJoin(
+          _db.trackStates,
+          _db.trackStates.trackKey.equalsExp(_db.tracks.trackKey) &
+              _db.trackStates.deletedAt.isNull(),
+        ),
+      ]);
+
+  Future<List<Track>> _toTracks(List<TypedResult> rows) async {
+    final tracks = <Track>[];
+    for (final r in rows) {
+      final t = r.readTable(_db.tracks);
+      final s = r.readTableOrNull(_db.trackStates);
+      final downloaded = t.source == TrackSourceKind.downloaded.name;
+      tracks.add(Track()
+        ..id = t.id
+        ..title = t.title
+        ..artist = t.artist
+        ..type = TrackType.values.byName(t.type)
+        ..filePath = downloaded ? await _files.absolute(t.filePath) : t.filePath
+        ..duration = t.durationMs
+        ..surahNumber = t.surahNumber
+        ..trackKey = t.trackKey
+        ..source = TrackSourceKind.values.byName(t.source)
+        ..isFavorite = s?.isFavorite ?? false
+        ..lastPlayed = s?.lastPlayed);
+    }
+    return tracks..sort(_compare);
   }
 
-  Future<int> count() => _isar.tracks.count();
-
-  // ── Writes ────────────────────────────────────────────────────────────────
-
-  /// Makes the collection match a fresh scan result, in one transaction.
-  ///
-  /// Tracks are matched by [Track.filePath]. A file that was already in the
-  /// library keeps its id (playlists reference ids) and its per-track user
-  /// state — favourite flag, last-played time and measured duration — while
-  /// title / artist / type are refreshed from the scan. Files that are no
-  /// longer on disk are removed, except those under one of the [keepUnder]
-  /// directories: folders the scanner could not read, whose contents are
-  /// unknown rather than gone.
-  Future<void> replaceAllTracks(
-    List<Track> tracks, {
-    Iterable<String> keepUnder = const [],
-  }) async {
-    await _isar.writeTxn(() async {
-      final existingByPath = <String, Track>{};
-      final staleIds = <Id>[];
-      for (final old in await _isar.tracks.where().findAll()) {
-        if (existingByPath.containsKey(old.filePath)) {
-          staleIds.add(old.id); // duplicate row for the same file
-        } else {
-          existingByPath[old.filePath] = old;
-        }
-      }
-
-      final scannedByPath = {for (final t in tracks) t.filePath: t};
-      for (final scanned in scannedByPath.values) {
-        final old = existingByPath.remove(scanned.filePath);
-        if (old == null) continue;
-        scanned
-          ..id = old.id
-          ..isFavorite = old.isFavorite
-          ..lastPlayed = old.lastPlayed
-          ..surahNumber ??= old.surahNumber;
-        if (scanned.duration == 0) scanned.duration = old.duration;
-      }
-
-      // Whatever is left in existingByPath was not seen by this scan.
-      for (final old in existingByPath.values) {
-        final unknown = keepUnder.any((dir) => p.isWithin(dir, old.filePath));
-        if (!unknown) staleIds.add(old.id);
-      }
-
-      await _isar.tracks.deleteAll(staleIds);
-      await _isar.tracks.putAll(scannedByPath.values.toList());
-    });
-  }
-
-  /// Persists changes to a single track (favorite toggle, lastPlayed, etc.).
-  Future<void> updateTrack(Track track) async {
-    await _isar.writeTxn(() => _isar.tracks.put(track));
-  }
-
-  /// Flips [Track.isFavorite] and saves.
-  Future<void> toggleFavorite(Track track) async {
-    track.isFavorite = !track.isFavorite;
-    await updateTrack(track);
-  }
-
-  /// Records that this track was just played.
-  Future<void> markPlayed(Track track) async {
-    track.lastPlayed = DateTime.now();
-    await updateTrack(track);
-  }
-
-  // ── Helpers ───────────────────────────────────────────────────────────────
-
-  void _sortInPlace(List<Track> list) => list.sort(_compareTrack);
-
-  int _compareTrack(Track a, Track b) {
+  int _compare(Track a, Track b) {
     final t = a.type.index.compareTo(b.type.index);
     return t != 0 ? t : a.title.toLowerCase().compareTo(b.title.toLowerCase());
   }
+
+  // ── Scanned tracks ────────────────────────────────────────────────────────
+
+  /// `lib:<path relative to the library folder>`, always with `/`.
+  static String libraryKey(String filePath, String libraryRoot) =>
+      'lib:${p.posix.joinAll(p.split(p.relative(filePath, from: libraryRoot)))}';
+
+  /// Makes the scanned part of the library match a fresh scan, in one
+  /// transaction. Downloaded tracks and all `track_states` are untouched.
+  ///
+  /// A file that was already known (same key) keeps its id and measured
+  /// duration while title / artist / type are refreshed. Files no longer on
+  /// disk are removed, except those under one of the [keepUnder] directories:
+  /// folders the scanner could not read, whose contents are unknown.
+  Future<void> replaceAllTracks(
+    List<Track> scanned, {
+    required String libraryRoot,
+    Iterable<String> keepUnder = const [],
+  }) =>
+      _db.transaction(() async {
+        final old = {
+          for (final r in await (_db.select(_db.tracks)
+                ..where((t) => t.source.equals(TrackSourceKind.scanned.name)))
+              .get())
+            r.trackKey: r,
+        };
+        final fresh = {
+          for (final t in scanned) libraryKey(t.filePath, libraryRoot): t,
+        };
+
+        for (final e in fresh.entries) {
+          final t = e.value;
+          final prev = old.remove(e.key);
+          if (prev == null) {
+            await _db.into(_db.tracks).insert(TracksCompanion.insert(
+                  title: t.title,
+                  artist: Value(t.artist),
+                  type: t.type.name,
+                  filePath: t.filePath,
+                  durationMs: Value(t.duration),
+                  surahNumber: Value(t.surahNumber),
+                  trackKey: e.key,
+                  source: TrackSourceKind.scanned.name,
+                ));
+          } else {
+            await (_db.update(_db.tracks)..where((r) => r.id.equals(prev.id)))
+                .write(TracksCompanion(
+              title: Value(t.title),
+              artist: Value(t.artist),
+              type: Value(t.type.name),
+              filePath: Value(t.filePath),
+              durationMs: Value(t.duration == 0 ? prev.durationMs : t.duration),
+              surahNumber: Value(t.surahNumber ?? prev.surahNumber),
+            ));
+          }
+        }
+
+        // What is left in `old` was not seen by this scan.
+        final gone = [
+          for (final r in old.values)
+            if (!keepUnder.any((dir) => p.isWithin(dir, r.filePath))) r.id,
+        ];
+        await (_db.delete(_db.tracks)..where((r) => r.id.isIn(gone))).go();
+      });
+
+  // ── Downloaded tracks ─────────────────────────────────────────────────────
+
+  /// Adds (or refreshes) the track for a completed download.
+  Future<void> upsertDownloadedTrack({
+    required String catalogFileId,
+    required String title,
+    required String artist,
+    required TrackType type,
+    required String relativePath,
+    String? surahNumber,
+  }) =>
+      _db.into(_db.tracks).insert(
+            TracksCompanion.insert(
+              title: title,
+              artist: Value(artist),
+              type: type.name,
+              filePath: relativePath,
+              surahNumber: Value(surahNumber),
+              trackKey: 'dl:$catalogFileId',
+              source: TrackSourceKind.downloaded.name,
+            ),
+            onConflict: DoUpdate(
+              (_) => TracksCompanion(
+                title: Value(title),
+                artist: Value(artist),
+                type: Value(type.name),
+                filePath: Value(relativePath),
+                surahNumber: Value(surahNumber),
+              ),
+              target: [_db.tracks.trackKey],
+            ),
+          );
+
+  /// Removes the track of a deleted download. Its favourite/last-played state
+  /// is kept, so a re-download restores it.
+  Future<void> removeDownloadedTrack(String catalogFileId) => (_db
+          .delete(_db.tracks)
+        ..where((t) => t.trackKey.equals('dl:$catalogFileId')))
+      .go();
+
+  // ── User state ────────────────────────────────────────────────────────────
+
+  /// Records a measured duration (ms) for [track].
+  Future<void> updateDuration(Track track, int milliseconds) =>
+      (_db.update(_db.tracks)..where((t) => t.id.equals(track.id)))
+          .write(TracksCompanion(durationMs: Value(milliseconds)));
+
+  /// Flips the favourite flag of [track] (stored in `track_states`).
+  Future<void> toggleFavorite(Track track) async {
+    final favourite = !track.isFavorite;
+    await _writeState(track.trackKey, isFavorite: Value(favourite));
+    track.isFavorite = favourite;
+  }
+
+  /// Records that [track] was just played.
+  Future<void> markPlayed(Track track) async {
+    final at = _stamper.nowUtc();
+    await _writeState(track.trackKey, lastPlayed: Value(at));
+    track.lastPlayed = at;
+  }
+
+  /// Creates or updates (reviving if soft-deleted) the state row of [key].
+  Future<void> _writeState(
+    String key, {
+    Value<bool> isFavorite = const Value.absent(),
+    Value<DateTime?> lastPlayed = const Value.absent(),
+  }) =>
+      _db.transaction(() async {
+        final existing = await (_db.select(_db.trackStates)
+              ..where((t) => t.trackKey.equals(key)))
+            .getSingleOrNull();
+        final stamp = TrackStatesCompanion(
+          isFavorite: isFavorite,
+          lastPlayed: lastPlayed,
+          updatedAt: Value(_stamper.nowUtc()),
+          deletedAt: const Value(null),
+          deviceId: Value(_stamper.deviceId),
+          userId: Value(_stamper.userId),
+        );
+        if (existing == null) {
+          await _db.into(_db.trackStates).insert(stamp.copyWith(
+                id: Value(_stamper.newId()),
+                trackKey: Value(key),
+              ));
+        } else {
+          await (_db.update(_db.trackStates)
+                ..where((t) => t.id.equals(existing.id)))
+              .write(stamp);
+        }
+      });
 }

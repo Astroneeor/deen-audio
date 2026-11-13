@@ -153,7 +153,7 @@ void main() {
     });
 
     test('disabling finds the current track even when ids collide', () {
-      // Tracks that were never persisted all share Isar.autoIncrement as id.
+      // Tracks that were never persisted all share the default id 0.
       final tracks = List.generate(10, (i) => Track()
         ..title = 'T$i'
         ..type = TrackType.quran

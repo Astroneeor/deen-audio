@@ -1,14 +1,11 @@
-import 'package:isar/isar.dart';
-
-part 'playlist.g.dart';
-
-@collection
+/// A user playlist (plain model; stored as `playlists` + `playlist_items`).
 class Playlist {
-  Id id = Isar.autoIncrement;
+  int id = 0;
 
   late String name;
 
-  List<int> trackIds = [];
+  /// Track keys (see `Track.trackKey`), in playback order.
+  List<String> trackKeys = [];
 
-  DateTime createdAt = DateTime.now();
+  DateTime createdAt = DateTime.now().toUtc();
 }

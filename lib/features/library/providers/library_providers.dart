@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show IconData, Icons;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/database/database_provider.dart';
+import '../../../core/providers/foundation_providers.dart';
 import '../../../core/models/track.dart';
 import '../data/library_repository.dart';
 import '../data/library_scanner.dart';
@@ -10,17 +10,24 @@ import '../data/library_scanner.dart';
 
 /// Repository for all Track CRUD operations.
 final libraryRepositoryProvider = Provider<LibraryRepository>((ref) {
-  return LibraryRepository(ref.watch(isarProvider));
+  return LibraryRepository(
+    ref.watch(appDatabaseProvider),
+    ref.watch(syncStamperProvider),
+    ref.watch(fileStoreProvider),
+  );
 });
 
 /// Scanner that picks a folder and populates the repository.
 final libraryScannerProvider = Provider<LibraryScanner>((ref) {
-  return LibraryScanner(ref.watch(libraryRepositoryProvider));
+  return LibraryScanner(
+    ref.watch(libraryRepositoryProvider),
+    ref.watch(deviceSettingsRepositoryProvider),
+  );
 });
 
 // ── Track list providers ──────────────────────────────────────────────────────
 
-/// Live stream of all tracks from Isar — updates automatically on DB changes.
+/// Live stream of all tracks from the database — updates automatically on DB changes.
 final tracksStreamProvider = StreamProvider<List<Track>>((ref) {
   return ref.watch(libraryRepositoryProvider).watchAllTracks();
 });
@@ -55,7 +62,7 @@ class ScanNotifier extends StateNotifier<AsyncValue<String?>> {
     _restoreLastFolder();
   }
 
-  /// Restore the last-used folder path on startup (for display; tracks come from Isar).
+  /// Restore the last-used folder path on startup (for display; tracks come from the database).
   Future<void> _restoreLastFolder() async {
     final last = await _scanner.getLastFolder();
     if (last == null || !mounted || _folder != null) return;

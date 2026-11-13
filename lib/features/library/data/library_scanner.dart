@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
+import '../../../core/database/device_settings_repository.dart';
 import '../../../core/models/track.dart';
 import 'library_repository.dart';
 
@@ -19,13 +19,14 @@ import 'library_repository.dart';
 /// unless that folder IS the type folder (e.g. Nasheeds/track.mp3 → no artist).
 class LibraryScanner {
   final LibraryRepository _repo;
+  final DeviceSettingsRepository _settings;
 
   static const _supportedExtensions = {
     '.mp3', '.m4a', '.flac', '.ogg', '.aac', '.wav', '.opus',
   };
-  static const _settingsFileName = 'last_library_folder.txt';
+  static const folderSettingKey = 'library.folder';
 
-  LibraryScanner(this._repo);
+  LibraryScanner(this._repo, this._settings);
 
   // ── Public API ────────────────────────────────────────────────────────────
 
@@ -46,17 +47,19 @@ class LibraryScanner {
   /// [dirPath] itself is missing or unreadable (e.g. an unplugged drive).
   Future<void> scanPath(String dirPath) async {
     final found = await _findTracks(dirPath);
-    await _repo.replaceAllTracks(found.tracks, keepUnder: found.unreadable);
-    await _persistFolder(dirPath);
+    await _repo.replaceAllTracks(
+      found.tracks,
+      libraryRoot: dirPath,
+      keepUnder: found.unreadable,
+    );
+    await _settings.write(folderSettingKey, dirPath);
   }
 
   /// Returns the last successfully scanned folder path (persisted across restarts).
   Future<String?> getLastFolder() async {
     try {
-      final file = await _settingsFile();
-      if (!file.existsSync()) return null;
-      final content = file.readAsStringSync().trim();
-      return content.isEmpty ? null : content;
+      final value = (await _settings.read(folderSettingKey))?.trim();
+      return value == null || value.isEmpty ? null : value;
     } catch (_) {
       return null;
     }
@@ -133,20 +136,6 @@ class LibraryScanner {
       return TrackType.whiteNoise;
     }
     return TrackType.nasheed;
-  }
-
-  // ── Persistence ───────────────────────────────────────────────────────────
-
-  Future<void> _persistFolder(String path) async {
-    try {
-      final file = await _settingsFile();
-      await file.writeAsString(path);
-    } catch (_) {}
-  }
-
-  Future<File> _settingsFile() async {
-    final dir = await getApplicationSupportDirectory();
-    return File(p.join(dir.path, _settingsFileName));
   }
 }
 

@@ -8,7 +8,6 @@ import 'core/audio/audio_handler.dart';
 import 'core/audio/audio_player_service.dart';
 import 'core/database/app_database.dart';
 import 'core/database/connection/native_connection.dart';
-import 'core/database/database_provider.dart';
 import 'core/database/device_settings_repository.dart';
 import 'core/database/isar_service.dart';
 import 'core/providers/foundation_providers.dart';
@@ -18,8 +17,8 @@ import 'core/sync/auth_session.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 1. Initialise Isar before anything touches the DB
-  final isar = await IsarService.init();
+  // 1. Legacy Isar init (no collections left; removed in a later task)
+  await IsarService.init();
 
   // 1b. Open the SQLite database (replacing Isar over the next tasks). It is
   //     required: if it cannot be opened this throws and the app does not
@@ -39,7 +38,6 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [
-        isarProvider.overrideWithValue(isar),
         audioHandlerProvider.overrideWithValue(audioHandler),
         appDatabaseProvider.overrideWithValue(foundation.db),
         authSessionProvider.overrideWithValue(foundation.session),

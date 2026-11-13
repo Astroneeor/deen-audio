@@ -1,22 +1,22 @@
-import 'package:isar/isar.dart';
-
-part 'track.g.dart';
-
 enum TrackType { quran, adhkar, nasheed, whiteNoise }
 
-@collection
+/// Where a track came from: a library-folder scan or a catalog download.
+enum TrackSourceKind { scanned, downloaded }
+
+/// A playable audio file. Plain value object: the repository builds it from
+/// the `tracks` table joined with the user's `track_states`.
 class Track {
-  Id id = Isar.autoIncrement;
+  /// Local row id (0 for a track that was never stored).
+  int id = 0;
 
   late String title;
 
   /// Reciter name for Quran, artist name for nasheeds
   String? artist;
 
-  @enumerated
   late TrackType type;
 
-  /// Local file path today; URL later via TrackSource abstraction
+  /// Always an absolute path once the track has left the repository.
   late String filePath;
 
   /// Duration in milliseconds
@@ -24,8 +24,15 @@ class Track {
 
   bool isFavorite = false;
 
+  /// UTC time of the last playback.
   DateTime? lastPlayed;
 
   /// Only populated for Quran tracks
   String? surahNumber;
+
+  /// `lib:<path relative to the library folder>` or `dl:<catalog file id>`.
+  /// Empty until the repository stores the track.
+  String trackKey = '';
+
+  TrackSourceKind source = TrackSourceKind.scanned;
 }
