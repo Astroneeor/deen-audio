@@ -1,8 +1,24 @@
-import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../data/settings_file.dart';
+import '../../../core/database/settings_repository.dart';
+import '../../../core/providers/foundation_providers.dart';
+
+/// Settings keys in the database `settings` table.
+const _fontSizeKey = 'quran.fontSize';
+const _locationKey = 'prayer.location';
+
+/// Reads [key], treating a failed read like a missing value.
+Future<Object?> _readOrNull(SettingsRepository repo, String key) async {
+  try {
+    return await repo.read(key);
+  } catch (_) {
+    return null;
+  }
+}
+
+/// Persistence is best-effort: a failed write keeps the in-memory state.
+Future<void> _writeQuietly(SettingsRepository repo, String key, Object? v) =>
+    repo.write(key, v).catchError((Object _) {});
 
 // ── Quran font size ───────────────────────────────────────────────────────────
 
@@ -12,7 +28,7 @@ class QuranFontSizeNotifier extends StateNotifier<double> {
   static const minSize = 18.0;
   static const maxSize = 48.0;
 
-  final _file = SettingsFile('quran_font_size.txt');
+  final SettingsRepository _repo;
 
   /// Set once the user changes the value; a still-running initial load must
   /// then not overwrite it with the older value from disk.
@@ -21,28 +37,28 @@ class QuranFontSizeNotifier extends StateNotifier<double> {
   /// Completes when the saved value has been read (or found missing).
   late final Future<void> loaded;
 
-  QuranFontSizeNotifier() : super(defaultSize) {
+  QuranFontSizeNotifier(this._repo) : super(defaultSize) {
     loaded = _load();
   }
 
   Future<void> _load() async {
-    final raw = await _file.read();
-    if (raw == null || !mounted || _changed) return;
-    final val = double.tryParse(raw.trim());
-    if (val != null && val >= minSize && val <= maxSize) state = val;
+    final raw = await _readOrNull(_repo, _fontSizeKey);
+    if (raw is! num || !mounted || _changed) return;
+    final val = raw.toDouble();
+    if (val >= minSize && val <= maxSize) state = val;
   }
 
   Future<void> set(double size) {
     _changed = true;
     state = size.clamp(minSize, maxSize).toDouble();
-    return _file.write(state.toStringAsFixed(1));
+    return _writeQuietly(_repo, _fontSizeKey, state);
   }
 }
 
 /// Quran body font size — persisted across restarts.
 final quranFontSizeProvider =
     StateNotifierProvider<QuranFontSizeNotifier, double>(
-  (ref) => QuranFontSizeNotifier(),
+  (ref) => QuranFontSizeNotifier(ref.watch(settingsRepositoryProvider)),
 );
 
 // ── Prayer location ───────────────────────────────────────────────────────────
@@ -125,7 +141,7 @@ class LocationSettings {
 }
 
 class LocationNotifier extends StateNotifier<LocationSettings> {
-  final _file = SettingsFile('prayer_location.json');
+  final SettingsRepository _repo;
 
   /// See [QuranFontSizeNotifier._changed].
   bool _changed = false;
@@ -133,7 +149,7 @@ class LocationNotifier extends StateNotifier<LocationSettings> {
   /// Completes when the saved settings have been read (or found missing).
   late final Future<void> loaded;
 
-  LocationNotifier() : super(const LocationSettings()) {
+  LocationNotifier(this._repo) : super(const LocationSettings()) {
     loaded = _load();
   }
 
@@ -156,26 +172,20 @@ class LocationNotifier extends StateNotifier<LocationSettings> {
   }
 
   Future<void> _load() async {
-    final raw = await _file.read();
-    if (raw == null || !mounted || _changed) return;
-    try {
-      final decoded = jsonDecode(raw);
-      if (decoded is Map<String, dynamic>) {
-        state = LocationSettings.fromJson(decoded);
-      }
-    } on FormatException {
-      // Empty or corrupt file: keep the defaults.
-    }
+    final raw = await _readOrNull(_repo, _locationKey);
+    if (!mounted || _changed) return;
+    // Anything that is not a map is damaged: keep the defaults.
+    if (raw is Map<String, dynamic>) state = LocationSettings.fromJson(raw);
   }
 
   Future<void> _save() {
     _changed = true;
-    return _file.write(jsonEncode(state.toJson()));
+    return _writeQuietly(_repo, _locationKey, state.toJson());
   }
 }
 
 /// Prayer location + calculation method — persisted across restarts.
 final locationSettingsProvider =
     StateNotifierProvider<LocationNotifier, LocationSettings>(
-  (ref) => LocationNotifier(),
+  (ref) => LocationNotifier(ref.watch(settingsRepositoryProvider)),
 );

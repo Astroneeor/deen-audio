@@ -1,5 +1,7 @@
-import 'dart:io';
-
+import 'package:deen_audio/core/database/app_database.dart';
+import 'package:deen_audio/core/database/settings_repository.dart';
+import 'package:deen_audio/core/providers/foundation_providers.dart';
+import 'package:deen_audio/core/sync/auth_session.dart';
 import 'package:deen_audio/features/library/data/library_scanner.dart';
 import 'package:deen_audio/features/library/providers/library_providers.dart';
 import 'package:deen_audio/features/settings/providers/settings_providers.dart';
@@ -7,9 +9,9 @@ import 'package:deen_audio/features/settings/ui/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:path/path.dart' as p;
 
-import 'support/fake_path_provider.dart';
+import 'support/empty_settings_repository.dart';
+import 'support/test_database.dart';
 
 class _FakeScanner implements LibraryScanner {
   @override
@@ -19,11 +21,27 @@ class _FakeScanner implements LibraryScanner {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-Future<ProviderContainer> _pumpSettings(WidgetTester tester) async {
+Future<ProviderContainer> _pumpSettings(WidgetTester tester, AppDatabase db,
+    {Object? savedLocation, SettingsRepository? repo}) async {
   final container = ProviderContainer(overrides: [
+    if (repo != null) settingsRepositoryProvider.overrideWithValue(repo),
+    appDatabaseProvider.overrideWithValue(db),
+    authSessionProvider
+        .overrideWithValue(const LocalAuthSession(deviceId: 'device-1')),
     libraryScannerProvider.overrideWithValue(_FakeScanner()),
   ]);
   addTearDown(container.dispose);
+  // Drift's queries run in the real zone, so seed and load the settings
+  // there before the widgets first read them.
+  await tester.runAsync(() async {
+    if (savedLocation != null) {
+      await container
+          .read(settingsRepositoryProvider)
+          .write('prayer.location', savedLocation);
+    }
+    await container.read(locationSettingsProvider.notifier).loaded;
+    await container.read(quranFontSizeProvider.notifier).loaded;
+  });
   await tester.pumpWidget(UncontrolledProviderScope(
     container: container,
     child: const MaterialApp(home: Scaffold(body: SettingsScreen())),
@@ -39,15 +57,18 @@ String _fieldText(WidgetTester tester, String label) => tester
     .text;
 
 void main() {
-  late Directory dir;
-  setUp(() => dir = useTempAppSupportDir());
+  late AppDatabase db;
+  setUp(() => db = testDatabase());
+  tearDown(() => db.close());
 
-  testWidgets('shows the saved location when Settings is the first screen '
+  testWidgets(
+      'shows the saved location when Settings is the first screen '
       'to read it', (tester) async {
-    File(p.join(dir.path, 'prayer_location.json')).writeAsStringSync(
-        '{"latitude":21.3891,"longitude":39.8579,"calculationMethod":"ummAlQura"}');
-
-    await _pumpSettings(tester);
+    await _pumpSettings(tester, db, savedLocation: {
+      'latitude': 21.3891,
+      'longitude': 39.8579,
+      'calculationMethod': 'ummAlQura',
+    });
 
     expect(_fieldText(tester, 'Latitude'), '21.3891');
     expect(_fieldText(tester, 'Longitude'), '39.8579');
@@ -56,7 +77,10 @@ void main() {
 
   testWidgets('rejects invalid coordinates and saves valid ones',
       (tester) async {
-    final container = await _pumpSettings(tester);
+    // Saving writes in the fake-async zone, which a real database cannot
+    // complete, so this test only looks at the in-memory state.
+    final container =
+        await _pumpSettings(tester, db, repo: EmptySettingsRepository());
 
     await tester.enterText(find.widgetWithText(TextField, 'Latitude'), '95');
     await tester.enterText(find.widgetWithText(TextField, 'Longitude'), '10');
@@ -81,10 +105,11 @@ void main() {
 
   testWidgets('a corrupt saved method does not break the method dropdown',
       (tester) async {
-    File(p.join(dir.path, 'prayer_location.json')).writeAsStringSync(
-        '{"latitude":1,"longitude":2,"calculationMethod":"bogus"}');
-
-    await _pumpSettings(tester);
+    await _pumpSettings(tester, db, savedLocation: {
+      'latitude': 1,
+      'longitude': 2,
+      'calculationMethod': 'bogus'
+    });
 
     expect(tester.takeException(), isNull);
     expect(find.text('Muslim World League'), findsOneWidget);
@@ -92,7 +117,7 @@ void main() {
 
   testWidgets('the folder button changes the folder rather than "rescanning"',
       (tester) async {
-    await _pumpSettings(tester);
+    await _pumpSettings(tester, db);
     expect(find.text('HalalAudio'), findsOneWidget);
     expect(find.text('Change folder'), findsOneWidget);
   });
@@ -102,7 +127,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-    await _pumpSettings(tester);
+    await _pumpSettings(tester, db);
 
     expect(tester.takeException(), isNull);
   });

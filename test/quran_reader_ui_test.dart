@@ -1,3 +1,4 @@
+import 'package:deen_audio/core/providers/foundation_providers.dart';
 import 'package:deen_audio/core/models/ayah.dart';
 import 'package:deen_audio/core/models/surah.dart';
 import 'package:deen_audio/core/theme/app_fonts.dart';
@@ -8,6 +9,7 @@ import 'package:deen_audio/features/quran/ui/surah_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'support/empty_settings_repository.dart';
 
 class _FakeRepo implements QuranRepository {
   final saved = <(int, int)>[];
@@ -42,6 +44,7 @@ Future<_FakeRepo> _pump(WidgetTester tester, Widget child) async {
   await tester.pumpWidget(ProviderScope(
     overrides: [
       quranRepositoryProvider.overrideWithValue(repo),
+      settingsRepositoryProvider.overrideWithValue(EmptySettingsRepository()),
       surahsProvider.overrideWith((ref) => [_surah(1), _surah(2), _surah(3)]),
       currentAyahsProvider.overrideWith(
           (ref) => _ayahs(ref.watch(selectedSurahNumberProvider))),

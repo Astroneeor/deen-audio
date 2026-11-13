@@ -6,8 +6,10 @@ import 'package:fake_async/fake_async.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'support/empty_settings_repository.dart';
+
 class _FixedLocation extends LocationNotifier {
-  _FixedLocation(LocationSettings settings) {
+  _FixedLocation(LocationSettings settings) : super(EmptySettingsRepository()) {
     state = settings;
   }
 }
