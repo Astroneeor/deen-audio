@@ -38,7 +38,8 @@ final downloadRepositoryProvider = Provider<DownloadRepository>(
 
 /// Provides the [DownloadService], restored at startup (interrupted downloads
 /// marked paused, nothing started). Finished Quran files are added to the
-/// Library and deleted ones removed from it.
+/// Library (and re-added if their track is missing) and deleted ones removed
+/// from it.
 final downloadServiceProvider = FutureProvider<DownloadService>((ref) async {
   final catalog = await ref.watch(catalogProvider.future);
   // Read (not watched) at call time, so a rebuilt Library repository never
@@ -53,6 +54,7 @@ final downloadServiceProvider = FutureProvider<DownloadService>((ref) async {
         _logged(registerDownloadedFile(library(), pack, file, path)),
     onFileRemoved: (file) =>
         _logged(unregisterDownloadedFile(library(), file)),
+    registeredFiles: (ids) => library().downloadedFileIds(ids),
   );
   ref.onDispose(service.dispose);
   await service.restore();

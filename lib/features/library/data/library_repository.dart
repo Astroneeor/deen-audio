@@ -30,8 +30,8 @@ class LibraryRepository {
 
   Future<int> count() async {
     final n = countAll();
-    final row = await (_db.selectOnly(_db.tracks)..addColumns([n])).getSingle();
-    return row.read(n)!;
+    return (await (_db.selectOnly(_db.tracks)..addColumns([n])).getSingle())
+        .read(n)!;
   }
 
   JoinedSelectStatement<HasResultSet, dynamic> _joined() =>
@@ -162,6 +162,13 @@ class LibraryRepository {
             ),
           );
 
+  /// Which of [catalogFileIds] already have a downloaded track.
+  Future<Set<String>> downloadedFileIds(Iterable<String> catalogFileIds) async {
+    final keys = [for (final id in catalogFileIds) 'dl:$id'];
+    final q = _db.select(_db.tracks)..where((t) => t.trackKey.isIn(keys));
+    return {for (final r in await q.get()) r.trackKey.substring(3)};
+  }
+
   /// Removes the track of a deleted download. Its favourite/last-played state
   /// is kept, so a re-download restores it.
   Future<void> removeDownloadedTrack(String catalogFileId) => (_db
@@ -196,11 +203,9 @@ class LibraryRepository {
     track.lastPlayed = at;
   }
 
-  void _requireKey(Track track) {
-    if (track.trackKey.isEmpty) {
-      throw ArgumentError.value(track.title, 'track', 'has no trackKey');
-    }
-  }
+  void _requireKey(Track track) => track.trackKey.isEmpty
+      ? throw ArgumentError.value(track.title, 'track', 'has no trackKey')
+      : null;
 
   /// Creates or updates (reviving if soft-deleted) the state row of [key].
   ///

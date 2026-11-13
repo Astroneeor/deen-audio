@@ -80,6 +80,33 @@ void main() {
     expect(track.filePath, '/store/audio/test-reciter/001.mp3');
   });
 
+  test('a done file whose track is missing is re-registered on enqueue',
+      () async {
+    await service.enqueueFile('test-reciter-001');
+    await service.whenIdle();
+    await tracksWhere((t) => t.isNotEmpty);
+    // As if adding the track had failed when the download finished.
+    await library.removeDownloadedTrack('test-reciter-001');
+    await tracksWhere((t) => t.isEmpty);
+
+    await service.enqueueFile('test-reciter-001');
+    final tracks = await tracksWhere((t) => t.isNotEmpty);
+    expect(tracks.single.trackKey, 'dl:test-reciter-001');
+  });
+
+  test('restore() re-adds tracks missing for done reciter files', () async {
+    await service.enqueueFile('test-reciter-001');
+    await service.enqueueFile('test-scans-morning');
+    await service.whenIdle();
+    await tracksWhere((t) => t.isNotEmpty);
+    await library.removeDownloadedTrack('test-reciter-001');
+    await tracksWhere((t) => t.isEmpty);
+
+    await service.restore();
+    final tracks = await tracksWhere((t) => t.isNotEmpty);
+    expect(tracks.map((t) => t.trackKey), ['dl:test-reciter-001']);
+  });
+
   test('deleting the pack removes its tracks', () async {
     await service.enqueuePack('test-reciter');
     await service.whenIdle();
