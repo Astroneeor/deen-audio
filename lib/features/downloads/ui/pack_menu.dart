@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../data/catalog.dart';
 import '../providers/download_actions.dart';
+import 'confirm_delete.dart';
 
 enum _MenuChoice { delete, copyLink, licence }
 
@@ -47,28 +48,14 @@ class PackMenu extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete downloads?'),
-        content: Text(
+    final ok = await confirmDelete(
+      context,
+      title: 'Delete downloads?',
+      message:
           'Removes the downloaded files of ${pack.title} from this device. '
           'Their tracks leave the Library.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
     );
-    if (ok == true) await ref.read(downloadActionsProvider).deletePack(pack.id);
+    if (ok) await ref.read(downloadActionsProvider).deletePack(pack.id);
   }
 
   Future<void> _copyLink(BuildContext context) async {

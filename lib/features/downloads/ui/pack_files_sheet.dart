@@ -6,6 +6,7 @@ import '../data/catalog.dart';
 import '../data/download_models.dart';
 import '../providers/download_actions.dart';
 import '../providers/download_providers.dart';
+import 'confirm_delete.dart';
 import 'pack_card.dart';
 
 /// Opens the per-file list of [pack] ("Choose surahs"): each file with its
@@ -98,6 +99,21 @@ class _FileRow extends ConsumerWidget {
 
   const _FileRow({required this.file, required this.item});
 
+  /// Deletes [file] after the same confirmation as a pack delete.
+  Future<void> _confirmDeleteFile(
+    BuildContext context,
+    DownloadActions actions,
+  ) async {
+    final ok = await confirmDelete(
+      context,
+      title: 'Delete download?',
+      message:
+          'Removes ${file.title} from this device. '
+          'Its track leaves the Library.',
+    );
+    if (ok) await actions.deleteFile(file.id);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final actions = ref.read(downloadActionsProvider);
@@ -168,12 +184,12 @@ class _FileRow extends ConsumerWidget {
                 actions.resumeFile(file.id);
               }),
               button('Delete', Icons.delete_outline, () {
-                actions.deleteFile(file.id);
+                _confirmDeleteFile(context, actions);
               }),
             ],
             DownloadStatus.done => [
               button('Delete', Icons.delete_outline, () {
-                actions.deleteFile(file.id);
+                _confirmDeleteFile(context, actions);
               }),
             ],
           },

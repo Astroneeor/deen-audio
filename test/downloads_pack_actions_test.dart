@@ -30,13 +30,36 @@ void main() {
 
     await tester.tap(find.byTooltip('Retry 113. Al-Falaq'));
     await tester.tap(find.byTooltip('Download 2. Al-Baqara'));
-    await tester.tap(find.byTooltip('Delete 1. Al-Faatiha'));
     await tester.pump();
     expect(actions.calls, [
       'resumeFile test-reciter-113',
       'downloadFile test-reciter-002',
-      'deleteFile test-reciter-001',
     ]);
+  });
+
+  testWidgets('deleting one file asks first', (tester) async {
+    final actions = await pumpDownloadsScreen(
+      tester,
+      items: [downloadItem('test-reciter-001', DownloadStatus.done)],
+    );
+    await tester.tap(find.text('Choose surahs'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Delete 1. Al-Faatiha'));
+    await tester.pumpAndSettle();
+    expect(actions.calls, isEmpty);
+    expect(find.text('Delete download?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(TextButton, 'Cancel'));
+    await tester.pumpAndSettle();
+    expect(actions.calls, isEmpty);
+
+    await tester.tap(find.byTooltip('Delete 1. Al-Faatiha'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(TextButton, 'Delete'));
+    await tester.pumpAndSettle();
+    expect(actions.calls, ['deleteFile test-reciter-001']);
+    // The file list stays open.
+    expect(find.text('2. Al-Baqara'), findsOneWidget);
   });
 
   testWidgets('the menu shows the licence and copies the source link', (
