@@ -36,7 +36,7 @@ class SettingsScreen extends ConsumerWidget {
           _section('About', [
             _infoTile('Version', '0.1.0'),
             _infoTile('Build', 'Phase 5 — Pre-release'),
-            _infoTile('Framework', 'Flutter 3 · Isar · Riverpod'),
+            _infoTile('Framework', 'Flutter 3 · SQLite (Drift) · Riverpod'),
           ]),
         ],
       ),

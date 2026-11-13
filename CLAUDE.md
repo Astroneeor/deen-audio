@@ -35,9 +35,10 @@ Users should be able to open the app, press play, and enter a state of focus/rem
 Framework:         Flutter Desktop
 Language:          Dart
 State Management:  Riverpod (flutter_riverpod)
-Local Database:    Isar
+Local Database:    SQLite via Drift (drift + sqlite3)
 Audio Engine:      just_audio + audio_service + just_audio_background
 File Access:       file_picker + path_provider
+Network + ids:     http, uuid, crypto (user-initiated downloads only)
 Routing:           go_router
 UI:                Flutter Material 3 + custom theme
 ```
@@ -49,19 +50,24 @@ UI:                Flutter Material 3 + custom theme
 - Firebase or any cloud services
 - Provider (use Riverpod instead)
 - GetX
-- sqflite manually (use Isar)
+- Isar (replaced by SQLite via Drift; old Isar files are removed once on startup)
+- sqflite or hand-written raw SQL (use Drift)
 
 ### Why Flutter Desktop specifically:
 - Single codebase → Windows + macOS + Linux + (later) mobile
 - Native performance — not a web wrapper
 - Smooth animations comparable to Spotify
 - `just_audio` is production-grade and works on desktop
-- Isar gives sub-millisecond local queries
+- SQLite (via Drift) gives typed local queries and full-text search, and runs on desktop, mobile and web
 - Future streaming server plugs in without UI rewrite
 
 ---
 
 ## pubspec.yaml (EXACT DEPENDENCIES)
+
+The owner approved SQLite via Drift (replacing Isar) plus `http`, `uuid` and
+`crypto`. `pubspec.yaml` in the repo is the source of truth for exact
+versions; this is its dependency list.
 
 ```yaml
 name: deen_audio
@@ -80,15 +86,26 @@ dependencies:
   just_audio: ^0.9.36
   audio_service: ^0.18.12
   just_audio_background: ^0.0.1-beta.11
+  just_audio_media_kit: ^2.1.0          # libmpv-based player for Linux + Windows
+  media_kit_libs_linux: ^1.2.1
+  media_kit_libs_windows_audio: ^1.0.9
+  audio_service_mpris: ^0.2.1           # Linux MPRIS
+  audio_service_win: ^0.0.3             # Windows SMTC
 
   # State Management
   flutter_riverpod: ^2.4.9
   riverpod_annotation: ^2.3.3
 
-  # Database
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
+  # Database: SQLite via Drift. package:sqlite3's build hook bundles SQLite
+  # into every desktop build (no *_flutter_libs package needed).
+  drift: ^2.34.1
+  sqlite3: ^3.1.7
   path_provider: ^2.1.1
+
+  # Network + ids
+  http: ^1.6.0
+  uuid: ^4.6.0
+  crypto: ^3.0.8
 
   # File System
   file_picker: ^6.1.1
@@ -99,16 +116,20 @@ dependencies:
   # Utilities
   flutter_hooks: ^0.20.4
   hooks_riverpod: ^2.4.9
-  freezed_annotation: ^2.4.1
+  freezed_annotation: ^3.0.0
+  rxdart: ^0.28.0
+  path: ^1.9.0
+
+  # Prayer times
+  adhan: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.4.7
-  isar_generator: ^3.1.0+1
-  riverpod_generator: ^2.3.9
-  freezed: ^2.4.5
-  json_serializable: ^6.7.1
+  drift_dev: ^2.34.0
+  freezed: ^3.0.0
+  json_serializable: ^6.9.0
 
 flutter:
   uses-material-design: true
@@ -143,13 +164,18 @@ deen_audio/
 │   │   │   └── track_source.dart             ← Abstraction: local | remote
 │   │   │
 │   │   ├── database/
-│   │   │   ├── isar_service.dart             ← Isar init and accessor
-│   │   │   └── database_provider.dart        ← Riverpod provider for Isar instance
+│   │   │   ├── app_database.dart             ← Drift database (all tables)
+│   │   │   ├── connection/native_connection.dart ← Opens deen_audio.sqlite (single connection factory)
+│   │   │   ├── tables/                       ← Drift table definitions (content, user, device)
+│   │   │   ├── sync_columns.dart             ← Sync columns + UTC timestamp converter
+│   │   │   ├── settings_repository.dart      ← Synced user settings
+│   │   │   ├── device_settings_repository.dart ← Device-only settings, device id
+│   │   │   └── legacy_cleanup.dart           ← One-time removal of pre-SQLite files
 │   │   │
 │   │   ├── models/
-│   │   │   ├── track.dart                    ← @Collection Isar model
-│   │   │   ├── playlist.dart                 ← @Collection Isar model
-│   │   │   └── bookmark.dart                 ← @Collection Isar model
+│   │   │   ├── track.dart                    ← Plain model (tracks + track_states tables)
+│   │   │   ├── playlist.dart                 ← Plain model (playlists + playlist_items)
+│   │   │   └── bookmark.dart                 ← Plain model (bookmarks table)
 │   │   │
 │   │   └── theme/
 │   │       ├── app_theme.dart                ← Dark theme, colors, typography
@@ -158,7 +184,7 @@ deen_audio/
 │   ├── features/
 │   │   ├── library/
 │   │   │   ├── data/
-│   │   │   │   ├── library_repository.dart   ← Reads/writes tracks to Isar
+│   │   │   │   ├── library_repository.dart   ← Reads/writes tracks in SQLite
 │   │   │   │   └── library_scanner.dart      ← Scans folders, extracts metadata
 │   │   │   ├── providers/
 │   │   │   │   └── library_providers.dart    ← Riverpod providers
@@ -169,7 +195,7 @@ deen_audio/
 │   │   │
 │   │   ├── quran/
 │   │   │   ├── data/
-│   │   │   │   ├── quran_repository.dart     ← Loads JSON, stores in Isar
+│   │   │   │   ├── quran_repository.dart     ← Loads JSON, stores in SQLite
 │   │   │   │   └── quran_json_parser.dart    ← Parses Tanzil JSON
 │   │   │   ├── providers/
 │   │   │   │   └── quran_providers.dart
@@ -212,44 +238,46 @@ deen_audio/
 
 ## CORE MODELS
 
-### Track (Isar Collection)
+Models in `core/models/` are plain Dart classes. Storage is the SQLite tables
+in `core/database/tables/`; repositories map rows to models. User-data tables
+are sync-ready (UUID `id`, `updated_at`, `deleted_at`, `device_id`,
+`user_id`), see `docs/sync-readiness.md`. All timestamps are UTC.
+
+### Track
 ```dart
-@collection
 class Track {
-  Id id = Isar.autoIncrement;
+  int id = 0;               // local row id
   late String title;
   String? artist;           // reciter name for Quran, artist for nasheed
-  @enumerated
   late TrackType type;      // quran | adhkar | nasheed | whiteNoise
-  late String filePath;     // local path today, URL later
+  late String filePath;     // absolute local path today, URL later
   int duration = 0;         // milliseconds
-  bool isFavorite = false;
-  DateTime? lastPlayed;
+  bool isFavorite = false;  // from track_states, survives rescans
+  DateTime? lastPlayed;     // UTC, from track_states
   String? surahNumber;      // only for Quran tracks
+  String trackKey = '';     // lib:<relative path> | dl:<catalog file id>
+  TrackSourceKind source = TrackSourceKind.scanned;
 }
 
 enum TrackType { quran, adhkar, nasheed, whiteNoise }
 ```
 
-### Playlist (Isar Collection)
+### Playlist
 ```dart
-@collection
 class Playlist {
-  Id id = Isar.autoIncrement;
+  int id = 0;
   late String name;
-  List<int> trackIds = [];
-  DateTime createdAt = DateTime.now();
+  List<String> trackKeys = [];   // stored as playlist_items, in order
+  DateTime createdAt = DateTime.now().toUtc();
 }
 ```
 
-### Bookmark (Isar Collection)
+### Bookmark
 ```dart
-@collection
 class Bookmark {
-  Id id = Isar.autoIncrement;
   late int surahNumber;
   late int ayahNumber;
-  DateTime savedAt = DateTime.now();
+  late DateTime savedAt;   // UTC
 }
 ```
 
@@ -432,7 +460,7 @@ Tasks for Claude:
 1. Run `flutter create --platforms=windows,macos,linux deen_audio`
 2. Set up folder structure exactly as specified above
 3. Install all pubspec.yaml dependencies
-4. Set up Isar initialization in `main.dart`
+4. Set up database initialization in `main.dart` (SQLite via Drift)
 5. Set up Riverpod `ProviderScope` in `main.dart`
 6. Create `AppTheme` with dark colors
 7. Set up `go_router` with placeholder screens for 3 tabs
@@ -476,7 +504,7 @@ Tasks for Claude:
    - Recursively scans for `.mp3`, `.m4a`, `.flac`, `.ogg`
    - Extracts filename as title, parent folder as artist
    - Infers `TrackType` from subfolder name (`Quran/`, `Nasheeds/`, etc.)
-2. Implement `LibraryRepository` (reads/writes `Track` to Isar)
+2. Implement `LibraryRepository` (reads/writes `Track` in SQLite)
 3. Build `LibraryScreen`:
    - Filter tabs: All | Quran | Adhkar | Nasheeds | White Noise
    - Track list with title, artist, duration, type icon
@@ -497,8 +525,8 @@ Tasks for Claude:
 2. Place translation JSON in `assets/quran/translation_en.json`
 3. Implement `QuranJsonParser` to load and parse both files
 4. Implement `QuranRepository`:
-   - First launch: parse JSON → insert into Isar
-   - Subsequent launches: read from Isar
+   - First launch: parse JSON → insert into SQLite
+   - Subsequent launches: read from SQLite
 5. Build `QuranScreen`:
    - Surah list on left (114 surahs with Arabic name + English name)
    - Ayah reader on right
@@ -507,8 +535,8 @@ Tasks for Claude:
    - Translation below each ayah (toggleable)
    - Tap ayah to bookmark
    - Auto-scroll
-   - Last-read position persisted in Isar
-7. Implement search (Isar full-text search on translations)
+   - Last-read position persisted in SQLite
+7. Implement search (SQLite full-text search on translations)
 8. Bookmark screen showing all saved ayahs
 
 **Test:** Open Quran tab, select Al-Fatiha, see Arabic + English, bookmark ayah 3, close app, reopen, last position restored.
@@ -575,7 +603,7 @@ Task: Phase 0 — Project Bootstrap.
 1. Give me the exact terminal commands to create the Flutter project with desktop platforms enabled.
 2. Create the complete folder structure from CLAUDE.md.
 3. Write pubspec.yaml with all dependencies.
-4. Write main.dart with Isar init + Riverpod ProviderScope + audio_service init.
+4. Write main.dart with database init + Riverpod ProviderScope + audio_service init.
 5. Write app.dart and router.dart with placeholder screens for Quran, Library, Adhkar.
 6. Write AppTheme and AppColors with the dark color palette.
 7. Write AppScaffold with sidebar (3 tabs) + content area.
@@ -616,7 +644,7 @@ Task: Phase 2 — Local Library Scanner.
 
 Build:
 1. library_scanner.dart — scans folder, infers track types from subfolder names
-2. library_repository.dart — CRUD for Track in Isar
+2. library_repository.dart — CRUD for Track in SQLite
 3. library_providers.dart — Riverpod providers
 4. library_screen.dart — main library view with filter tabs
 5. track_list_tile.dart — single track row widget
@@ -642,7 +670,7 @@ Use the Track model exactly as defined in CLAUDE.md.
 
 2. Every service is a Riverpod provider. No singletons accessed via static methods.
 
-3. Isar models are in core/models/. Features import models, not the other way around.
+3. Models are in core/models/, Drift tables in core/database/tables/. Features import models, not the other way around.
 
 4. AudioPlayerService is the ONLY class that imports just_audio.
 
@@ -694,7 +722,8 @@ Zero frontend rewrites required because of TrackSource abstraction.
 - **Linux**: Requires `libappindicator3` for system tray. audio_service uses MPRIS.
 - **Large audio files**: Do NOT bundle in app assets. Always reference external path.
 - **Arabic font**: Must be loaded via `pubspec.yaml` assets — do not rely on system fonts for Arabic.
-- **Isar**: Requires running `build_runner` after changing `@collection` classes.
+- **Drift**: Requires running `build_runner` after changing a table in `core/database/tables/` (regenerates `app_database.g.dart`).
+- **SQLite library**: `package:sqlite3`'s build hook downloads a prebuilt SQLite for the target platform during `flutter run`/`build`/`test` (needs network the first time, then cached; `hooks: user_defines: sqlite3:` in pubspec can point it at a system library or a mirror instead). Requires Flutter 3.38+.
 
 ---
 
@@ -707,8 +736,8 @@ flutter create --platforms=windows,macos,linux deen_audio
 # Install deps
 flutter pub get
 
-# Generate Isar + Riverpod code
-flutter pub run build_runner build --delete-conflicting-outputs
+# Generate Drift database code
+dart run build_runner build --delete-conflicting-outputs
 
 # Run on Windows
 flutter run -d windows

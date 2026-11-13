@@ -44,7 +44,8 @@ void main() {
     expect(await repo.isSeeded(), isTrue);
   });
 
-  test('ayah text round-trips byte-identical to the assets', () async {
+  test('every ayah text and translation is byte-identical to the assets',
+      () async {
     await repo.seed();
     final quran =
         jsonDecode(File('assets/quran/quran_simple.json').readAsStringSync())
@@ -52,12 +53,23 @@ void main() {
     final trans =
         jsonDecode(File('assets/quran/translation_en.json').readAsStringSync())
             as List;
-    expect(
-        (await repo.getAyahs(1))[0].arabicText, quran[0]['ayahs'][0]['text']);
-    expect((await repo.getAyahs(114))[5].arabicText,
-        quran[113]['ayahs'][5]['text']);
-    expect((await repo.getAyahs(114))[5].translation,
-        trans[113]['ayahs'][5]['text']);
+    var compared = 0;
+    for (var s = 0; s < quran.length; s++) {
+      final number = quran[s]['number'] as int;
+      final assetAyahs = quran[s]['ayahs'] as List;
+      final assetTrans = trans[s]['ayahs'] as List;
+      expect(trans[s]['number'], number);
+      final stored = await repo.getAyahs(number);
+      expect(stored, hasLength(assetAyahs.length), reason: 'surah $number');
+      for (var i = 0; i < assetAyahs.length; i++) {
+        final where = '$number:${i + 1}';
+        expect(stored[i].ayahNumber, assetAyahs[i]['number'], reason: where);
+        expect(stored[i].arabicText, assetAyahs[i]['text'], reason: where);
+        expect(stored[i].translation, assetTrans[i]['text'], reason: where);
+        compared++;
+      }
+    }
+    expect(compared, 6236);
   });
 
   test('second seed leaves counts unchanged', () async {
@@ -65,6 +77,23 @@ void main() {
     await repo.seed();
     expect(await count(db.surahs), 114);
     expect(await count(db.ayahs), 6236);
+  });
+
+  test('bookmarks and last-read survive a second seed', () async {
+    await repo.seed();
+    await repo.toggleBookmark(2, 255);
+    await repo.toggleBookmark(36, 1);
+    await repo.saveLastRead(18, 10);
+
+    await repo.seed();
+
+    final live = await repo.watchBookmarks().first;
+    expect(
+      live.map((b) => (b.surahNumber, b.ayahNumber)),
+      unorderedEquals([(2, 255), (36, 1)]),
+    );
+    final pos = await repo.getLastRead();
+    expect((pos!.surah, pos.ayah), (18, 10));
   });
 
   test('toggling a bookmark three times leaves one live row, one row total',

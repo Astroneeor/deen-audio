@@ -34,7 +34,7 @@ class Dhikr {
 }
 
 /// Loads adhkar from bundled JSON assets.
-/// No Isar model needed — content is static and asset-based.
+/// No database table needed — content is static and asset-based.
 class AdhkarRepository {
   static const _morningAsset = 'assets/adhkar/morning.json';
   static const _eveningAsset = 'assets/adhkar/evening.json';

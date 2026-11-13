@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'support/empty_settings_repository.dart';
+import 'support/recording_settings_repository.dart';
 import 'support/test_database.dart';
 
 class _FakeScanner implements LibraryScanner {
@@ -78,9 +78,9 @@ void main() {
   testWidgets('rejects invalid coordinates and saves valid ones',
       (tester) async {
     // Saving writes in the fake-async zone, which a real database cannot
-    // complete, so this test only looks at the in-memory state.
-    final container =
-        await _pumpSettings(tester, db, repo: EmptySettingsRepository());
+    // complete, so a recording fake stands in for the repository.
+    final repo = RecordingSettingsRepository();
+    final container = await _pumpSettings(tester, db, repo: repo);
 
     await tester.enterText(find.widgetWithText(TextField, 'Latitude'), '95');
     await tester.enterText(find.widgetWithText(TextField, 'Longitude'), '10');
@@ -88,6 +88,7 @@ void main() {
     await tester.pump();
     expect(find.textContaining('Enter valid coordinates'), findsOneWidget);
     expect(container.read(locationSettingsProvider).hasLocation, isFalse);
+    expect(repo.writes.where((w) => w.$1 == 'prayer.location'), isEmpty);
 
     await tester.enterText(
         find.widgetWithText(TextField, 'Latitude'), ' 51.50735 ');
@@ -101,6 +102,12 @@ void main() {
     expect(loc.longitude, -0.12776);
     // What the user typed is not reformatted under their cursor.
     expect(_fieldText(tester, 'Longitude'), '-0.12776');
+
+    final saved = repo.writes.where((w) => w.$1 == 'prayer.location').toList();
+    expect(saved, hasLength(1));
+    final json = saved.single.$2! as Map;
+    expect(json['latitude'], 51.50735);
+    expect(json['longitude'], -0.12776);
   });
 
   testWidgets('a corrupt saved method does not break the method dropdown',

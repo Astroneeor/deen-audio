@@ -27,15 +27,14 @@ dependencies:
   riverpod_annotation: ^2.3.3
 
   # Database
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
   path_provider: ^2.1.1
-  # SQLite via Drift (replacing Isar). drift/drift_dev are held at 2.18.x:
-  # the newest line whose generator accepts analyzer 5.x, which
-  # isar_generator still pins. Upgrade once Isar is removed.
-  drift: ">=2.18.0 <2.19.0"
-  sqlite3: ^2.4.0
-  sqlite3_flutter_libs: ^0.5.42   # bundles SQLite into desktop builds
+  # SQLite via Drift. package:sqlite3 3.x bundles SQLite itself through a
+  # build hook (downloads a prebuilt library per platform), so no
+  # *_flutter_libs package. drift 2.34 / sqlite3 3.1 are the newest releases
+  # that resolve with Flutter 3.41, which pins meta 1.17: drift_dev >=2.34.6
+  # (via analyzer >=13) and sqlite3 >=3.6 (via hooks 2.2) need a newer meta.
+  drift: ^2.34.1
+  sqlite3: ^3.1.7
 
   # Network + ids
   http: ^1.6.0
@@ -51,7 +50,7 @@ dependencies:
   # Utilities
   flutter_hooks: ^0.20.4
   hooks_riverpod: ^2.4.9
-  freezed_annotation: ^2.4.1
+  freezed_annotation: ^3.0.0
   rxdart: ^0.28.0
   path: ^1.9.0
 
@@ -62,18 +61,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^2.4.7
-  isar_generator: ^3.1.0+1
-  drift_dev: ">=2.18.0 <2.19.0"
-  riverpod_generator: ^2.3.9
-  freezed: ^2.4.5
-  json_serializable: ^6.7.1
-
-# TEMPORARY (remove together with Isar): drift 2.18 declares web ^0.5 while
-# media_kit needs web ^1.1. drift only imports package:web from its browser
-# entry points (drift/web.dart, drift/wasm.dart), which this desktop app never
-# imports, so the override does not affect native code.
-dependency_overrides:
-  web: ^1.1.0
+  drift_dev: ^2.34.0
+  freezed: ^3.0.0
+  json_serializable: ^6.9.0
 
 flutter:
   uses-material-design: true

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +11,7 @@ import 'core/audio/audio_player_service.dart';
 import 'core/database/app_database.dart';
 import 'core/database/connection/native_connection.dart';
 import 'core/database/device_settings_repository.dart';
-import 'core/database/isar_service.dart';
+import 'core/database/legacy_cleanup.dart';
 import 'core/providers/foundation_providers.dart';
 import 'core/storage/io_file_store.dart';
 import 'core/sync/auth_session.dart';
@@ -17,13 +19,18 @@ import 'core/sync/auth_session.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 1. Legacy Isar init (no collections left; removed in a later task)
-  await IsarService.init();
-
-  // 1b. Open the SQLite database (replacing Isar over the next tasks). It is
-  //     required: if it cannot be opened this throws and the app does not
-  //     start, rather than running without its data.
+  // 1. Open the SQLite database. It is required: if it cannot be opened this
+  //    throws and the app does not start, rather than running without its
+  //    data.
   final foundation = await _openFoundation();
+
+  // 1b. Remove files left by pre-SQLite versions. Not awaited, and it never
+  //     throws (failures are logged and retried next launch), so it cannot
+  //     delay or break startup.
+  unawaited(runLegacyCleanupOnce(
+    device: DeviceSettingsRepository(foundation.db),
+    appSupport: foundation.files,
+  ));
 
   // 2. Register the just_audio backend for Linux/Windows (libmpv). Must
   //    happen before the handler creates its player.

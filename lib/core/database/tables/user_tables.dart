@@ -3,8 +3,8 @@ import 'package:drift/drift.dart';
 import '../sync_columns.dart';
 
 // User data: sync-ready. Every table has the SyncColumns (UUID `id` primary
-// key, updated_at, deleted_at, device_id, user_id) plus a unique natural key,
-// so re-adding something soft-deleted revives the same row.
+// key, updated_at, deleted_at, device_id, user_id). Tables with a natural key
+// declare it unique, so re-adding something soft-deleted revives the same row.
 
 /// Saved ayahs. Natural key: (surah_number, ayah_number).
 @DataClassName('BookmarkRow')
@@ -39,16 +39,16 @@ class Playlists extends Table with SyncColumns {
 
 /// Ordered playlist entries. Tracks are referenced by track key (catalog file
 /// id or library-relative path), never by a local row id.
+///
+/// (playlist_id, position) is indexed for ordering only, not unique: a
+/// soft-deleted row keeps its old position, and reordering passes through
+/// transient duplicates.
 @DataClassName('PlaylistItemRow')
+@TableIndex(name: 'playlist_items_order', columns: {#playlistId, #position})
 class PlaylistItems extends Table with SyncColumns {
   TextColumn get playlistId => text()();
   IntColumn get position => integer()();
   TextColumn get trackKey => text()();
-
-  @override
-  List<Set<Column>> get uniqueKeys => [
-        {playlistId, position},
-      ];
 }
 
 /// Per-track user state that must survive a rescan and travel between

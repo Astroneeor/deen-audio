@@ -16,8 +16,8 @@ Offline-first Islamic desktop audio player — Spotify for halal content.
 
 ## Requirements
 
-- Flutter 3.13 or later (`flutter --version`)
-- Dart SDK ≥ 3.0
+- Flutter 3.38 or later (`flutter --version`) — the SQLite package (`sqlite3` 3.x, used through Drift) relies on Dart build hooks
+- Dart SDK ≥ 3.10
 
 ### Linux
 
@@ -32,6 +32,7 @@ sudo apt install libmpv2
 - `lld` is required when Flutter is installed via snap. Without it the linker step fails.
 - `libmpv2` provides `libmpv.so.2`, which the audio backend (`just_audio_media_kit` / `media_kit`) loads at startup. Without it the app still opens but nothing plays; the console prints `Audio backend unavailable`. On other distros install the package that ships `libmpv.so.2` (often `mpv-libs` or `libmpv`).
 - `build-essential` (`make` + a C compiler) is used by `media_kit_libs_linux`, which downloads and compiles mimalloc during the first build, so that build needs internet access.
+- SQLite needs no system package: `package:sqlite3`'s build hook downloads a prebuilt SQLite library for the target platform during the first `flutter run`/`build`/`test` (internet needed once; it is cached afterwards) and bundles it with the app. The same applies on macOS and Windows.
 - Media keys and the desktop media widget use MPRIS over the D-Bus session bus (`audio_service_mpris`); no extra package is needed on a standard desktop session.
 
 ### macOS
@@ -58,8 +59,9 @@ cd deen-audio
 # 2. Dependencies
 flutter pub get
 
-# 3. Generate Isar schema code (required after any model change)
-flutter pub run build_runner build --delete-conflicting-outputs
+# 3. Generate the Drift database code (required after any table change in
+#    lib/core/database/tables/)
+dart run build_runner build --delete-conflicting-outputs
 
 # 4. Run
 flutter run -d linux      # Linux
@@ -173,4 +175,4 @@ Shortcuts are suppressed when a text field has focus.
 | macOS | `~/Library/Application Support/deen_audio/` |
 | Windows | `%APPDATA%\deen_audio\` |
 
-The Isar database, last-read Quran position, last library folder, and Quran font-size preference are all stored here.
+The SQLite database `deen_audio.sqlite` lives here and holds the Quran text, the library index, bookmarks, last-read position, the library folder and all settings. Files left by older versions (`deen_audio.isar` and the per-setting `.txt`/`.json` files) are deleted once, on the first launch of the SQLite build.

@@ -79,6 +79,39 @@ void main() {
     );
   });
 
+  test('a soft-deleted playlist item does not block its position', () async {
+    PlaylistItemsCompanion item(String id, String track) =>
+        PlaylistItemsCompanion.insert(
+          id: id,
+          updatedAt: DateTime.utc(2026, 11, 13),
+          deviceId: 'device-1',
+          playlistId: 'p1',
+          position: 1,
+          trackKey: track,
+        );
+
+    await db.into(db.playlistItems).insert(item('a', 'track-a'));
+    await (db.update(db.playlistItems)..where((t) => t.id.equals('a')))
+        .write(PlaylistItemsCompanion(deletedAt: Value(DateTime.utc(2026))));
+    await db.into(db.playlistItems).insert(item('b', 'track-b'));
+
+    final rows = await db.select(db.playlistItems).get();
+    expect(rows.map((r) => r.id), unorderedEquals(['a', 'b']));
+  });
+
+  test('playlist items keep an ordering index on (playlist_id, position)',
+      () async {
+    final indexes = await db
+        .customSelect("SELECT name, sql FROM sqlite_master WHERE type = 'index' "
+            "AND tbl_name = 'playlist_items' AND sql IS NOT NULL")
+        .get();
+    final sqls = indexes.map((r) => r.read<String>('sql')).toList();
+    expect(
+      sqls.where((s) => s.contains('playlist_id') && s.contains('position')),
+      hasLength(1),
+    );
+  });
+
   test('timestamps round-trip as UTC with millisecond precision', () async {
     final at = DateTime.utc(2026, 11, 13, 8, 30, 15, 123);
     await db.into(db.bookmarks).insert(BookmarksCompanion.insert(
