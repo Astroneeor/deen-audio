@@ -13,8 +13,8 @@ class DeenAudioApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Bring the download service up at launch: it marks downloads left
     // unfinished by the last session as paused (starting nothing) and keeps
-    // the Library in step with finished downloads.
-    ref.listen(downloadServiceProvider, (_, _) {});
+    // the Library in step with finished downloads. Failures are logged.
+    startDownloadService(ref);
     return MaterialApp.router(
       title: 'Deen Audio',
       theme: AppTheme.dark,

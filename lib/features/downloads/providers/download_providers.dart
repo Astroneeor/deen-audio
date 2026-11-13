@@ -11,6 +11,7 @@ import '../data/download_models.dart';
 import '../data/download_repository.dart';
 import '../data/download_service.dart';
 import '../data/library_registration.dart';
+import '../../library/data/library_repository.dart';
 import '../../library/providers/library_providers.dart';
 
 /// Provides where the download catalog is loaded from (the bundled asset).
@@ -39,20 +40,46 @@ final downloadRepositoryProvider = Provider<DownloadRepository>(
 /// marked paused, nothing started). Finished Quran files are added to the
 /// Library and deleted ones removed from it.
 final downloadServiceProvider = FutureProvider<DownloadService>((ref) async {
-  final library = ref.watch(libraryRepositoryProvider);
+  final catalog = await ref.watch(catalogProvider.future);
+  // Read (not watched) at call time, so a rebuilt Library repository never
+  // restarts the service and aborts its transfers.
+  LibraryRepository library() => ref.read(libraryRepositoryProvider);
   final service = DownloadService(
     client: ref.watch(downloadHttpClientProvider),
     files: ref.watch(fileStoreProvider),
     repo: ref.watch(downloadRepositoryProvider),
-    catalog: await ref.watch(catalogProvider.future),
+    catalog: catalog,
     onFileDone: (pack, file, path) =>
-        _logged(registerDownloadedFile(library, pack, file, path)),
-    onFileRemoved: (file) => _logged(unregisterDownloadedFile(library, file)),
+        _logged(registerDownloadedFile(library(), pack, file, path)),
+    onFileRemoved: (file) =>
+        _logged(unregisterDownloadedFile(library(), file)),
   );
   ref.onDispose(service.dispose);
   await service.restore();
   return service;
 });
+
+/// Brings the download service up at launch (restoring it: unfinished
+/// downloads become paused, nothing starts). A failure, such as a catalog
+/// that does not parse, goes to [onFailure] (logged by default) instead of
+/// surfacing as an error.
+void startDownloadService(
+  WidgetRef ref, {
+  void Function(Object error, StackTrace stack)? onFailure,
+}) {
+  ref.listen<AsyncValue<DownloadService>>(downloadServiceProvider, (_, next) {
+    if (next case AsyncError(:final error, :final stackTrace)) {
+      (onFailure ?? _logStartFailure)(error, stackTrace);
+    }
+  }, onError: onFailure ?? _logStartFailure);
+}
+
+void _logStartFailure(Object error, StackTrace stack) => developer.log(
+  'Download service failed to start',
+  name: 'downloads',
+  error: error,
+  stackTrace: stack,
+);
 
 /// Runs a Library write without blocking the download service; a failure is
 /// logged (the file stays downloaded either way).

@@ -9,6 +9,7 @@ import 'package:deen_audio/features/downloads/data/catalog_loader.dart';
 import 'package:deen_audio/features/downloads/data/download_models.dart';
 import 'package:deen_audio/features/downloads/data/download_repository.dart';
 import 'package:deen_audio/features/downloads/providers/download_providers.dart';
+import 'package:deen_audio/features/library/providers/library_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -141,5 +142,35 @@ void main() {
     expect(container.read(downloadItemsProvider).hasError, isTrue);
 
     expect(await container.read(downloadsUsedBytesProvider.future), 0);
+  });
+
+  test('rebuilding the Library repository does not restart the service',
+      () async {
+    final container = ProviderContainer(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        authSessionProvider.overrideWithValue(
+          const LocalAuthSession(deviceId: 'device-1'),
+        ),
+        fileStoreProvider.overrideWithValue(MemoryFileStore()),
+        downloadHttpClientProvider.overrideWithValue(
+          FakeDownloadServer({}).client,
+        ),
+        catalogLoaderProvider.overrideWithValue(_FixtureLoader()),
+      ],
+    );
+    addTearDown(container.dispose);
+    final sub = container.listen(downloadServiceProvider, (_, _) {});
+    addTearDown(sub.close);
+
+    final before = await container.read(downloadServiceProvider.future);
+    container.read(libraryRepositoryProvider);
+    // Upstream of the Library repository (as an auth-session change would be).
+    container.invalidate(syncStamperProvider);
+    container.read(libraryRepositoryProvider);
+    await pumpEventQueue();
+
+    expect(await container.read(downloadServiceProvider.future),
+        same(before));
   });
 }

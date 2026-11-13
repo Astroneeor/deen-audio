@@ -22,7 +22,8 @@ void main() {
     tester,
   ) async {
     final actions = await pumpDownloadsScreen(tester);
-    expect(find.text('Not downloaded'), findsOneWidget);
+    expect(find.text('0 of 5 surahs'), findsOneWidget);
+    expect(find.text('Not downloaded'), findsNothing);
     expect(find.text('Choose surahs'), findsOneWidget);
 
     await tester.tap(find.text('Download all'));
@@ -41,11 +42,30 @@ void main() {
       ],
     );
     expect(find.text('1 of 5 surahs'), findsOneWidget);
-    expect(find.text('Download all'), findsNothing);
 
     await tester.tap(find.text('Pause'));
+    await tester.tap(find.text('Download all'));
     await tester.pump();
-    expect(actions.calls, ['pausePack test-reciter']);
+    expect(actions.calls, [
+      'pausePack test-reciter',
+      'downloadPack test-reciter',
+    ]);
+  });
+
+  testWidgets('a pack whose every file has a row has no Download all', (
+    tester,
+  ) async {
+    await pumpDownloadsScreen(
+      tester,
+      items: [
+        for (final n in ['001', '002', '112', '113'])
+          downloadItem('test-reciter-$n', DownloadStatus.done),
+        downloadItem('test-reciter-114', DownloadStatus.running),
+      ],
+    );
+    expect(find.text('4 of 5 surahs'), findsOneWidget);
+    expect(find.text('Pause'), findsOneWidget);
+    expect(find.text('Download all'), findsNothing);
   });
 
   testWidgets('a paused pack offers Resume', (tester) async {
@@ -54,8 +74,12 @@ void main() {
       items: [downloadItem('test-reciter-112', DownloadStatus.paused)],
     );
     await tester.tap(find.text('Resume'));
+    await tester.tap(find.text('Download all'));
     await tester.pump();
-    expect(actions.calls, ['resumePack test-reciter']);
+    expect(actions.calls, [
+      'resumePack test-reciter',
+      'downloadPack test-reciter',
+    ]);
   });
 
   testWidgets('a failed file shows its reason and a Retry', (tester) async {
@@ -72,8 +96,12 @@ void main() {
     );
     expect(find.textContaining('The server answered 404'), findsOneWidget);
     await tester.tap(find.text('Retry'));
+    await tester.tap(find.text('Download all'));
     await tester.pump();
-    expect(actions.calls, ['resumePack test-reciter']);
+    expect(actions.calls, [
+      'resumePack test-reciter',
+      'downloadPack test-reciter',
+    ]);
   });
 
   testWidgets('the Adhkar tab lists scan packs', (tester) async {
