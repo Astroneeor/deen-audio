@@ -5,6 +5,7 @@ import '../../../core/database/app_database.dart';
 import '../../../core/models/track.dart';
 import '../../../core/storage/file_store.dart';
 import '../../../core/sync/sync_stamper.dart';
+import 'track_order.dart';
 
 /// Reads and writes the audio library in the SQLite [AppDatabase].
 ///
@@ -20,7 +21,7 @@ class LibraryRepository {
 
   // ── Reads ─────────────────────────────────────────────────────────────────
 
-  /// All tracks, sorted by type → title.
+  /// All tracks, in [compareTracks] order.
   Future<List<Track>> getAllTracks() async => _toTracks(await _joined().get());
 
   /// Live list: emits now and after every change to tracks or their state.
@@ -61,12 +62,7 @@ class LibraryRepository {
         ..isFavorite = s?.isFavorite ?? false
         ..lastPlayed = s?.lastPlayed);
     }
-    return tracks..sort(_compare);
-  }
-
-  int _compare(Track a, Track b) {
-    final t = a.type.index.compareTo(b.type.index);
-    return t != 0 ? t : a.title.toLowerCase().compareTo(b.title.toLowerCase());
+    return tracks..sort(compareTracks);
   }
 
   // ── Scanned tracks ────────────────────────────────────────────────────────
