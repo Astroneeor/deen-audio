@@ -11,10 +11,13 @@ class IoFileStore implements FileStore {
 
   final Directory base;
 
-  String _abs(String rel) {
-    final parts = normaliseStorePath(rel).split('/').where((s) => s.isNotEmpty);
-    return p.joinAll([base.path, ...parts]);
-  }
+  String _abs(String rel) => _join(normaliseStorePath(rel));
+
+  /// For mutating operations: never the base directory itself.
+  String _absMut(String rel) => _join(normaliseMutablePath(rel));
+
+  String _join(String normalised) => p.joinAll(
+      [base.path, ...normalised.split('/').where((s) => s.isNotEmpty)]);
 
   @override
   Future<String> basePath() async => base.path;
@@ -36,27 +39,28 @@ class IoFileStore implements FileStore {
 
   @override
   Future<IOSinkLike> openAppend(String rel) async {
-    final file = File(_abs(rel));
+    final file = File(_absMut(rel));
     await file.parent.create(recursive: true);
     return _IoSink(file.openWrite(mode: FileMode.append));
   }
 
   @override
   Future<void> rename(String from, String to) async {
-    final target = File(_abs(to));
+    final source = File(_absMut(from));
+    final target = File(_absMut(to));
     await target.parent.create(recursive: true);
-    await File(_abs(from)).rename(target.path);
+    await source.rename(target.path);
   }
 
   @override
   Future<void> delete(String rel) async {
-    final file = File(_abs(rel));
+    final file = File(_absMut(rel));
     if (await file.exists()) await file.delete();
   }
 
   @override
   Future<void> deleteDir(String rel) async {
-    final dir = Directory(_abs(rel));
+    final dir = Directory(_absMut(rel));
     if (await dir.exists()) await dir.delete(recursive: true);
   }
 

@@ -44,25 +44,27 @@ class MemoryFileStore implements FileStore {
 
   @override
   Future<IOSinkLike> openAppend(String rel) async {
-    final key = normaliseStorePath(rel);
+    final key = normaliseMutablePath(rel);
     files.putIfAbsent(key, () => <int>[]);
     return _MemorySink(this, key);
   }
 
   @override
   Future<void> rename(String from, String to) async {
-    final data = files.remove(normaliseStorePath(from));
+    final source = normaliseMutablePath(from);
+    final target = normaliseMutablePath(to);
+    final data = files.remove(source);
     if (data == null) throw StateError('No such file: $from');
-    files[normaliseStorePath(to)] = data;
+    files[target] = data;
   }
 
   @override
   Future<void> delete(String rel) async =>
-      files.remove(normaliseStorePath(rel));
+      files.remove(normaliseMutablePath(rel));
 
   @override
   Future<void> deleteDir(String rel) async {
-    final dir = normaliseStorePath(rel);
+    final dir = normaliseMutablePath(rel);
     files.removeWhere((path, _) => _under(path, dir));
   }
 

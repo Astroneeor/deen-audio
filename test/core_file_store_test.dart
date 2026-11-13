@@ -84,6 +84,24 @@ void main() {
         expect(() => s.absolute('../outside.txt'), throwsArgumentError);
         expect(() => s.openAppend('/etc/passwd'), throwsArgumentError);
       });
+
+      test('mutating operations reject a path that normalises to empty',
+          () async {
+        final s = make();
+        await append(s, 'audio/pack/a.mp3', [1]);
+        for (final rel in ['', '.', 'audio/..', './/']) {
+          await expectLater(s.deleteDir(rel), throwsArgumentError);
+          await expectLater(s.delete(rel), throwsArgumentError);
+          await expectLater(s.openAppend(rel), throwsArgumentError);
+          await expectLater(
+              s.rename(rel, 'audio/pack/b.mp3'), throwsArgumentError);
+          await expectLater(
+              s.rename('audio/pack/a.mp3', rel), throwsArgumentError);
+        }
+        expect(await s.exists('audio/pack/a.mp3'), isTrue);
+        expect(Directory(await s.basePath()).existsSync() || s is! IoFileStore,
+            isTrue);
+      });
     });
   });
 

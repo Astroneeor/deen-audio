@@ -110,7 +110,7 @@ class Catalog {
   /// checksumAlgo?, surahNumber?, fileName}]}]}`.
   ///
   /// Throws [FormatException] on a missing field, a duplicate pack or file
-  /// id, a non-http(s) URL, a file name containing a path, an unknown kind or
+  /// id, a pack or file id that is not a safe path segment, a non-http(s) URL, a file name containing a path, an unknown kind or
   /// checksum algorithm, or a `quranReciter` file whose surah number is
   /// missing or outside 1–114.
   static Catalog parse(String json) {
@@ -123,7 +123,7 @@ class Catalog {
     final packs = <CatalogPack>[];
     for (final raw in _list(root, 'packs', 'catalog')) {
       final p = _map(raw, 'pack');
-      final id = _str(p, 'id', 'pack');
+      final id = _id(p, 'pack');
       if (!packIds.add(id)) throw FormatException('Duplicate pack id "$id"');
       final kindName = _str(p, 'kind', id);
       final kind = PackKind.values.where((k) => k.name == kindName);
@@ -157,7 +157,7 @@ class Catalog {
     PackKind kind,
     String packId,
   ) {
-    final id = _str(f, 'id', packId);
+    final id = _id(f, packId);
     final surah = f['surahNumber'];
     if (surah != null && surah is! int) {
       throw FormatException('File $id: surahNumber must be an integer');
@@ -221,6 +221,18 @@ class Catalog {
     final v = m[key];
     if (v is String && v.trim().isNotEmpty) return v;
     throw FormatException('$where: "$key" must be a non-empty string');
+  }
+
+  static final _safeId = RegExp(r'^[A-Za-z0-9._-]+$');
+
+  /// The `id` of [m]: becomes a directory or row key, so letters, digits and
+  /// `. _ -` only, and never `.` or `..`.
+  static String _id(Map<String, dynamic> m, String where) {
+    final id = _str(m, 'id', where);
+    if (!_safeId.hasMatch(id) || id == '.' || id == '..') {
+      throw FormatException('$where: id "$id" is not a safe path segment');
+    }
+    return id;
   }
 
   static String? _optStr(Map<String, dynamic> m, String key, String where) =>

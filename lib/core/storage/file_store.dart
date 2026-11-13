@@ -8,7 +8,9 @@ abstract class IOSinkLike {
 
 /// App-owned files (downloads, later exports). All paths are relative to
 /// [basePath] and use `/` as separator; a path that would leave the base
-/// directory throws an [ArgumentError].
+/// directory throws an [ArgumentError]. Mutating operations ([openAppend],
+/// [rename], [delete], [deleteDir]) also reject a path that normalises to
+/// the base directory itself (see [normaliseMutablePath]).
 abstract class FileStore {
   /// Absolute path of the base directory.
   Future<String> basePath();
@@ -60,4 +62,15 @@ String normaliseStorePath(String rel) {
     }
   }
   return parts.join('/');
+}
+
+/// [normaliseStorePath] for a path that will be written, moved or deleted:
+/// also rejects one that resolves to the base directory itself (e.g. `''` or
+/// `audio/..`), so a bad id can never delete the whole store.
+String normaliseMutablePath(String rel) {
+  final path = normaliseStorePath(rel);
+  if (path.isEmpty) {
+    throw ArgumentError.value(rel, 'rel', 'must name a path inside the store');
+  }
+  return path;
 }

@@ -85,6 +85,29 @@ void main() {
     expect(() => Catalog.parse(json), throwsFormatException);
   });
 
+  test('pack and file ids must be safe path segments', () {
+    for (final bad in ['.', '..', '', 'a/b', r'a\b', 'a b', '../x']) {
+      expect(
+        () => Catalog.parse(
+          editedFixture((j) => (j['packs'] as List).first['id'] = bad),
+        ),
+        throwsFormatException,
+        reason: 'pack id "$bad"',
+      );
+      expect(
+        () => Catalog.parse(editedFixture((j) => firstFile(j)['id'] = bad)),
+        throwsFormatException,
+        reason: 'file id "$bad"',
+      );
+    }
+    expect(
+      Catalog.parse(
+        editedFixture((j) => (j['packs'] as List).first['id'] = 'A.b_c-9'),
+      ).packs.first.id,
+      'A.b_c-9',
+    );
+  });
+
   test('an unknown kind or a file name with a path throws', () {
     expect(
       () => Catalog.parse(
