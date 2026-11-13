@@ -168,7 +168,7 @@ class _Header extends ConsumerWidget {
             child: IconButton(
               onPressed: () => ref
                   .read(showTranslationProvider.notifier)
-                  .state = !showTranslation,
+                  .set(!showTranslation),
               icon: Icon(
                 showTranslation
                     ? Icons.translate

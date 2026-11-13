@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/database/settings_repository.dart';
 import '../../../core/providers/foundation_providers.dart';
 import '../../../core/models/ayah.dart';
 import '../../../core/models/bookmark.dart';
@@ -55,8 +56,44 @@ final currentAyahsProvider = FutureProvider<List<Ayah>>((ref) async {
 
 // ── Translation toggle ────────────────────────────────────────────────────────
 
-/// Whether to show English translations beneath each ayah.
-final showTranslationProvider = StateProvider<bool>((ref) => true);
+/// Persisted "show translation" flag (settings key `quran.showTranslation`).
+/// Default on. Like the font size, a change made before the saved value has
+/// loaded wins over it, and persistence is best-effort.
+class ShowTranslationNotifier extends StateNotifier<bool> {
+  ShowTranslationNotifier(this._repo) : super(true) {
+    loaded = _load();
+  }
+
+  static const settingsKey = 'quran.showTranslation';
+
+  final SettingsRepository _repo;
+  bool _changed = false;
+
+  /// Completes when the saved value has been read (or found missing).
+  late final Future<void> loaded;
+
+  Future<void> _load() async {
+    Object? raw;
+    try {
+      raw = await _repo.read(settingsKey);
+    } catch (_) {
+      return;
+    }
+    if (raw is bool && mounted && !_changed) state = raw;
+  }
+
+  Future<void> set(bool show) {
+    _changed = true;
+    state = show;
+    return _repo.write(settingsKey, show).catchError((Object _) {});
+  }
+}
+
+/// Whether to show English translations beneath each ayah (persisted).
+final showTranslationProvider =
+    StateNotifierProvider<ShowTranslationNotifier, bool>(
+  (ref) => ShowTranslationNotifier(ref.watch(settingsRepositoryProvider)),
+);
 
 // ── Bookmarks ─────────────────────────────────────────────────────────────────
 
