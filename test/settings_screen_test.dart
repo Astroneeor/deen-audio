@@ -7,6 +7,7 @@ import 'package:deen_audio/features/library/providers/library_providers.dart';
 import 'package:deen_audio/features/settings/providers/settings_providers.dart';
 import 'package:deen_audio/features/settings/ui/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -127,6 +128,48 @@ void main() {
     await _pumpSettings(tester, db);
     expect(find.text('HalalAudio'), findsOneWidget);
     expect(find.text('Change folder'), findsOneWidget);
+  });
+
+  testWidgets('About credits the content sources with their links',
+      (tester) async {
+    final copied = <String>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform, (call) async {
+      if (call.method == 'Clipboard.setData') {
+        copied.add((call.arguments as Map)['text'] as String);
+      }
+      return null;
+    });
+    addTearDown(() => tester.binding.defaultBinaryMessenger
+        .setMockMethodCallHandler(SystemChannels.platform, null));
+    tester.view.physicalSize = const Size(900, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await _pumpSettings(tester, db);
+
+    for (final label in [
+      'Quran text',
+      'Translation',
+      'Arabic font',
+      'Recitations',
+    ]) {
+      expect(find.text(label), findsOneWidget);
+    }
+    expect(find.textContaining('Tanzil Project, Uthmani text'), findsOneWidget);
+    expect(find.textContaining('CC BY 3.0, unmodified'), findsOneWidget);
+    expect(find.textContaining('Saheeh International, via tanzil.net'),
+        findsOneWidget);
+    expect(find.textContaining('Amiri Quran'), findsOneWidget);
+    expect(find.textContaining('SIL Open Font License'), findsOneWidget);
+    expect(find.textContaining('QuranicAudio.com'), findsOneWidget);
+    expect(find.textContaining('personal use only'), findsOneWidget);
+    expect(find.text('https://tanzil.net'), findsOneWidget);
+
+    await tester.tap(find.text('https://tanzil.net'));
+    await tester.pump();
+    expect(copied, ['https://tanzil.net']);
+    expect(find.text('Copied https://tanzil.net'), findsOneWidget);
   });
 
   testWidgets('does not overflow in a narrow content area', (tester) async {

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
+import 'credit_tiles.dart';
 import 'font_size_tile.dart';
 import 'library_folder_tile.dart';
 import 'location_tile.dart';
 
-/// Settings screen — library folder, prayer location, Quran font size, about.
+/// Settings screen — library folder, prayer location, Quran font size, about
+/// (with the content sources' attribution).
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -37,6 +39,7 @@ class SettingsScreen extends ConsumerWidget {
             _infoTile('Version', '0.1.0'),
             _infoTile('Build', 'Phase 5 — Pre-release'),
             _infoTile('Framework', 'Flutter 3 · SQLite (Drift) · Riverpod'),
+            for (final credit in appCredits) CreditTile(credit),
           ]),
         ],
       ),
